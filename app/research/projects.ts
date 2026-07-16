@@ -159,7 +159,7 @@ export const researchProjects: ResearchProject[] = [
       "BridgeSync is a digital twin framework for secure and resilient bridge monitoring. It connects structural sensors, edge processing, synchronized 3D representations, and a blockchain-ready data layer.",
       "The project was validated through digital twins of three bridges, with the same sensor coordinates and live readings shared between a browser-based WebGL interface and an immersive Unreal Engine environment.",
     ],
-    status: "Presented at ICUFN 2025 in Lisbon, Portugal",
+    status: "Presented at ICUFN 2025, July 8 to 11 at Iscte, University Institute of Lisbon, Portugal",
     question: "How can a bridge twin maintain low-latency monitoring, auditable data, and consistent sensor placement across web and immersive interfaces?",
     approach: [
       { title: "PureEdge processing", text: "Edge services support low-latency monitoring and continued operation in settings where cloud connectivity may be constrained." },

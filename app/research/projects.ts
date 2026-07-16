@@ -224,6 +224,8 @@ export const researchProjects: ResearchProject[] = [
       "A reproducible baseline for perception around smart parking environments.",
     ],
     images: [
+      { src: "/research/smartparking/system.png", alt: "Smart parking object-detection system from dataset preparation to traffic-scene deployment", caption: "The complete system connects the TraPedesVeh dataset to preprocessing, feature extraction, classification, evaluation, and real-traffic testing for vehicles, pedestrians, and traffic signs." },
+      { src: "/research/smartparking/process.png", alt: "TraPedesVeh dataset construction and annotation process", caption: "The dataset pipeline moves from class-keyword selection and image retrieval through screening, annotation, TFRecord conversion, and label-map creation." },
       { src: "/research/smartparking/p6-img0.png", alt: "SmartParking detection result for pedestrians and a vehicle", caption: "A qualitative result showing joint pedestrian and vehicle detections in a street scene. These mixed scenes reflect the perception demands near parking facilities." },
       { src: "/research/smartparking/p6-img4.png", alt: "SmartParking detection result for pedestrians, cyclists, and bicycles", caption: "A multi-object result with pedestrians, cyclists, and bicycles detected in the same urban scene." },
       { src: "/research/smartparking/p6-img3.png", alt: "SmartParking comparison result for vehicles and pedestrians", caption: "An additional detector output used to compare localization and class confidence across the evaluated model families." },

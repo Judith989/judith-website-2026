@@ -21,6 +21,14 @@ const pandaPresentation = [
   { src: "/research/panda-image4.png", alt: "PANDA three-dimensional parking facility digital twin", caption: "The research system maps present and predicted states to parking modules and individual spaces, allowing the audience to inspect how the facility changes over time." },
 ];
 
+const uwDigitalTwinsMeetup = [
+  { src: "/gallery/uw-digital-twins-meetup-1.jpg", alt: "University of Wyoming Computing Meet Up poster for Digital Twins", caption: "The University of Wyoming School of Computing brought its interdisciplinary community together for lightning talks, discussion, and conversation on digital twins at Altitude Chophouse in Laramie on May 6, 2026." },
+  { src: "/gallery/uw-digital-twins-meetup-2.jpg", alt: "Vanessa Lueck presenting at the University of Wyoming Digital Twins Computing Meet Up", caption: "Vanessa Lueck opened the six-talk program with the people and policy perspective, grounding the technical conversation in the decisions, communities, and governance structures surrounding digital twins." },
+  { src: "/gallery/uw-digital-twins-meetup-3.jpg", alt: "University of Wyoming community attending the Digital Twins Computing Meet Up", caption: "The evening format made room for informal questions and interdisciplinary exchange among University of Wyoming researchers and community members after the lightning talks." },
+  { src: "/gallery/uw-digital-twins-meetup-4.jpg", alt: "Jian Gong presenting sensor networks at the University of Wyoming Digital Twins Computing Meet Up", caption: "Jian Gong presented the sensor-network layer of digital twins, connecting adaptive sensing and neuromorphic computing with the data systems that keep physical and virtual assets synchronized." },
+  { src: "/gallery/uw-digital-twins-meetup-5.jpg", alt: "Wabi Demeke presenting physics modeling at the University of Wyoming Digital Twins Computing Meet Up", caption: "Wabi Demeke demonstrated physics-guided artificial intelligence through a damped-oscillator example, showing how physical equations and learned models can strengthen one another." },
+];
+
 const moments = [
   { src: "/gallery/conference-2025-07-09.jpg", title: "ICUFN 2025, 16th International Conference on Ubiquitous and Future Networks", detail: "At Iscte, University Institute of Lisbon in Portugal, July 8 to 11, 2025. Connecting with the international future-networks community while sharing research across intelligent bridges, battery digital twins, and emerging communication systems.", orientation: "portrait" },
   { src: "/gallery/research-2025-04-25.jpg", title: "JCCI 2025, 35th Joint Conference on Telecommunications and Information", detail: "Presenting PureTwin, an interactive non-fungible digital twin framework for battery management systems, at Sokcho Sonocalm Delpino Resort in South Korea. JCCI 2025 was held April 23 to 25, 2025.", orientation: "wide" },
@@ -106,6 +114,15 @@ export default function GalleryPage() {
           <p>I presented OmniRestore, coauthored with Dr. Diksha Shukla, at the Colorado Convention Center. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions. Presenting it at CVPR brought this research into conversation with the international computer vision community and marked an important expansion of my work into robust autonomous perception.</p>
         </div>
         <PhotoStoryCarousel images={cvprPresentation} label="CVPR 2026 presentation" />
+      </section>
+
+      <section className="page-section featured-gallery-story">
+        <div className="featured-story-copy">
+          <p className="kicker">May 6, 2026, Laramie, Wyoming</p>
+          <h2>Facilitating a University of Wyoming community conversation on digital twins</h2>
+          <p>I facilitated the School of Computing&apos;s Digital Twins Computing Meet Up at Altitude Chophouse and presented a battery-management digital twin case study. Six lightning talks brought people and policy, sensor networks, physics modeling, utility and immersive education, visualization, virtual reality, and battery intelligence into one room, followed by the candid interdisciplinary discussion that makes ideas travel beyond their home disciplines.</p>
+        </div>
+        <PhotoStoryCarousel images={uwDigitalTwinsMeetup} label="University of Wyoming Digital Twins Computing Meet Up" />
       </section>
 
       <section className="page-section photo-grid">

@@ -1,0 +1,498 @@
+%% ============================================================
+%% Judith Nkechinyere Njoku - Curriculum Vitae
+%% Tailored for: UW ISE Assistant Professor (Systems Engineering)
+%% Compiler: pdfLaTeX
+%% Rev 1: UW red accent, em dashes removed, fact corrections
+%% ============================================================
+
+\documentclass[11pt, letterpaper]{article}
+
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[backend=biber,
+            style=authoryear,
+            sorting=ydnt,
+            maxbibnames=99,
+            giveninits=false,
+            uniquename=false,
+            dashed=false,
+            doi=true,
+            url=false,
+            isbn=false,
+            eprint=false]{biblatex}
+
+\addbibresource{own-bib.bib}
+
+%% ── UW ACCENT COLORS ────────────────────────────────────────
+\definecolor{uwred}{HTML}{4B2E83}   % UW official red
+\definecolor{uwgold}{HTML}{85754D}     % darkened Husky gold (print-safe)
+
+%% Bold own name
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \ifdefstring{\namepartfamily}{Njoku}{\textbf{#1}}{#1}}
+\renewcommand*{\mkbibnamegiven}[1]{%
+  \ifdefstring{\namepartfamily}{Njoku}{\textbf{#1}}{#1}}
+
+%% Hyperlinks in UW red
+\hypersetup{colorlinks=true, urlcolor=uwred, linkcolor=black, citecolor=black}
+
+%% Section style: ALL CAPS in UW red, red rule
+\titleformat{\section}{\normalsize\bfseries\color{uwred}}{}{0em}{\uppercase}[\vspace{-6pt}{\color{uwred}\rule{\linewidth}{0.6pt}}]
+\titlespacing{\section}{0pt}{10pt}{2pt}
+
+%% Subsection style
+\titleformat{\subsection}{\normalsize\itshape\color{uwgold}}{}{0em}{}
+\titlespacing{\subsection}{0pt}{6pt}{2pt}
+
+%% Footer
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\small\color{gray} Judith Nkechinyere Njoku, Ph.D. \quad CV}
+\fancyfoot[R]{\small\color{gray} Page \thepage\ of \pageref{LastPage}}
+
+%% List settings
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=1.5em}
+
+%% red date column (replaces existing \entry definition)
+
+
+%% Breakable entry: date on left, content flows across pages
+\newcommand{\entry}[2]{%
+  \begin{list}{}{%
+    \setlength{\leftmargin}{0.17\linewidth}%
+    \setlength{\labelwidth}{0.15\linewidth}%
+    \setlength{\labelsep}{0.02\linewidth}%
+    \setlength{\topsep}{3pt}%
+    \setlength{\parsep}{2pt}%
+    \setlength{\itemsep}{0pt}%
+    \renewcommand{\makelabel}[1]{\parbox[t]{0.15\linewidth}{\small\raggedright\color{uwred}##1}\hfill}%
+  }%
+  \item[{#1}] #2%
+  \end{list}%
+}
+
+%% Role title: bold red
+\newcommand{\role}[1]{{\color{uwred}\textbf{#1}}}
+
+%% Research label: italic red
+\newcommand{\research}[1]{{\color{uwred}\textit{Research:}} #1}
+
+%% Breakable year+content entry
+\newcommand{\yearentry}[2]{%
+  \begin{list}{}{%
+    \setlength{\leftmargin}{0.12\linewidth}%
+    \setlength{\labelwidth}{0.10\linewidth}%
+    \setlength{\labelsep}{0.02\linewidth}%
+    \setlength{\topsep}{2pt}%
+    \setlength{\parsep}{2pt}%
+    \setlength{\itemsep}{0pt}%
+    \renewcommand{\makelabel}[1]{\parbox[t]{0.10\linewidth}{\small\raggedright\color{uwred}##1}\hfill}%
+  }%
+  \item[{#1}] #2%
+  \end{list}%
+}
+
+%% Grant entry with red label
+\newcommand{\grantentry}[5]{%
+  % #1=label, #2=title, #3=role, #4=agency+period, #5=amount
+  \noindent[{\color{uwred}\textbf{#1}}] \textit{#2}\\
+  \hspace*{1em}Role: #3 \quad|\quad Funding Agency: #4 \quad|\quad Total: \textbf{#5}\vspace{4pt}\par
+}
+
+\raggedbottom
+
+%% ============================================================
+\begin{document}
+\nocite{*}
+\thispagestyle{fancy}
+
+%% ── HEADER ──────────────────────────────────────────────────
+\noindent
+\begin{minipage}[t]{0.560\textwidth}
+  {\LARGE\bfseries\color{uwred} Judith Nkechinyere Njoku, Ph.D.}\\[2pt]
+  Digital Twins |  AI-Enabled Systems | Trustworthy AI\\
+  Postdoctoral Research Associate\\
+  Dept.\ of Electrical Engineering \& Computer Science\\
+  University of Wyoming, Laramie, WY 82071
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.46\textwidth}
+  \raggedleft
+
+  \href{https://www.judithnjoku.me}{judithnjoku.me}\\
+  \href{https://scholar.google.com/citations?user=Ag2gYzIAAAAJ}{Google Scholar} (1,350+ citations | h-index 14)\\
+  \href{https://orcid.org/0000-0002-2294-9204}{ORCID: 0000-0002-2294-9204}\\
+  \href{https://linkedin.com/in/judith989}{LinkedIn} \quad
+  \href{https://github.com/Judith989}{GitHub} \\
+  \href{mailto:judithnjoku24@gmail.com}{judithnjoku24@gmail.com}
+\end{minipage}
+
+% \vspace{2pt}
+\noindent{\color{uwred}\rule{\linewidth}{0.6pt}}
+% \vspace{-20pt}
+
+
+%% ── RESEARCH INTERESTS ──────────────────────────────────────
+\section{Research Interests}
+
+\noindent AI-enabled Systems Engineering for complex cyber-physical systems through the integration of \textbf{digital twins, trustworthy artificial intelligence, model-informed machine learning, computer vision, explainable AI, and uncertainty quantification} to enhance the resilience, safety, autonomy, and decision-making of transportation, energy systems, and smart infrastructure.
+
+\section{Research Areas}
+
+\noindent Digital Twins $\bullet$ AI-Enabled Systems Engineering $\bullet$
+Cyber-Physical Systems $\bullet$
+Autonomous Systems $\bullet$
+Computer Vision $\bullet$
+Explainable AI $\bullet$
+Human-Autonomy Teaming
+
+
+%% ── EDUCATION ───────────────────────────────────────────────
+\section{Education}
+
+\noindent
+\textbf{Ph.D., IT Convergence Engineering} \hfill August 2025\\
+Kumoh National Institute of Technology (KIT), Gumi, South Korea\\
+\textbf{Doctoral Dissertation}: \textit{BatteryMetrix: A User-Centric Digital Twin Framework for Predictive, Explainable, and Secure Battery Management Systems}\\
+Advisors: Prof.~Dong-Seong Kim, Prof.~Jae-Min Lee
+
+
+\noindent
+\textbf{M.Sc., Electronics Engineering} \hfill August 2021\\
+Kumoh National Institute of Technology (KIT), Gumi, South Korea\\
+\textbf{Master's Thesis}: \textit{Improving Performance and Reliability of Wireless Communication Systems using Deep Learning}\\
+Advisor: Prof.~Wansu Lim
+
+
+\noindent
+\textbf{B.Eng., Petroleum Engineering} \hfill December 2014\\
+Federal University of Technology, Owerri (FUTO), Nigeria\\
+\textbf{Project}: \textit{A Two-Dimensional Well Plan of a Relief Well using MATLAB} \\
+Advisor: Dr. Emenike Egelle
+
+
+
+%% ── PROFESSIONAL APPOINTMENTS ───────────────────────────────
+\section{Professional Appointments}%
+\entry{Aug 2025 --\\Present}{%
+  \role{Postdoctoral Research Associate}\\
+  Secure Sensing and Learning (SSL) Research Lab \& Center for Rural Community Resilience \& Innovation (CRCRI)\\
+  Department of Electrical Engineering \& Computer Science\\
+  University of Wyoming, Laramie, WY\\
+  \research{AI-enabled perception for autonomous systems; digital twins for smart infrastructure and rural communities; trustworthy AI for cyber-physical systems}\\
+  Advisors: Dr.~Diksha Shukla, Dr.~Jeffrey Hamerlinck
+
+  \vspace{0pt}
+  \textbf{Research Highlights}
+  \begin{itemize}
+      \item Developed \textit{OmniRestore}, a lightweight adverse-weather image restoration framework (CVPR Workshops, NTIRE 2026) for robust perception in autonomous cyber-physical systems.
+      \item Developing weather-robust perception algorithms for autonomous driving (KINET) and benchmarking methodologies for trustworthy AI-enabled digital twins (\textit{dttibench}).
+      \item Leading the development of a city-scale digital twin of downtown Laramie integrating drone imagery, AI-based 3D reconstruction, and geospatial visualization.
+      \item Developing PANDA, a digital twin and agent-based modeling framework for intelligent parking management and urban mobility analysis.
+  \end{itemize}
+}
+
+\entry{Jan 2024 --\\Feb 2024}{%
+  \role{Visiting Research Scholar}\\
+  Climate Smart Decision Support Systems (CLIMDES) Laboratory\\
+  Michigan State University, East Lansing, MI\\
+  \research{Digital twins and AI-driven decision support for climate-smart agriculture}\\
+  Host: Dr.~Daniel Dooyum Uyeh
+
+
+  \textbf{Research Highlights}
+  \begin{itemize}
+      \item Initiated research on digital twin technologies for greenhouse microclimate monitoring and sensor optimization.
+      \item Established collaborations that expanded into long-term joint research projects and publications with Michigan State University.
+  \end{itemize}
+}
+
+\entry{Aug 2022 --\\Jul 2024}{%
+  \role{Research Specialist and Supervisor}\\
+  Kyungpook National University, Daegu, South Korea \& Michigan State University, East Lansing, MI\\
+  \research{AI-enabled sensing, digital agriculture, explainable machine learning, and international workforce development}
+
+
+  \textbf{Research Highlights}
+  \begin{itemize}
+      \item Developed AI-enabled decision-support systems and digital twin frameworks for greenhouse monitoring, precision agriculture, crop resilience, and environmental sensing.
+      \item Designed machine learning and multimodal deep learning models for soil characterization, agricultural sensing, and livestock feed quality prediction.
+      \item Coordinated international research collaborations between Kyungpook National University and Michigan State University, resulting in multiple peer-reviewed journal publications.
+      \item Recruited, supervised, and mentored two international research internship cohorts comprising more than 15 students, many of whom co-authored publications and pursued graduate studies.
+  \end{itemize}
+}
+
+\entry{Sep 2022 --\\Aug 2025}{%
+  \role{Graduate Research Assistant (Ph.D.)}\\
+  Networked Systems (NS) Laboratory\\
+  Kumoh National Institute of Technology, Gumi, South Korea\\
+  \research{Digital twins for energy and infrastructure systems; trustworthy AI for intelligent transportation; AI-enabled decision support for industrial applications}
+
+
+  \textbf{Research Highlights}
+  \begin{itemize}
+      \item Developed \textbf{BatteryMetrix}, an explainable AI-enabled digital twin framework for battery state estimation, prognosis, visualization, and secure communication, resulting in four journal articles, one accepted journal article, and thirteen conference papers.
+      \item Developed trustworthy AI methods for intelligent transportation systems, autonomous vehicle security, explainable intrusion detection, and digital transportation platforms, resulting in four journal publications and seven conference papers.
+      \item Developed \textbf{BridgeSync}, a digital twin framework for intelligent bridge monitoring, coordinating multidisciplinary teams for structural monitoring of four bridges across South Korea.
+      \item Led a \$100,000 industry-funded AI project with Metamonkey AI to develop predictive analytics for automotive retail operations, resulting in one journal publication and four conference papers.
+  \end{itemize}
+}
+
+\entry{Jan 2022 --\\Aug 2022}{%
+  \role{Post-Masters Researcher}\\
+  ICT Convergence Research Center, Kumoh National Institute of Technology, Korea\\
+  \research{Metaverse technologies and immersive digital environments}
+
+
+  \textbf{Research Highlights}
+  \begin{itemize}
+      \item Investigated metaverse technologies, immersive digital environments, and digital twin applications for next-generation cyber-physical systems.
+      \item Contributed to research on intelligent transportation, industrial metaverse platforms, and human-centered digital experiences.
+  \end{itemize}
+}
+
+\entry{Sep 2019 --\\Aug 2021}{%
+  \role{Graduate Research Assistant \& Teaching Assistant (M.Sc.)}\\
+  Future Communications Systems Laboratory\\
+  Kumoh National Institute of Technology, Korea\\
+  \research{Machine learning for next-generation wireless communication systems}
+
+  \textbf{Research Highlights}
+  \begin{itemize}
+      \item Developed machine learning methods for next-generation wireless communication systems, including automatic modulation recognition, dynamic spectrum allocation, channel autoencoders, and multimodal emotion recognition.
+      \item Published four peer-reviewed research papers spanning deep learning, wireless communications, multimodal learning, and intelligent communication systems.
+      \item Assisted with graduate laboratory instruction and supervised undergraduate laboratory activities.
+  \end{itemize}
+}
+
+\entry{Apr 2017 --\\Jul 2019}{%
+  \role{Customer Experience Management Personnel \& IT Buddy}\\
+  Sterling Bank PLC, Lagos, Nigeria
+}
+
+
+%% ── PUBLICATIONS ────────────────────────────────────────────
+\section{Publications}
+
+\noindent\textit{Google Scholar: Citations 1,350+ $\mid$ h-index: 14 $\mid$ i10-index: 20. Name appears in \textbf{bold} in the author lists below.}
+
+
+
+\printbibliography[heading={subbibliography},
+                   title={Peer-Reviewed Journal Articles},
+                   type=article]
+
+\printbibliography[heading={subbibliography},
+                   title={International Conference Proceedings},
+                   type=inproceedings,
+                   notkeyword={domestic}]
+
+% \printbibliography[heading={subbibliography},
+%                    title={Domestic Conference Proceedings (South Korea)},
+%                    keyword={domestic}]
+
+
+\textcolor{uwred}{\textit{Domestic (South Korea) conference papers are omitted for brevity; the complete list is available via Google Scholar.}}
+
+
+
+%% ── GRANTS AND FUNDING ──────────────────────────────────────
+\section{Grants and Funding}
+
+
+\subsection*{As Research Team Lead}
+\grantentry{G2}{AI in Service Drive for Automotive Retail Dealerships}{Research Team Lead}{Metamonkey AI (USA) + KIT Korea, 2023--2024}{\$100,000}
+\grantentry{G1}{Metaverse and Digital Twin for Battery Management Systems}{Research Team Lead}{KIT Internal ICT Fund, 2022--2024}{\$50,000}
+
+\subsection*{As Funded Researcher (laboratory-wide national programs)}
+
+\grantentry{G5}{ICT Convergence Research Center Long-term Project}{Researcher}{NRF Korea (MEST), 2019--2027}{\$7,300,000}
+
+\grantentry{G4}{Grand ICT: Mobile ICT Intelligent Convergence}{Researcher}{MSIT Korea / IITP, 2019--2027}{\$20,530,000}
+
+\grantentry{G3}{MERIT Convergence Innovative Talents Training Group for Smart Manufacturing}{Researcher}{Brain Korea 21$^+$, 2020--2027}{\$4,127,000}
+
+\subsection*{Under Review}
+\grantentry{P1}{ClearSense: Perception-Aware Intrusion Detection for Autonomous Vehicles under Adverse Weather}{Principal Investigator (Fellow)}{Washington Research Foundation Postdoctoral Fellowship, submitted June 2026}{\$100,000}
+
+
+%% ── HONORS AND AWARDS ───────────────────────────────────────
+\section{Honors and Awards}
+
+\yearentry{2023}{%
+  \textbf{Outstanding Paper Award}, 2nd International Conference on Maritime IT Convergence (ICMIC), Jeju, South Korea\\
+  \textit{``SHAP-Based Intrusion Detection Framework for Zero-Trust IoT Maritime Security''}\\
+  Awarded by IEICE Communications Society \& KICS
+}
+
+\yearentry{2022--2025}{%
+  \textbf{Brain Korea 21$^+$ (BK21$^+$) Ph.D.\ Scholarship}\\
+  Full doctoral fellowship, Kumoh National Institute of Technology. Estimated value: \$50,000
+}
+
+\yearentry{2021}{%
+  \textbf{Excellent Publication Award}, BrainKorea 2020 \& Kumoh National Institute of Technology
+}
+
+\yearentry{2019--2021}{%
+  \textbf{Brain Korea Scholarship (M.Sc.)}\\
+  Full master's fellowship, Kumoh National Institute of Technology. Estimated value: \$50,000
+}
+
+
+
+
+%% ── TEACHING AND MENTORSHIP ─────────────────────────────────
+\section{Teaching and Mentorship}
+
+\subsection*{Teaching}
+
+\entry{Jun 2026}{%
+  \role{Invited REU Colloquium Talk}, University of Wyoming\\
+  \textit{``Can AI Drive in the Storm? Restoring Vision for Autonomous Vehicles''}\\
+  40-minute invited research lecture + Q\&A, undergraduate REU cohort
+}
+
+\entry{Mar 2026 --\\Present}{%
+  \role{Project Research Mentor}, COSC 4555/5555 Machine Learning, University of Wyoming\\
+  Supervised student ML projects; guided model implementation, evaluation, and interpretation
+}
+
+\subsection*{Courses Prepared to Teach}
+
+\begin{itemize}
+  \item \textit{Existing:} Data Analytics and Machine Learning for Systems Engineers; Simulation (IND E 338)
+  \item \textit{Proposed:} Cyber-Physical and Embedded Systems: Modeling, Computation, and Real-Time Design; Introduction to Digital Twins; Explainable AI and Uncertainty Quantification for Safety-Critical Systems
+\end{itemize}
+
+\subsection*{Research Supervision}
+
+\entry{Mar 2026 --\\Present}{%
+  \role{Graduate and Undergraduate Research Mentorship}, University of Wyoming\\
+  Mentoring five student research teams toward peer-reviewed publication:
+  \begin{itemize}
+    \item Susmita Biswas Bristy \& Md.\ Sharmon Hossain Arnob (Graduate): Driver fatigue detection; in preparation for WACV 2027
+    \item Pratik Shrestha, Prashanna Mani Paudel \& Saubhagya Jung Karki (Graduate): Parking occupancy prediction; in preparation for WACV 2027
+    \item Toyiomfon Obot Udoete, Alisha Khan \& Sudipa Roy (Graduate): Image deraining; in preparation for WACV 2027
+    \item Aneesh Vyas \& Greg Saul (Graduate): Multi-degradation image restoration; in preparation for WACV 2027
+    \item Adwita Ram (10th grade, Santa Clara High School): IMU-based gait analysis for NPH screening; abstract submitted to SfN 2026
+  \end{itemize}
+}
+
+\entry{2022 --\\2025}{%
+  \role{Graduate Student Mentorship}, NS Laboratory, Kumoh National Institute of Technology\\
+  Mentored junior graduate researchers to co-authored publications:
+  \begin{itemize}
+    \item Ebuka Chinaechetam Nkoro (M.Sc.): Metaverse security and intrusion detection; now Research and Teaching Assistant, Towson University, USA
+    \item Robin Matthew Medina (M.Sc.): Battery digital twin visualization and edge deployment
+    \item Mohamed Abubakar Dini Rage (M.Sc.): Physics-guided deep learning for battery abuse detection; now Ph.D.\ student, Kumoh National Institute of Technology
+  \end{itemize}
+}
+
+\entry{2023 --\\2024}{%
+  \role{Internship Lead and Research Supervisor}, CLIMDES Lab, Michigan State University\\
+  Designed and led a remote research internship program; recruited and supervised two international cohorts (15 interns); 12 contributed to peer-reviewed publications, with multiple conference and poster presentations.\\[3pt]
+  \textit{Cohort 2 (Jan--Jun 2023):}
+  \begin{itemize}
+    \item Babatunde Oluwabukunmi Owoeye (Food Engineering); now Software Engineer, Moniepoint, Nigeria
+    \item Miraculous Udurume (Physics); now integrated M.Sc./Ph.D.\ student, Kumoh National Institute of Technology, Korea
+    \item Ayobami Joseph Akomolafe (Biology and Biological Sciences)
+    \item Ifeanyi Vincent Nwaneri (Mechanical \& Mechatronics Engineering); completed M.S., Michigan State University
+    \item Abayomi Okunlola Yusuf (Agricultural \& Environmental Engineering)
+    \item Ayobami Adelani (Computer Science)
+    \item Patience Chizoba Mba (Computer Science); Researcher, CLIMDES Laboratory; incoming M.S.\ student, Michigan State University
+    \item Opegbemi Matthias Busoye (Electrical \& Electronics Engineering)
+    \item John Temitope Ajayi (Metallurgical \& Materials Engineering)
+  \end{itemize}
+  \textit{Cohort 3 (Feb--Jul 2024):}
+  \begin{itemize}
+    \item Oreofeoluwa Akintan (Electrical \& Electronics Engineering); completed M.S., Michigan State University
+    \item Ayooluwaposi Olomo (Mechanical Engineering)
+    \item Joy Abiodun (Statistics)
+    \item Taiwo Oluwaseun Opadotun (Agronomy)
+    \item Ridwan Adeyemo (Computer Science)
+    \item Damilola Babawale Sodiq (Industrial \& Production Engineering)
+  \end{itemize}
+}
+
+\subsection*{Professional Mentorship}
+
+\entry{2026 --\\Present}{%
+  \role{Mentor}, Femme Alliance Network\\
+  Mentoring women navigating career transitions into technology, including returners from career breaks and professionals entering tech and engineering roles; guidance spans research careers, graduate school applications, and technical skill development
+}
+
+\entry{2023 --\\Present}{%
+  \role{Mentor}, WomenTech Network women-in-tech mentorship programs\\
+  Career and technical mentorship for women transitioning into or advancing within AI, data, and engineering roles, alongside Global Ambassador role
+}
+
+%% ── PROFESSIONAL SERVICE ────────────────────────────────────
+\section{Leadership and Professional Service}
+
+\subsection*{Technical Program Committees}
+
+\yearentry{2024}{TPC Member, Track 4 (Emerging Technologies), IEEE WCNC 2025, Milan, Italy}
+\yearentry{2023}{TPC Member, Track 4 (Emerging Technologies), IEEE WCNC 2024, Dubai, UAE}
+
+\subsection*{Conference Peer Review}
+
+\noindent IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) $\cdot$ International Conference on Machine Learning (ICML) $\cdot$ Conference on Neural Information Processing Systems (NeurIPS) $\cdot$ International Conference on Computer Vision and Image Processing (CVIP) $\cdot$ IEEE Wireless Communications and Networking Conference (WCNC)
+
+\subsection*{Journal Peer Review}
+
+\noindent IEEE Transactions on Industrial Informatics $\cdot$ IEEE Internet of Things Journal $\cdot$ IEEE Access $\cdot$ IEEE Communications Letters $\cdot$ IET Communications $\cdot$ Engineering Applications of Artificial Intelligence $\cdot$ Journal of Retailing and Consumer Services $\cdot$ Electronics (MDPI) $\cdot$ Sensors (MDPI) $\cdot$ Algorithms (MDPI) $\cdot$ Cogent Arts \& Humanities
+
+\subsection*{Professional Memberships}
+
+\yearentry{2019 --\\Present}{\textbf{IEEE Member}}
+
+\subsection*{Community and Professional Leadership}
+
+\yearentry{2018 --\\Present}{\textbf{WomenTech Network Global Ambassador}}
+\yearentry{2020 --\\Present}{\textbf{Toastmasters International}, Level 4 (communication and leadership)}
+
+
+
+%% ── TECHNICAL SKILLS ────────────────────────────────────────
+\section{Technical Skills}
+
+\noindent
+\begin{tabular}[t]{@{}p{0.3\linewidth}@{\hspace{6pt}}p{0.70\linewidth}@{}}
+  \textbf{Programming} & Python, MATLAB, R \\[1pt]
+  \textbf{AI / ML} & PyTorch, TensorFlow/Keras, scikit-learn, physics-informed ML, SHAP, LIME, GradCAM \\[2pt]
+  \textbf{Modeling \& Simulation} & MATLAB/Simulink, PyBaMM (physics-based battery simulation), CARLA, agent-based modeling (Mesa), hardware-in-the-loop (HIL) prototyping \\[2pt]
+  \textbf{Digital Twins \& Visualization} & Unreal Engine 5, CesiumJS, RealityCapture, Blender \\[2pt]
+  \textbf{Software \& Deployment} & FastAPI, REST APIs, MQTT, Docker, Git/GitHub, edge deployment (Raspberry Pi) \\[2pt]
+  \textbf{HPC} & Derecho (NCAR), PBS/SLURM job scheduling \\[2pt]
+  \textbf{Languages} & English (fluent) $\cdot$ Igbo (native) $\cdot$ Yoruba (proficient) $\cdot$ Korean (intermediate)\\
+\end{tabular}
+
+%% ── REFERENCES ──────────────────────────────────────────────
+\section{References}
+
+\noindent
+\begin{tabular}[t]{@{}p{0.48\linewidth}@{\hspace{8pt}}p{0.48\linewidth}@{}}
+  \textbf{Dr.\ Diksha Shukla} & \textbf{Dr.\ Jeffrey D.\ Hamerlinck} \\
+  Associate Professor & Associate Director \& Senior Research Scientist \\
+  Dept.\ of Electrical Engineering \& Computer Science & School of Computing \\
+  University of Wyoming & University of Wyoming \\
+  \href{mailto:dshukla@uwyo.edu}{dshukla@uwyo.edu} & \href{mailto:jeff.hamerlinck@uwyo.edu}{jeff.hamerlinck@uwyo.edu} \\[8pt]
+  \textbf{Dr.\ Daniel Dooyum Uyeh} & \textbf{Dr.\ Senorpe Asem-Hiablie} \\
+  Assistant Professor & Bio-feedstock Researcher \\
+  Dept.\ of Biosystems \& Agricultural Engineering & Bio \& Circularity Feedstocks \\
+  Michigan State University & Shell USA, Houston, TX \\
+  \href{mailto:uyehdani@msu.edu}{uyehdani@msu.edu} & \href{mailto:senorpe.hiablie@shell.com}{senorpe.hiablie@shell.com} \\
+\end{tabular}
+
+\end{document}

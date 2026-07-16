@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import { TypingHeadline } from "./typing-headline";
 
 const links = {
   email: "mailto:judithnjoku24@gmail.com",
@@ -147,10 +148,7 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-copy">
           <p className="hero-overline">AI-enabled systems researcher</p>
-          <h1>
-            I build intelligent systems that help the physical world{" "}
-            <em>see, predict, and decide.</em>
-          </h1>
+          <TypingHeadline />
           <p className="hero-lede">
             I&apos;m <strong>Judith Nkechinyere Njoku-Vowels, PhD</strong>, a
             Distinguished Postdoctoral Fellow at the University of Wyoming. My work

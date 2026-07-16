@@ -13,7 +13,7 @@ const education = [
 
 const appointments = [
   ["2025 to Present", "Distinguished Postdoctoral Fellow", "University of Wyoming"],
-  ["2024", "Visiting Research Scholar", "Michigan State University"],
+  ["Jan 4, 2024", "Visiting Research Scholar", "Michigan State University"],
   ["2022 to 2025", "Graduate Research Assistant", "Kumoh National Institute of Technology"],
   ["2019 to 2021", "Graduate Research and Teaching Assistant", "Kumoh National Institute of Technology"],
 ];

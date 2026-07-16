@@ -5,7 +5,14 @@ import { sitePath } from "../site-paths";
 
 export const metadata: Metadata = { title: "News | Judith Njoku-Vowels, PhD" };
 
-type NewsItem = { date: string; category: string; title: string; text: string; href?: string };
+type NewsItem = {
+  date: string;
+  category: string;
+  title: string;
+  text: string;
+  href?: string;
+  links?: { label: string; href: string }[];
+};
 
 const monthAbbreviations: Record<string, string> = {
   January: "Jan",
@@ -55,6 +62,24 @@ const journey: NewsItem[] = [
   { date: "October 2022", category: "Conference presentation", title: "SmartParking object detection presented at ICTC 2022", text: "At the 13th International Conference on Information and Communication Technology Convergence at Ramada Plaza on Jeju Island, South Korea, our team presented State-of-the-Art Object Detectors for Vehicle, Pedestrian, and Traffic Sign Detection for Smart Parking Systems.", href: "https://doi.org/10.1109/ICTC55196.2022.9952856" },
   { date: "October 19 to 21, 2022", category: "Conference presentation", title: "5G and the metaverse presented at APCC 2022", text: "At the 27th Asia-Pacific Conference on Communications at Ramada Plaza on Jeju Island, South Korea, I presented The Role of 5G Wireless Communication System in the Metaverse with Robin Matthew Medina, Cosmas Ifeanyi Nwakanma, and Dong-Seong Kim.", href: "https://scholar.google.com/scholar?q=%22The+Role+of+5G+Wireless+Communication+System+in+the+Metaverse%22" },
   { date: "2022", category: "Conference presentation", title: "Keyword spotting for autonomous vehicles presented at KICS Summer 2022", text: "At the KICS Summer Conference at the Grand Hyatt on Jeju Island, South Korea, I presented Evaluation of Spectrograms for Keyword Spotting in Control of Autonomous Vehicles for the Metaverse with Cosmas Ifeanyi Nwakanma and Dong-Seong Kim.", href: "https://www.researchgate.net/publication/361558505_Evaluation_of_Spectrograms_for_Keyword_Spotting_in_Control_of_Autonomous_Vehicles_for_The_Metaverse" },
+  {
+    date: "May 25 to 26, 2022",
+    category: "Workshop co-organization",
+    title: "Co-organized Metaverse and The Industry workshop",
+    text: "I co-organized the two-day Metaverse and The Industry live workshop with the ICT Convergence Research Center at Kumoh National Institute of Technology in Gumi, South Korea. Eight sessions connected metaverse foundations with manufacturing, blockchain transactions, NFTs, artificial intelligence, transportation, global research trends, and security. I also delivered the sixth presentation on metaverse applications in transportation systems.",
+    links: [
+      { label: "1. Introduction to the Metaverse", href: "https://www.youtube.com/watch?v=6ohpFb4AYrc" },
+      { label: "2. Metaverse applicability to manufacturing", href: "https://www.youtube.com/watch?v=s4d2Z3v6nD8" },
+      { label: "3. Pure Wallet and offline blockchain transactions", href: "https://www.youtube.com/watch?v=ZSx6wv83ckA" },
+      { label: "4. Metaverse and NFT with Creativia", href: "https://www.youtube.com/watch?v=PbN72jv7yzs" },
+      { label: "5. Artificial Intelligence and Metaverse", href: "https://www.youtube.com/watch?v=MZ8TfJ6H-6k" },
+      { label: "6. Metaverse applicability to transportation systems", href: "https://www.youtube.com/watch?v=nk00bl7RHBU" },
+      { label: "7. Domain and global research trends of the metaverse", href: "https://www.youtube.com/watch?v=CzOSENO8_mU" },
+      { label: "8. Security in the Metaverse: A Closer Look", href: "https://www.youtube.com/watch?v=7VHSTMoNIus" },
+      { label: "Complete Day One recording", href: "https://www.youtube.com/watch?v=EUO3ygEEVHk" },
+      { label: "Complete Day Two recording", href: "https://www.youtube.com/watch?v=5jbhUPUe4jk" },
+    ],
+  },
   { date: "February 9 to 11, 2022", category: "Conference presentation", title: "Real-time scene recognition presented at KICS Winter 2022", text: "At Alpensia Resort in Pyeongchang, Gangwon Province, South Korea, I presented Real-time Deep Learning-based Scene Recognition Model for Metaverse Applications with Gabriel Amaizu, Jae-Min Lee, and Dong-Seong Kim.", href: "https://www.researchgate.net/publication/358947984_Real-time_Deep_Learning-based_Scene_Recognition_Model_For_Metaverse_Applications" },
   { date: "2022", category: "Research transition", title: "Joined the Networked Systems Laboratory for my PhD", text: "At Kumoh National Institute of Technology in Gumi, South Korea, I moved from wireless communication research into digital twins, explainable AI, cybersecurity, and battery-management systems. This was the beginning of the BatteryMetrix research program.", href: "/about" },
   { date: "January 2022", category: "Research transition", title: "Joined the ICT Convergence Research Center for post-master's research", text: "I joined the ICT Convergence Research Center at Kumoh National Institute of Technology in Gumi, South Korea, for post-master's research focused on the metaverse. This chapter expanded my work from wireless communications into immersive intelligent systems and metaverse applications.", href: "/about" },
@@ -77,6 +102,11 @@ function NewsCard({ item }: { item: NewsItem }) {
         <span>{item.category}</span>
         <h2>{item.title}</h2>
         <p>{item.text}</p>
+        {item.links && (
+          <div className="news-resource-links">
+            {item.links.map((link) => <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>{link.label} <ArrowUpRight size={14} /></a>)}
+          </div>
+        )}
         {item.href && <a href={external ? item.href : sitePath(item.href)} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>Read more <ArrowUpRight size={14} /></a>}
       </div>
     </article>

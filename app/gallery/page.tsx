@@ -38,6 +38,9 @@ const moments = [
   { src: "/gallery/kics-summer-2022-keyword-1.jpg", title: "International Conference on Information and Communication Technology Convergence 2022", detail: "Presenting State-of-the-Art Object Detectors for Vehicle, Pedestrian, and Traffic Sign Detection for Smart Parking Systems at ICTC 2022, held October 19 to 21 at Ramada Plaza on Jeju Island, South Korea.", orientation: "portrait" },
   { src: "/gallery/conference-2023-08-group.jpg", title: "Asia-Pacific Conference on Communications 2022", detail: "At APCC 2022, October 19 to 21 at Ramada Plaza on Jeju Island, South Korea, I presented The Role of 5G Wireless Communication System in the Metaverse.", orientation: "wide" },
   { src: "/gallery/kics-summer-2022-keyword-2.jpg", title: "KICS Summer Conference 2022", detail: "Presenting Evaluation of Spectrograms for Keyword Spotting in Control of Autonomous Vehicles for the Metaverse, June 22 to 24 at the Grand Hyatt on Jeju Island, South Korea.", orientation: "portrait" },
+  { src: "/gallery/metaverse-workshop-day-1.jpg", title: "Metaverse and The Industry Workshop 2022", detail: "The workshop I co-organized with the ICT Convergence Research Center at Kumoh National Institute of Technology, held May 25 to 26, 2022. The two-day program connected metaverse research with industry applications across manufacturing, blockchain, NFTs, artificial intelligence, transportation, and security.", orientation: "portrait" },
+  { src: "/gallery/metaverse-workshop-transportation.jpg", title: "Metaverse and The Industry Workshop 2022", detail: "Presenting Metaverse Applicability to Transportation Systems during the workshop. My session examined how virtual environments and digital twins could extend transportation monitoring, interaction, and decision support.", orientation: "wide" },
+  { src: "/gallery/metaverse-workshop-nft.jpg", title: "Metaverse and The Industry Workshop 2022", detail: "A workshop session on Metaverse and NFT with Creativia, one of eight presentations spanning the technical, industrial, and research dimensions of the metaverse.", orientation: "wide" },
   { src: "/gallery/conference-2023-08-event.jpg", title: "KICS Winter Conference 2022", detail: "At Alpensia Resort in Pyeongchang, Gangwon Province, South Korea, February 9 to 11, I presented Real-time Deep Learning-based Scene Recognition Model for Metaverse Applications.", orientation: "wide" },
   { src: "/gallery/kics-winter-2021-uav-spectrum.png", title: "KICS Winter Conference 2021, virtual presentation", detail: "I presented Optimizing Spectrum Sharing in UAV-to-UAV Cellular Communications virtually during the conference hosted at YongPyong Resort in Pyeongchang, Gangwon Province, South Korea, February 3 to 5.", orientation: "wide" },
   { src: "/gallery/kics-winter-2021-gaussian.png", title: "KICS Winter Conference 2021, virtual presentation", detail: "I also presented Predicting Target Data Rates for Dynamic Spectrum Allocation Using Gaussian Process Regression virtually during KICS Winter 2021.", orientation: "wide" },
@@ -46,6 +49,8 @@ const moments = [
 ];
 
 const galleryPaperTitles = [
+  "Metaverse Applicability to Transportation Systems",
+  "Metaverse and NFT with Creativia",
   "PureTwin: A Reliable Non-Fungible Digital Twin Framework for Battery Management Systems",
   "Trustworthy Battery Management: A Digital Twin Approach Leveraging XAI and Blockchain",
   "ProphEn: Advanced Energy Forecasting for Korean Industries with Seasonal and Logistic Growth",

@@ -12,10 +12,10 @@ const education = [
 ];
 
 const appointments = [
-  ["2025 to Present", "Distinguished Postdoctoral Fellow", "University of Wyoming"],
-  ["Jan 4, 2024", "Visiting Research Scholar", "Michigan State University"],
-  ["2022 to 2025", "Graduate Research Assistant", "Kumoh National Institute of Technology"],
-  ["2019 to 2021", "Graduate Research and Teaching Assistant", "Kumoh National Institute of Technology"],
+  ["2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and Center for Rural Community Resilience and Innovation", "University of Wyoming"],
+  ["2024", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory", "Michigan State University"],
+  ["2022 to 2025", "Graduate Research Assistant", "Networked Systems Laboratory", "Kumoh National Institute of Technology"],
+  ["2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
 ];
 
 export default function CvPage() {
@@ -28,7 +28,7 @@ export default function CvPage() {
       </section>
       <section className="page-section cv-layout">
         <div className="cv-main">
-          <div className="cv-block"><p className="kicker">Appointments</p>{appointments.map(([date, role, institution]) => <article key={role}><span>{date}</span><div><h2>{role}</h2><p>{institution}</p></div></article>)}</div>
+          <div className="cv-block"><p className="kicker">Appointments</p>{appointments.map(([date, role, lab, institution]) => <article key={role}><span>{date}</span><div><h2>{role}</h2><p><strong>{lab}</strong><br />{institution}</p></div></article>)}</div>
           <div className="cv-block"><p className="kicker">Education</p>{education.map(([date, degree, institution]) => <article key={degree}><span>{date}</span><div><h2>{degree}</h2><p>{institution}</p></div></article>)}</div>
         </div>
         <aside className="cv-sidebar">

@@ -96,9 +96,9 @@ const projects = [
 ];
 
 const journey = [
-  ["2025 to Present", "Distinguished Postdoctoral Fellow", "University of Wyoming"],
+  ["2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and CRCRI, University of Wyoming"],
   ["2022 to 2025", "PhD, IT Convergence Engineering", "Kumoh National Institute of Technology"],
-  ["Jan 4, 2024", "Visiting Research Scholar", "Michigan State University"],
+  ["2024", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory, Michigan State University"],
   ["2019 to 2021", "MSc, Electronics Engineering", "Kumoh National Institute of Technology"],
   ["Dec 12, 2024", "BEng, Petroleum Engineering", "Federal University of Technology, Owerri"],
 ];

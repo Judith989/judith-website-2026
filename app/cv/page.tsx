@@ -34,7 +34,7 @@ export default function CvPage() {
         <aside className="cv-sidebar">
           <div><strong>1,350+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>
           <h3>Research areas</h3><p>Digital twins, trustworthy AI, computer vision, cyber-physical systems, simulation, and intelligent infrastructure.</p>
-          <h3>Service</h3><p>Reviewer for CVPR, ICML, NeurIPS, IEEE journals, and interdisciplinary AI venues.</p>
+          <h3>Service and leadership</h3><p><a href="https://www.womentech.net/global-ambassadors/South%20Korea/Judith%20/Njoku-Vowels" target="_blank" rel="noreferrer">WomenTech Network Global Ambassador</a> in South Korea since mid-2020. Reviewer for CVPR, ICML, NeurIPS, IEEE journals, and interdisciplinary AI venues.</p>
         </aside>
       </section>
     </main>

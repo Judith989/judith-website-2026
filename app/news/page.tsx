@@ -7,6 +7,28 @@ export const metadata: Metadata = { title: "News | Judith Njoku-Vowels, PhD" };
 
 type NewsItem = { date: string; category: string; title: string; text: string; href?: string };
 
+const monthAbbreviations: Record<string, string> = {
+  January: "Jan",
+  February: "Feb",
+  March: "Mar",
+  April: "Apr",
+  May: "May",
+  June: "Jun",
+  July: "Jul",
+  August: "Aug",
+  September: "Sep",
+  October: "Oct",
+  November: "Nov",
+  December: "Dec",
+};
+
+function abbreviateMonths(date: string) {
+  return date.replace(
+    /\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g,
+    (month) => monthAbbreviations[month],
+  );
+}
+
 const journey: NewsItem[] = [
   { date: "June 17, 2026", category: "Virtual presentation", title: "PANDA presented virtually at i3CE 2026", text: "I presented PANDA, our lightweight digital twin framework for smart parking management, during the virtual program of the ASCE International Conference on Computing in Civil Engineering. The conference was held June 14 to 17 at Songdo Convensia in Songdo, Incheon, South Korea.", href: "https://www.i3ce2026.com/about/03.html" },
   { date: "June 3 to 7, 2026", category: "Conference", title: "OmniRestore presented at the IEEE/CVF CVPR Workshops in Denver", text: "An exciting milestone for our Secure Sensing and Learning Research Lab team. I presented OmniRestore, our parameter-efficient framework for universal adverse-weather image restoration, at the Colorado Convention Center in Denver, Colorado.", href: "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Njoku_OmniRestore_A_Parameter-Efficient_Framework_for_Universal_Adverse-Weather_Image_Restoration_CVPRW_2026_paper.pdf" },
@@ -48,7 +70,7 @@ function NewsCard({ item }: { item: NewsItem }) {
   const external = item.href?.startsWith("http");
   return (
     <article>
-      <div className="news-year">{item.date}</div>
+      <div className="news-year">{abbreviateMonths(item.date)}</div>
       <div className="news-dot" />
       <div className="news-card">
         <span>{item.category}</span>

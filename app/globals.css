@@ -466,7 +466,8 @@ footer p { margin: 0; }
   .mentorship-panel { padding: 28px 22px; }
   .publication-filters label, .publication-filters select { width: 100%; }
   .publication-filters > p { margin-left: 0; }
-  .news-timeline article { grid-template-columns: 58px 18px 1fr; }
+  .news-timeline article { grid-template-columns: 72px 18px 1fr; }
+  .news-year { font-size: 16px; line-height: 1.2; overflow-wrap: normal; }
   .photo-grid { column-count: 1; }
   .news-card { padding-left: 18px; }
   .cv-block article { grid-template-columns: 1fr; gap: 8px; }

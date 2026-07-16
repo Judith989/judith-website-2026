@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Download, ExternalLink } from "lucide-react";
 import { PageHero } from "../site-chrome";
+import { sitePath } from "../site-paths";
 
 export const metadata: Metadata = { title: "Curriculum Vitae | Judith Njoku-Vowels, PhD" };
 
@@ -22,7 +23,7 @@ export default function CvPage() {
     <main>
       <PageHero label="Curriculum vitae" title="The record behind my research journey." text="Trace the appointments, education, projects, awards, mentorship, service, and technical work that have shaped my academic path." />
       <section className="page-section cv-actions">
-        <a className="button button-primary" href="/Judith_Njoku_Academic_CV.pdf" download><Download size={17} /> Download academic CV</a>
+        <a className="button button-primary" href={sitePath("/Judith_Njoku_Academic_CV.pdf")} download><Download size={17} /> Download academic CV</a>
         <a className="button button-secondary" href="https://scholar.google.com/citations?user=Ag2gYzIAAAAJ" target="_blank" rel="noreferrer">Google Scholar <ExternalLink size={16} /></a>
       </section>
       <section className="page-section cv-layout">

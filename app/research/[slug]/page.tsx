@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getResearchProject, researchProjects } from "../projects";
+import { sitePath } from "../../site-paths";
 
 export const dynamicParams = false;
 
@@ -34,7 +35,7 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
         <p className="project-status">{project.status}</p>
         <div className="project-resource-links">
           {project.links.map((link) => (
-            <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined} key={link.label}>
+            <a href={link.href.startsWith("http") ? link.href : sitePath(link.href)} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined} key={link.label}>
               {link.label}<ArrowUpRight size={15} />
             </a>
           ))}
@@ -98,7 +99,7 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
           <p className="kicker">Where I am taking it next</p>
           <h2>{project.next}</h2>
           <div className="project-resource-links">
-            {project.links.map((link) => <a href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined} key={link.label}>{link.label}<ArrowUpRight size={15} /></a>)}
+            {project.links.map((link) => <a href={link.href.startsWith("http") ? link.href : sitePath(link.href)} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined} key={link.label}>{link.label}<ArrowUpRight size={15} /></a>)}
           </div>
         </section>
       )}

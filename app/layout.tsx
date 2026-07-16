@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SiteFooter, SiteHeader } from "./site-chrome";
+import { siteUrl } from "./site-paths";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Judith Nkechinyere Njoku-Vowels, PhD | AI-Enabled Systems Researcher",
   description:
     "Judith Njoku-Vowels is a researcher in digital twins, trustworthy AI, computer vision, and AI-enabled systems for transportation, energy, and infrastructure.",
@@ -15,10 +17,6 @@ export const metadata: Metadata = {
     "University of Wyoming",
   ],
   authors: [{ name: "Judith Nkechinyere Njoku-Vowels" }],
-  icons: {
-    icon: "/logo-judith.png",
-    apple: "/logo-judith.png",
-  },
   openGraph: {
     title: "Judith Nkechinyere Njoku-Vowels, PhD",
     description:

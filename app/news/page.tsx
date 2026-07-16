@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "../site-chrome";
+import { sitePath } from "../site-paths";
 
 export const metadata: Metadata = { title: "News | Judith Njoku-Vowels, PhD" };
 
@@ -53,7 +54,7 @@ function NewsCard({ item }: { item: NewsItem }) {
         <span>{item.category}</span>
         <h2>{item.title}</h2>
         <p>{item.text}</p>
-        {item.href && <a href={item.href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>Read more <ArrowUpRight size={14} /></a>}
+        {item.href && <a href={external ? item.href : sitePath(item.href)} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>Read more <ArrowUpRight size={14} /></a>}
       </div>
     </article>
   );

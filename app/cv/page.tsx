@@ -18,6 +18,10 @@ const appointments = [
   ["2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
 ];
 
+const conferenceReview = ["IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)", "International Conference on Machine Learning (ICML)", "Conference on Neural Information Processing Systems (NeurIPS)", "International Conference on Computer Vision and Image Processing (CVIP)", "IEEE Wireless Communications and Networking Conference (WCNC)"];
+
+const journalReview = ["IEEE Transactions on Industrial Informatics", "IEEE Internet of Things Journal", "IEEE Access", "IEEE Communications Letters", "IET Communications", "Engineering Applications of Artificial Intelligence", "Journal of Retailing and Consumer Services", "Electronics (MDPI)", "Sensors (MDPI)", "Algorithms (MDPI)", "Cogent Arts & Humanities"];
+
 export default function CvPage() {
   return (
     <main>
@@ -34,8 +38,26 @@ export default function CvPage() {
         <aside className="cv-sidebar">
           <div><strong>1,350+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>
           <h3>Research areas</h3><p>Digital twins, trustworthy AI, computer vision, cyber-physical systems, simulation, and intelligent infrastructure.</p>
-          <h3>Service and leadership</h3><p><a href="https://www.womentech.net/global-ambassadors/South%20Korea/Judith%20/Njoku-Vowels" target="_blank" rel="noreferrer">WomenTech Network Global Ambassador</a> in South Korea since mid-2020. Mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a> since June 2026, supporting women entering technology and graduates transitioning into professional careers. Seminar Coordinator for the Prof. Cosmas Development Forum&apos;s women-empowerment group for one year across 2025 and 2026, leading speaker outreach, event management, anchoring, and moderation. Reviewer for CVPR, ICML, NeurIPS, IEEE journals, and interdisciplinary AI venues.</p>
+          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Toastmasters International Level 4, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
         </aside>
+      </section>
+      <section className="page-section professional-service">
+        <div className="gallery-lead"><p className="kicker">Leadership and professional service</p><h2>Strengthening the communities that evaluate, communicate, and widen access to research.</h2></div>
+        <div className="service-grid">
+          <article>
+            <h3>Technical program committees</h3>
+            <div className="service-entry"><span>2024</span><p><strong>TPC Member, Track 4: Emerging Technologies</strong><br />IEEE WCNC 2025, Milan, Italy</p></div>
+            <div className="service-entry"><span>2023</span><p><strong>TPC Member, Track 4: Emerging Technologies</strong><br />IEEE WCNC 2024, Dubai, UAE</p></div>
+          </article>
+          <article><h3>Conference peer review</h3><ul>{conferenceReview.map((venue) => <li key={venue}>{venue}</li>)}</ul></article>
+          <article><h3>Journal peer review</h3><ul>{journalReview.map((journal) => <li key={journal}>{journal}</li>)}</ul></article>
+          <article>
+            <h3>Memberships and community leadership</h3>
+            <div className="service-entry"><span>2019 to Present</span><p><strong>IEEE Member</strong></p></div>
+            <div className="service-entry"><span>2020 to Present</span><p><strong>WomenTech Network Member and Global Ambassador</strong></p></div>
+            <div className="service-entry"><span>2020 to Present</span><p><strong>Toastmasters International</strong><br />Level 4 in communication and leadership</p></div>
+          </article>
+        </div>
       </section>
     </main>
   );

@@ -531,12 +531,18 @@ export const researchProjects: ResearchProject[] = [
       "A working connection between the hosted detector and a Roblox environment.",
     ],
     images: [
+      { src: "/research/metahate/system-model.png", alt: "MetaHate system model from metaverse interaction through hate-speech detection and deployment", caption: "The complete system model connects live metaverse interaction to a labeled speech dataset, tokenization, GloVe embeddings, deep-model training, quantization, server deployment, and a moderation response returned to the virtual environment." },
+      { src: "/research/metahate/model-architectures.png", alt: "MLP CNN and deep CNN architectures evaluated in MetaHate", caption: "The model comparison covers multilayer perceptron, convolutional neural network, and deep convolutional neural network architectures built for three-class text moderation." },
+      { src: "/research/metahate/lime-performance.png", alt: "LIME explanations comparing influential words across MetaHate models", caption: "LIME exposes the words that move each model toward hate, offensive, or normal predictions, making individual moderation decisions inspectable." },
+      { src: "/research/metahate/processor-confusion-results.png", alt: "MetaHate CNN confusion matrices on CPU GPU and TPU", caption: "Processor-specific confusion matrices show whether the deployed CNN preserves class behavior across CPU, GPU, and TPU execution environments." },
+      { src: "/research/metahate/server-roblox-demo.png", alt: "MetaHate web server and Roblox moderation demonstration", caption: "The end-to-end demonstration connects the hosted inference interface to live Roblox chat, showing a submitted message and the moderation result returned inside the virtual environment." },
       { src: "/research/metahate/cnn-confusion-matrix.png", alt: "CNN confusion matrix for hate, offensive, and normal language", caption: "The confusion matrix reveals class-specific behavior, including the difficulty of separating hate speech from the larger offensive-language class." },
       { src: "/research/metahate/model-performance.png", alt: "MetaHate model and processor performance comparison", caption: "The performance analysis compares model behavior and deployment cost to support selection of a lightweight real-time classifier." },
       { src: "/research/metahate/web-assistant.jpg", alt: "MetaHate web interface for submitting text to the detection model", caption: "The web service provides the inference endpoint that connects the trained language model to interactive virtual platforms." },
       { src: "/research/metahate/roblox-environment.jpg", alt: "Roblox environment connected to the MetaHate moderation service", caption: "The Roblox deployment demonstrates how live virtual messages can be sent to the hosted model for real-time analysis." },
     ],
     links: [
+      { label: "IEEE paper", href: "https://ieeexplore.ieee.org/document/10392437" },
       { label: "Related publications", href: "/publications" },
     ],
     interpretation: "The deployment makes the research concrete: moderation is not evaluated only as an offline classification score. Model size, explanation quality, web serving, and the behavior of a live Roblox connection all become part of the system.",

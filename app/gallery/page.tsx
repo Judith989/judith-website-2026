@@ -21,6 +21,12 @@ const pandaPresentation = [
   { src: "/research/panda-image4.png", alt: "PANDA three-dimensional parking facility digital twin", caption: "The research system maps present and predicted states to parking modules and individual spaces, allowing the audience to inspect how the facility changes over time." },
 ];
 
+const metaverseWorkshop = [
+  { src: "/gallery/metaverse-workshop-day-1.jpg", alt: "Metaverse and The Industry Workshop program and opening session", caption: "The two-day workshop I co-organized with the ICT Convergence Research Center at Kumoh National Institute of Technology brought together eight presentations on metaverse foundations and industry applications." },
+  { src: "/gallery/metaverse-workshop-transportation.jpg", alt: "Judith Njoku-Vowels presenting transportation applications of the metaverse", caption: "I presented Metaverse Applicability to Transportation Systems, examining how virtual environments and digital twins could extend transportation monitoring, interaction, and decision support." },
+  { src: "/gallery/metaverse-workshop-nft.jpg", alt: "Metaverse and NFT with Creativia workshop presentation", caption: "Metaverse and NFT with Creativia was one session in a program spanning manufacturing, blockchain, NFTs, artificial intelligence, transportation, research trends, and security." },
+];
+
 const uwDigitalTwinsMeetup = [
   { src: "/gallery/uw-digital-twins-meetup-1.jpg", alt: "University of Wyoming Computing Meet Up poster for Digital Twins", caption: "The University of Wyoming School of Computing brought its interdisciplinary community together for lightning talks, discussion, and conversation on digital twins at Altitude Chophouse in Laramie on May 6, 2026." },
   { src: "/gallery/uw-digital-twins-meetup-2.jpg", alt: "Vanessa Lueck presenting at the University of Wyoming Digital Twins Computing Meet Up", caption: "Vanessa Lueck opened the six-talk program with the people and policy perspective, grounding the technical conversation in the decisions, communities, and governance structures surrounding digital twins." },
@@ -34,7 +40,7 @@ const moments = [
   { src: "/gallery/research-2025-04-25.jpg", title: "JCCI 2025, 35th Joint Conference on Telecommunications and Information", detail: "Presenting PureTwin, an interactive non-fungible digital twin framework for battery management systems, at Sokcho Sonocalm Delpino Resort in South Korea. JCCI 2025 was held April 23 to 25, 2025.", orientation: "wide" },
   { src: "/gallery/conference-2025-02-19.jpg", title: "International Conference on Artificial Intelligence in Information and Communication 2025", detail: "At ICAIIC 2025 in Fukuoka, Japan, I presented Trustworthy Battery Management: A Digital Twin Approach Leveraging XAI and Blockchain.", orientation: "portrait" },
   { src: "/gallery/conference-2024-11-21.jpg", title: "Korean Institute of Communications and Information Sciences Fall Conference 2024", detail: "Presenting ProphEn: Advanced Energy Forecasting for Korean Industries with Seasonal and Logistic Growth in Gyeongju, South Korea.", orientation: "portrait" },
-  { src: "/gallery/conference-2024-10-16.jpg", title: "International Conference on Information and Communication Technology Convergence 2024", detail: "At ICTC 2024 on Jeju Island, South Korea, I presented EL-Alert, an explainable lightweight audio spectrogram transformer for military situational awareness and surveillance.", orientation: "portrait" },
+  { src: "/gallery/conference-2024-10-16.jpg", title: "International Conference on Information and Communication Technology Convergence 2024", detail: "At ICTC 2024 on Jeju Island, South Korea, I presented EL-Alert: An Explainable Lightweight AST Model for Military Situational Awareness and Surveillance.", orientation: "portrait" },
   { src: "/gallery/conference-2024-08-08.jpg", title: "International Conference on Mobile, Military and Maritime IT Convergence 2024", detail: "Presenting TwinMil: Semantic Segmentation-based Digital Twin Framework for Military Surveillance, August 7 to 9 at the Concorde Hotel in Kuala Lumpur, Malaysia.", orientation: "wide" },
   { src: "/gallery/conference-2024-04-25.jpg", title: "JCCI 2024, 34th Joint Conference on Telecommunications and Information", detail: "Presenting SHAP-based Explainable Model-in-the-Loop for Digital Twins in Battery Management Systems at Busan Paradise Hotel in Busan, South Korea. JCCI 2024 was held April 24 to 26, 2024.", orientation: "portrait" },
   { src: "/gallery/conference-2023-10-12.jpg", title: "International Conference on Information and Communication Technology Convergence 2023", detail: "Presenting MetaHate: Text-based Hate Speech Detection for Metaverse Applications Using Deep Learning at ICTC 2023 on Jeju Island, South Korea.", orientation: "wide" },
@@ -46,9 +52,6 @@ const moments = [
   { src: "/gallery/kics-summer-2022-keyword-1.jpg", title: "International Conference on Information and Communication Technology Convergence 2022", detail: "Presenting State-of-the-Art Object Detectors for Vehicle, Pedestrian, and Traffic Sign Detection for Smart Parking Systems at ICTC 2022, held October 19 to 21 at Ramada Plaza on Jeju Island, South Korea.", orientation: "portrait" },
   { src: "/gallery/conference-2023-08-group.jpg", title: "Asia-Pacific Conference on Communications 2022", detail: "At APCC 2022, October 19 to 21 at Ramada Plaza on Jeju Island, South Korea, I presented The Role of 5G Wireless Communication System in the Metaverse.", orientation: "wide" },
   { src: "/gallery/kics-summer-2022-keyword-2.jpg", title: "KICS Summer Conference 2022", detail: "Presenting Evaluation of Spectrograms for Keyword Spotting in Control of Autonomous Vehicles for the Metaverse, June 22 to 24 at the Grand Hyatt on Jeju Island, South Korea.", orientation: "portrait" },
-  { src: "/gallery/metaverse-workshop-day-1.jpg", title: "Metaverse and The Industry Workshop 2022", detail: "The workshop I co-organized with the ICT Convergence Research Center at Kumoh National Institute of Technology, held May 25 to 26, 2022. The two-day program connected metaverse research with industry applications across manufacturing, blockchain, NFTs, artificial intelligence, transportation, and security.", orientation: "portrait" },
-  { src: "/gallery/metaverse-workshop-transportation.jpg", title: "Metaverse and The Industry Workshop 2022", detail: "Presenting Metaverse Applicability to Transportation Systems during the workshop. My session examined how virtual environments and digital twins could extend transportation monitoring, interaction, and decision support.", orientation: "wide" },
-  { src: "/gallery/metaverse-workshop-nft.jpg", title: "Metaverse and The Industry Workshop 2022", detail: "A workshop session on Metaverse and NFT with Creativia, one of eight presentations spanning the technical, industrial, and research dimensions of the metaverse.", orientation: "wide" },
   { src: "/gallery/conference-2023-08-event.jpg", title: "KICS Winter Conference 2022", detail: "At Alpensia Resort in Pyeongchang, Gangwon Province, South Korea, February 9 to 11, I presented Real-time Deep Learning-based Scene Recognition Model for Metaverse Applications.", orientation: "wide" },
   { src: "/gallery/kics-winter-2021-uav-spectrum.png", title: "KICS Winter Conference 2021, virtual presentation", detail: "I presented Optimizing Spectrum Sharing in UAV-to-UAV Cellular Communications virtually during the conference hosted at YongPyong Resort in Pyeongchang, Gangwon Province, South Korea, February 3 to 5.", orientation: "wide" },
   { src: "/gallery/kics-winter-2021-gaussian.png", title: "KICS Winter Conference 2021, virtual presentation", detail: "I also presented Predicting Target Data Rates for Dynamic Spectrum Allocation Using Gaussian Process Regression virtually during KICS Winter 2021.", orientation: "wide" },
@@ -88,6 +91,19 @@ function GalleryDetail({ text }: { text: string }) {
   return <>{before}<cite>{paperTitle}</cite>{after}</>;
 }
 
+function StoryPhotoGrid({ images }: { images: { src: string; alt: string; caption: string }[] }) {
+  return (
+    <div className="story-photo-grid">
+      {images.map((image) => (
+        <figure key={image.src}>
+          <div><Image src={image.src} alt={image.alt} fill sizes="(max-width: 700px) 92vw, 30vw" /></div>
+          <figcaption><span>{image.caption}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 export default function GalleryPage() {
   return (
     <main>
@@ -98,31 +114,11 @@ export default function GalleryPage() {
         <p>Every photograph below comes from my academic archive. Images are shown in full, with the story and setting recorded alongside each moment.</p>
       </section>
 
-      <section className="page-section featured-gallery-story">
-        <div className="featured-story-copy">
-          <p className="kicker">June 17, 2026, virtual presentation</p>
-          <h2>PANDA at the ASCE International Conference on Computing in Civil Engineering</h2>
-          <p>I presented PANDA virtually during i3CE 2026, hosted at Songdo Convensia in Songdo, Incheon, South Korea. The presentation demonstrated how a lightweight forecasting model and a Cesium digital twin can turn limited parking data into multi-horizon occupancy and turnover predictions that operators can inspect spatially.</p>
-        </div>
-        <PhotoStoryCarousel images={pandaPresentation} label="PANDA i3CE 2026 presentation" />
-      </section>
-
-      <section className="page-section featured-gallery-story">
-        <div className="featured-story-copy">
-          <p className="kicker">June 3 to 7, 2026, Denver, Colorado</p>
-          <h2>OmniRestore at the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops</h2>
-          <p>I presented OmniRestore, coauthored with Dr. Diksha Shukla, at the Colorado Convention Center. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions. Presenting it at CVPR brought this research into conversation with the international computer vision community and marked an important expansion of my work into robust autonomous perception.</p>
-        </div>
-        <PhotoStoryCarousel images={cvprPresentation} label="CVPR 2026 presentation" />
-      </section>
-
-      <section className="page-section featured-gallery-story">
-        <div className="featured-story-copy">
-          <p className="kicker">May 6, 2026, Laramie, Wyoming</p>
-          <h2>Facilitating a University of Wyoming community conversation on digital twins</h2>
-          <p>I facilitated the School of Computing&apos;s Digital Twins Computing Meet Up at Altitude Chophouse and presented a battery-management digital twin case study. Six lightning talks brought people and policy, sensor networks, physics modeling, utility and immersive education, visualization, virtual reality, and battery intelligence into one room, followed by the candid interdisciplinary discussion that makes ideas travel beyond their home disciplines.</p>
-        </div>
-        <PhotoStoryCarousel images={uwDigitalTwinsMeetup} label="University of Wyoming Digital Twins Computing Meet Up" />
+      <section className="page-section gallery-highlight-grid">
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 17, 2026, virtual presentation</p><h2>PANDA at the ASCE International Conference on Computing in Civil Engineering</h2><p>I presented PANDA virtually during i3CE 2026, hosted at Songdo Convensia in Songdo, Incheon, South Korea. The presentation demonstrated how a lightweight forecasting model and a Cesium digital twin turn limited parking data into predictions that operators can inspect spatially.</p></div><StoryPhotoGrid images={pandaPresentation} /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 3 to 7, 2026, Denver, Colorado</p><h2>OmniRestore at the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops</h2><p>I presented OmniRestore, coauthored with Dr. Diksha Shukla, at the Colorado Convention Center. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions.</p></div><StoryPhotoGrid images={cvprPresentation} /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 6, 2026, Laramie, Wyoming</p><h2>Facilitating a University of Wyoming community conversation on digital twins</h2><p>I facilitated the School of Computing&apos;s Digital Twins Computing Meet Up at Altitude Chophouse and presented a battery-management digital twin case study. Six lightning talks brought complementary views of digital twins into one room.</p></div><StoryPhotoGrid images={uwDigitalTwinsMeetup} /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 25 to 26, 2022, Gumi, South Korea</p><h2>Metaverse and The Industry Workshop</h2><p>I co-organized this two-day workshop with the ICT Convergence Research Center and delivered the transportation-systems presentation. Eight sessions connected metaverse foundations with manufacturing, blockchain, NFTs, artificial intelligence, transportation, research trends, and security.</p></div><StoryPhotoGrid images={metaverseWorkshop} /></article>
       </section>
 
       <section className="page-section photo-grid">
@@ -146,10 +142,7 @@ export default function GalleryPage() {
             <div><Image src="/gallery/msc_grad.jpeg" alt="Judith Njoku-Vowels at her MSc graduation" fill sizes="(max-width: 800px) 92vw, 48vw" /></div>
             <figcaption><strong>MSc Graduation</strong><span>Celebrating the conferral of my MSc in Electronics Engineering at Kumoh National Institute of Technology, South Korea, on August 20, 2021.</span></figcaption>
           </figure>
-          <article className="degree-card degree-card-phd">
-            <div className="degree-copy"><span>PhD milestone</span><h3>Doctor of Philosophy</h3><p>My PhD in IT Convergence Engineering was conferred by Kumoh National Institute of Technology in South Korea on August 22, 2025. My dissertation introduced BatteryMetrix, a user-centric digital twin framework that brings prediction, explainable AI, secure lifecycle records, and immersive battery monitoring into one integrated system.</p></div>
-            <PhotoStoryCarousel images={phdGraduation} label="PhD graduation" />
-          </article>
+          <figure className="degree-card"><PhotoStoryCarousel images={phdGraduation} label="PhD graduation" /><figcaption><strong>PhD Graduation</strong><span>Celebrating the conferral of my PhD in IT Convergence Engineering at Kumoh National Institute of Technology, South Korea, on August 22, 2025. My dissertation introduced BatteryMetrix.</span></figcaption></figure>
         </div>
       </section>
 

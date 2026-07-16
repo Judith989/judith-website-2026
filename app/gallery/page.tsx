@@ -122,7 +122,7 @@ export default function GalleryPage() {
           </figure>
           <figure className="degree-card">
             <div><Image src="/gallery/msc_grad.jpeg" alt="Judith Njoku-Vowels at her MSc graduation" fill sizes="(max-width: 800px) 92vw, 48vw" /></div>
-            <figcaption><strong>MSc Graduation</strong><span>Completing my MSc in Electronics Engineering at Kumoh National Institute of Technology, South Korea, in 2021.</span></figcaption>
+            <figcaption><strong>MSc Graduation</strong><span>Celebrating the conferral of my MSc in Electronics Engineering at Kumoh National Institute of Technology, South Korea, on August 20, 2021.</span></figcaption>
           </figure>
           <article className="degree-card degree-card-phd">
             <div className="degree-copy"><span>PhD milestone</span><h3>Doctor of Philosophy</h3><p>My PhD in IT Convergence Engineering was conferred by Kumoh National Institute of Technology in South Korea on August 22, 2025. My dissertation introduced BatteryMetrix, a user-centric digital twin framework that brings prediction, explainable AI, secure lifecycle records, and immersive battery monitoring into one integrated system.</p></div>

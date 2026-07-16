@@ -22,6 +22,16 @@ export default function AboutPage() {
           <p>Beyond the laboratory, I am committed to widening participation in research and technology. I approach scholarship as a public and collaborative practice, one that should produce rigorous knowledge, prepare thoughtful researchers, and create pathways for people whose potential may otherwise be overlooked.</p>
         </div>
       </section>
+      <section className="page-section about-brand">
+        <div className="about-brand-mark">
+          <Image src="/logo-judith.png" alt="Judith Njoku-Vowels monogram logo" fill sizes="(max-width: 800px) 72vw, 34vw" />
+        </div>
+        <div>
+          <p className="kicker">The mark behind my work</p>
+          <h2>A personal identity shaped by engineering, intelligence, and the systems we build.</h2>
+          <p>The profile, monogram, and branching circuit traces bring together the parts of my research identity: the person behind the work, an engineering foundation, and intelligent systems that connect physical and digital worlds. The maroon and gold palette carries that identity across my scholarship, projects, and academic community.</p>
+        </div>
+      </section>
       <section className="page-section education-values">
         <div>
           <p className="kicker">Teaching philosophy</p>

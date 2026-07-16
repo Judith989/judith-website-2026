@@ -17,11 +17,36 @@ export const metadata: Metadata = {
     "University of Wyoming",
   ],
   authors: [{ name: "Judith Nkechinyere Njoku-Vowels" }],
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "1254x1254" },
+      { url: "/logo-judith.png", type: "image/png" },
+    ],
+    apple: [{ url: "/icon.png", sizes: "1254x1254", type: "image/png" }],
+    shortcut: ["/icon.png"],
+  },
   openGraph: {
     title: "Judith Nkechinyere Njoku-Vowels, PhD",
     description:
       "AI-enabled systems researcher building trustworthy digital twins and robust perception for the physical world.",
     type: "profile",
+    url: siteUrl,
+    siteName: "Judith Njoku-Vowels",
+    images: [
+      {
+        url: "/logo-judith.png",
+        width: 1254,
+        height: 1254,
+        alt: "Judith Njoku-Vowels monogram logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Judith Nkechinyere Njoku-Vowels, PhD",
+    description:
+      "AI-enabled systems researcher building trustworthy digital twins and robust perception for the physical world.",
+    images: ["/logo-judith.png"],
   },
 };
 

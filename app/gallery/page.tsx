@@ -140,7 +140,7 @@ export default function GalleryPage() {
         <div className="degree-milestones">
           <figure className="degree-card">
             <div><Image src="/gallery/Bsc_grad.jpg" alt="Judith Njoku-Vowels at her bachelor of engineering graduation" fill sizes="(max-width: 800px) 92vw, 48vw" /></div>
-            <figcaption><strong>BEng Graduation</strong><span>Celebrating the completion of my Bachelor of Engineering in Petroleum Engineering at the Federal University of Technology, Owerri, Nigeria.</span></figcaption>
+            <figcaption><strong>BEng Graduation</strong><span>Celebrating the conferral of my Bachelor of Engineering in Petroleum Engineering at the Federal University of Technology, Owerri, Nigeria, on December 12, 2024.</span></figcaption>
           </figure>
           <figure className="degree-card">
             <div><Image src="/gallery/msc_grad.jpeg" alt="Judith Njoku-Vowels at her MSc graduation" fill sizes="(max-width: 800px) 92vw, 48vw" /></div>

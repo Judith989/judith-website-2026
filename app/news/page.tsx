@@ -64,11 +64,6 @@ export default function NewsPage() {
   return (
     <main>
       <PageHero label="News and milestones" title="What I am presenting, building, and celebrating." text="Follow the conference journeys, academic milestones, collaborations, and shared wins that continue to shape my work." />
-      <section className="page-section news-introduction">
-        <p className="kicker">My journey</p>
-        <h2>The moments that moved the work, and me, forward.</h2>
-        <p>This chronology records conference presentations, degree milestones, research transitions, and collaborative achievements from Nigeria to South Korea and the United States.</p>
-      </section>
       <section className="page-section news-timeline">
         {journey.map((item) => <NewsCard item={item} key={`${item.date}-${item.title}`} />)}
       </section>

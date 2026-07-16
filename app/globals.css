@@ -326,9 +326,6 @@ footer p { margin: 0; }
 .project-next .project-resource-links a { color: var(--green); }
 .publications-page { background: var(--cream); padding-top: 55px; }
 .news-timeline { background: var(--cream); }
-.news-introduction { max-width: 980px; }
-.news-introduction h2 { font-family: Georgia, serif; font-size: clamp(38px, 5vw, 62px); font-weight: 500; line-height: 1.12; margin: 12px 0 18px; }
-.news-introduction > p:last-child { color: var(--muted); font-size: 16px; line-height: 1.8; max-width: 760px; }
 .scholarly-news { background: var(--cream); }
 .news-timeline article { display: grid; grid-template-columns: 90px 22px 1fr; margin: 0 auto; max-width: 1050px; }
 .news-year { color: var(--green); font-family: Georgia, serif; font-size: 20px; padding-top: 26px; }

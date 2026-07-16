@@ -6,7 +6,7 @@ import PhotoStoryCarousel from "./photo-story-carousel";
 export const metadata: Metadata = { title: "Gallery | Judith Njoku-Vowels, PhD" };
 
 const phdGraduation = [
-  { src: "/gallery/phd_grad1.jpeg", alt: "Judith Njoku-Vowels at her PhD graduation", caption: "Celebrating the conferral of my PhD in IT Convergence Engineering at Kumoh National Institute of Technology in South Korea." },
+  { src: "/gallery/phd_grad1.jpeg", alt: "Judith Njoku-Vowels at her PhD graduation", caption: "Celebrating the conferral of my PhD in IT Convergence Engineering at Kumoh National Institute of Technology in South Korea on August 22, 2025." },
   { src: "/gallery/phd_grad2.jpeg", alt: "Judith Njoku-Vowels celebrating with colleagues at her PhD graduation", caption: "A graduation celebration shared with members of the academic community who were part of the doctoral journey." },
   { src: "/gallery/phd_grad3.jpeg", alt: "Judith Njoku-Vowels in graduation regalia with supporters", caption: "Marking the completion of BatteryMetrix and a doctoral chapter shaped by research, mentorship, and community." },
 ];
@@ -125,7 +125,7 @@ export default function GalleryPage() {
             <figcaption><strong>MSc Graduation</strong><span>Completing my MSc in Electronics Engineering at Kumoh National Institute of Technology, South Korea, in 2021.</span></figcaption>
           </figure>
           <article className="degree-card degree-card-phd">
-            <div className="degree-copy"><span>PhD milestone</span><h3>Doctor of Philosophy</h3><p>In 2025, I completed my PhD in IT Convergence Engineering at Kumoh National Institute of Technology in South Korea. My dissertation introduced BatteryMetrix, a user-centric digital twin framework that brings prediction, explainable AI, secure lifecycle records, and immersive battery monitoring into one integrated system.</p></div>
+            <div className="degree-copy"><span>PhD milestone</span><h3>Doctor of Philosophy</h3><p>My PhD in IT Convergence Engineering was conferred by Kumoh National Institute of Technology in South Korea on August 22, 2025. My dissertation introduced BatteryMetrix, a user-centric digital twin framework that brings prediction, explainable AI, secure lifecycle records, and immersive battery monitoring into one integrated system.</p></div>
             <PhotoStoryCarousel images={phdGraduation} label="PhD graduation" />
           </article>
         </div>

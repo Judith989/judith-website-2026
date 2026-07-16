@@ -6,7 +6,7 @@ import { sitePath } from "../site-paths";
 export const metadata: Metadata = { title: "Curriculum Vitae | Judith Njoku-Vowels, PhD" };
 
 const education = [
-  ["2025", "PhD, IT Convergence Engineering", "Kumoh National Institute of Technology"],
+  ["August 22, 2025", "PhD, IT Convergence Engineering", "Kumoh National Institute of Technology"],
   ["2021", "MSc, Electronics Engineering", "Kumoh National Institute of Technology"],
   ["2014", "BEng, Petroleum Engineering", "Federal University of Technology, Owerri"],
 ];

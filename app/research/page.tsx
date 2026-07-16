@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "../site-chrome";
+import { researchProjects } from "./projects";
 
 export const metadata: Metadata = { title: "Research | Judith Njoku-Vowels, PhD" };
 
@@ -11,14 +12,6 @@ const themes = [
   ["Trustworthy AI for autonomy", "Explainable, uncertainty-aware, and deployment-conscious methods for safety-critical cyber-physical systems.", "XAI · uncertainty · security"],
   ["Robust visual perception", "Efficient computer vision for degraded real-world scenes and autonomous systems operating in adverse weather.", "Image restoration · scene understanding · edge AI"],
   ["AI-enabled decision systems", "Interdisciplinary systems that connect data, simulation, and domain expertise in agriculture, transportation, and energy.", "Forecasting · multimodal learning · decision support"],
-];
-
-const systems = [
-  { title: "OmniRestore", text: "Universal adverse-weather image restoration for autonomous perception.", slug: "omnirestore", image: "/research/omni-p2-img0.jpg" },
-  { title: "BatteryMetrix", text: "A predictive, explainable, and secure digital twin for battery management.", slug: "batterymetrix", image: "/research/battery-p297-img0.png" },
-  { title: "PANDA", text: "A lightweight predictive digital twin for intelligent parking management.", slug: "panda", image: "/research/panda-image4.png" },
-  { title: "BridgeSync", text: "A secure digital twin framework for intelligent bridge monitoring.", slug: "bridgesync", image: "/research/bridge-p5-img1.png" },
-  { title: "SmartParking", text: "Multi-object visual perception for vehicles, pedestrians, cyclists, and traffic signs.", slug: "smartparking", image: "/research/smartparking/p6-img0.png" },
 ];
 
 export default function ResearchPage() {
@@ -31,10 +24,10 @@ export default function ResearchPage() {
       <section className="page-section surface">
         <div className="section-heading"><p className="kicker">Research systems</p><h2>Where my research questions become working systems.</h2></div>
         <div className="research-system-grid">
-          {systems.map((system) => (
+          {researchProjects.map((system) => (
             <Link href={`/research/${system.slug}`} key={system.slug}>
-              <div className="research-system-image"><Image src={system.image} alt={`${system.title} research system`} fill sizes="(max-width: 700px) 92vw, 46vw" /></div>
-              <div><h3>{system.title}</h3><p>{system.text}</p><span>Explore the project <ArrowUpRight size={15} /></span></div>
+              <div className="research-system-image"><Image src={system.images[0].src} alt={system.images[0].alt} fill sizes="(max-width: 700px) 92vw, 46vw" /></div>
+              <div><p className="kicker">{system.eyebrow}</p><h3>{system.name}</h3><p>{system.statement}</p><span>Explore the project <ArrowUpRight size={15} /></span></div>
             </Link>
           ))}
         </div>

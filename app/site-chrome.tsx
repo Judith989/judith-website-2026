@@ -56,13 +56,13 @@ export function PageHero({
 }: {
   label: string;
   title: ReactNode;
-  text: string;
+  text?: string;
 }) {
   return (
     <section className="page-hero">
       <p className="kicker">{label}</p>
       <h1>{title}</h1>
-      <p>{text}</p>
+      {text && <p>{text}</p>}
     </section>
   );
 }

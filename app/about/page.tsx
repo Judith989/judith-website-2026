@@ -10,7 +10,6 @@ export default function AboutPage() {
       <PageHero
         label="About"
         title={<>Meet Dr. Judith <span className="keep-together">Njoku-Vowels.</span></>}
-        text="Meet the engineer, researcher, and mentor behind a journey from petroleum systems in Nigeria to trustworthy intelligent systems across South Korea and the United States."
       />
       <section className="page-section about-profile">
         <div className="about-photo"><Image src="/judith_pic2.png" alt="Judith Nkechinyere Njoku-Vowels" fill sizes="(max-width: 800px) 90vw, 38vw" /></div>

@@ -134,7 +134,7 @@ function NewsCard({ item }: { item: NewsItem }) {
 export default function NewsPage() {
   return (
     <main>
-      <PageHero label="News and milestones" title="What I am presenting, building, and celebrating." text="Follow the conference journeys, academic milestones, collaborations, and shared wins that continue to shape my work." />
+      <PageHero label="News and milestones" title="What I am presenting, building, and celebrating." />
       <section className="page-section news-timeline">
         {journey.map((item) => <NewsCard item={item} key={`${item.date}-${item.title}`} />)}
       </section>

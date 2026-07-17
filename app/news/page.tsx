@@ -37,6 +37,65 @@ function abbreviateMonths(date: string) {
   );
 }
 
+const workTitles = [
+  "Can AI Drive in the Storm? Restoring Vision for Autonomous Vehicles",
+  "The Insider Playbook to Winning Global Scholarships & Fellowships",
+  "BatteryMetrix: A User-Centric Digital Twin Framework for Predictive, Explainable, and Secure Battery Management Systems",
+  "Your U.S. PR Dream: A Sister's Guide to EB1 & EB2 Visa",
+  "SHAP-based Explainable Model-in-the-Loop for Digital Twins in Battery Management Systems",
+  "Multi-Feature Concatenation for Speech Dependent Automatic Speaker Identification in Maritime Autonomous Vehicles",
+  "State-of-the-Art Object Detectors for Vehicle, Pedestrian, and Traffic Sign Detection for Smart Parking Systems",
+  "Evaluation of Spectrograms for Keyword Spotting in Control of Autonomous Vehicles for the Metaverse",
+  "Predicting Target Data Rates for Dynamic Spectrum Allocation Using Gaussian Process Regression",
+  "Automatic Radar Waveform Recognition using the Wigner-Ville Distribution and AlexNet-SVM",
+  "Hunger Marketing and Blockchain Technology: Applications in Wireless Spectrum Management",
+  "Real-time Deep Learning-based Scene Recognition Model for Metaverse Applications",
+  "Building a Metaverse for Transportation Systems: A Brief Review and Demonstration",
+  "Analysis of Deep Neural Networks-Based Digital Twin for Lithium-ion Batteries",
+  "Model Comparison and Selection for Battery Digital Twin Development using PyBaMM",
+  "The Role of 5G Wireless Communication System in the Metaverse",
+  "Metaverse and Digital Twin for BMS using MATLAB and Unreal Engine",
+  "MetaHate: Text-based Hate Speech Detection for Metaverse Applications Using Deep Learning",
+  "Optimizing Spectrum Sharing in UAV-to-UAV Cellular Communications",
+  "Metaverse applicability to transportation systems",
+  "Domain and global research trends of the metaverse",
+  "Pure Wallet and offline blockchain transactions",
+  "Metaverse applicability to manufacturing",
+  "Artificial Intelligence and Metaverse",
+  "Security in the Metaverse: A Closer Look",
+  "Introduction to the Metaverse",
+  "Metaverse and NFT with Creativia",
+  "Inspiring Young Ladies in STEM",
+  "EL-Alert",
+  "TwinMil",
+  "PureTwin",
+  "BridgeSync",
+  "OmniRestore",
+  "PANDA",
+].sort((a, b) => b.length - a.length);
+
+function EmphasizedWorks({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  let remaining = text;
+  let key = 0;
+  while (remaining) {
+    const matches = workTitles
+      .map((title) => ({ title, index: remaining.toLowerCase().indexOf(title.toLowerCase()) }))
+      .filter((match) => match.index >= 0)
+      .sort((a, b) => a.index - b.index || b.title.length - a.title.length);
+    const match = matches[0];
+    if (!match) {
+      parts.push(remaining);
+      break;
+    }
+    if (match.index > 0) parts.push(remaining.slice(0, match.index));
+    const original = remaining.slice(match.index, match.index + match.title.length);
+    parts.push(<cite className="news-work-title" key={`${original}-${key++}`}>{original}</cite>);
+    remaining = remaining.slice(match.index + match.title.length);
+  }
+  return <>{parts}</>;
+}
+
 const journey: NewsItem[] = [
   { date: "June 17, 2026", category: "Virtual presentation", title: "PANDA presented virtually at i3CE 2026", text: "Excited to share that I presented PANDA, our lightweight digital twin framework for smart parking management, during the virtual program of the ASCE International Conference on Computing in Civil Engineering. The conference was held June 14 to 17 at Songdo Convensia in Songdo, Incheon, South Korea.", href: "https://www.i3ce2026.com/about/03.html" },
   { date: "June 3 to 7, 2026", category: "Conference", title: "OmniRestore presented at the IEEE/CVF CVPR Workshops in Denver", text: "Pleased to share an exciting milestone for our Secure Sensing and Learning Research Lab team. I presented OmniRestore, our parameter-efficient framework for universal adverse-weather image restoration, at the Colorado Convention Center in Denver, Colorado.", href: "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Njoku_OmniRestore_A_Parameter-Efficient_Framework_for_Universal_Adverse-Weather_Image_Restoration_CVPRW_2026_paper.pdf" },
@@ -118,11 +177,11 @@ function NewsCard({ item }: { item: NewsItem }) {
       <div className="news-dot" />
       <div className="news-card">
         <span>{item.category}</span>
-        <h2 className={item.emphasizeTitle ? "news-title-emphasis" : undefined}>{item.title}</h2>
-        <p>{item.text}</p>
+        <h2 className={item.emphasizeTitle ? "news-title-emphasis" : undefined}><EmphasizedWorks text={item.title} /></h2>
+        <p><EmphasizedWorks text={item.text} /></p>
         {item.links && (
           <div className="news-resource-links">
-            {item.links.map((link) => <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>{link.label} <ArrowUpRight size={14} /></a>)}
+            {item.links.map((link) => <a href={link.href} target="_blank" rel="noreferrer" key={link.href}><EmphasizedWorks text={link.label} /> <ArrowUpRight size={14} /></a>)}
           </div>
         )}
         {item.href && <a href={external ? item.href : sitePath(item.href)} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined}>Read more <ArrowUpRight size={14} /></a>}

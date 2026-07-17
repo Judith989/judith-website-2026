@@ -342,6 +342,7 @@ footer p { margin: 0; }
 .news-card > span { color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .news-card h2 { font-family: Georgia, serif; font-size: 25px; font-weight: 500; margin: 8px 0; }
 .news-card h2.news-title-emphasis { font-style: italic; font-weight: 700; }
+.news-work-title { color: inherit; font-family: inherit; font-style: italic; font-weight: 700; }
 .news-card p { color: var(--muted); line-height: 1.7; margin: 0; }
 .news-card a { align-items: center; color: var(--green); display: inline-flex; font-size: 12px; font-weight: 700; gap: 6px; margin-top: 15px; }
 .news-resource-links { display: grid; gap: 8px 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 20px; }

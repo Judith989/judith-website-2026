@@ -374,6 +374,9 @@ footer p { margin: 0; }
 .degree-card { background: white; border: 1px solid var(--line); color: var(--ink); margin: 0; overflow: hidden; }
 .degree-card > div:first-child:not(.degree-copy) { aspect-ratio: 4 / 5; max-height: 310px; background: #f2e7ea; position: relative; }
 .degree-card > div:first-child img { object-fit: contain; }
+.degree-card > .photo-story { aspect-ratio: auto; background: white; max-height: none; position: static; width: 100%; }
+.degree-card .photo-story-frame { aspect-ratio: 1 / 1; border: 0; width: 100%; }
+.degree-card .story-image-caption { min-height: 82px; padding: 14px 15px 17px; }
 .degree-card figcaption { display: grid; gap: 5px; padding: 14px 15px 17px; }
 .degree-card figcaption strong { font-family: Georgia, serif; font-size: 17px; font-weight: 500; line-height: 1.25; }
 .degree-card figcaption span { color: var(--muted); font-size: 11px; line-height: 1.5; }

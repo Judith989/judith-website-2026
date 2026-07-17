@@ -101,12 +101,6 @@ export default function GalleryPage() {
   return (
     <main>
       <PageHero label="Gallery" title="The places I have been and the moments that shaped how I research." text="Come behind the papers with me, from graduation days and first presentations to the conference rooms where ideas became collaborations." />
-      <section className="page-section gallery-lead">
-        <p className="kicker">Academic moments</p>
-        <h2>This is the journey behind my research record.</h2>
-        <p>Every photograph below comes from my academic archive. Images are shown in full, with the story and setting recorded alongside each moment.</p>
-      </section>
-
       <section className="page-section gallery-highlight-grid">
         <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 17, 2026, virtual presentation</p><h2>PANDA at the ASCE International Conference on Computing in Civil Engineering</h2><p>I presented PANDA virtually during i3CE 2026, hosted at Songdo Convensia in Songdo, Incheon, South Korea. The presentation demonstrated how a lightweight forecasting model and a Cesium digital twin can turn limited parking data into multi-horizon occupancy and turnover predictions that operators can inspect spatially.</p></div><PhotoStoryCarousel images={pandaPresentation} label="PANDA presentation" /></article>
         <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 3 to 7, 2026, Denver, Colorado</p><h2>OmniRestore at the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops</h2><p>I presented OmniRestore, coauthored with Dr. Diksha Shukla, at the Colorado Convention Center. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions. Presenting it at CVPR brought this research into conversation with the international computer vision community and marked an important expansion of my work into robust autonomous perception.</p></div><PhotoStoryCarousel images={cvprPresentation} label="OmniRestore at CVPR" /></article>

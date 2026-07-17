@@ -4,12 +4,8 @@ import {
   ArrowUpRight,
   BookOpen,
   ChevronRight,
-  Download,
-  GraduationCap,
   Mail,
   MapPin,
-  ShieldCheck,
-  Users,
 } from "lucide-react";
 import { TypingHeadline } from "./typing-headline";
 
@@ -95,12 +91,11 @@ const projects = [
   },
 ];
 
-const journey = [
-  ["2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and CRCRI, University of Wyoming"],
-  ["2022 to 2025", "PhD, IT Convergence Engineering", "Kumoh National Institute of Technology"],
-  ["2024", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory, Michigan State University"],
-  ["2019 to 2021", "MSc, Electronics Engineering", "Kumoh National Institute of Technology"],
-  ["Dec 12, 2014", "BEng, Petroleum Engineering", "Federal University of Technology, Owerri"],
+const recentNews = [
+  ["Jun 17, 2026", "PANDA presented at i3CE 2026", "I presented our predictive smart-parking digital twin virtually at the ASCE International Conference on Computing in Civil Engineering."],
+  ["Jun 3 to 7, 2026", "OmniRestore presented at CVPR Workshops", "I presented our parameter-efficient adverse-weather image-restoration framework at the Colorado Convention Center in Denver."],
+  ["Jun 2026", "Invited University of Wyoming REU colloquium talk", "I delivered Can AI Drive in the Storm? Restoring Vision for Autonomous Vehicles to an undergraduate research cohort."],
+  ["2026", "Remote practical training research published", "Our paper on developing future workforce skills through remote practical training was published in Computers and Education Open."],
 ];
 
 function ExternalLink({
@@ -200,24 +195,13 @@ export default function Home() {
         </div>
         <div className="about-copy">
           <p>
-            From petroleum engineering in Nigeria to communications research
-            in South Korea and AI-enabled systems in Wyoming, my path has
-            taught me to look beyond isolated models. I study how intelligence
-            interacts with physical systems, operational constraints, and the
-            people who depend on their decisions.
-          </p>
-          <p>
             I bring together artificial intelligence, simulation, sensing, and
             visualization to make complex systems more understandable,
-            trustworthy, and useful. I approach mentorship with the same
-            principle: strong research should expand both knowledge and the
-            people equipped to create it.
+            trustworthy, and useful. My research asks how intelligent systems
+            can observe complex physical environments, explain what they infer,
+            and support decisions under real operational constraints.
           </p>
-        </div>
-        <div className="principles" aria-label="Research philosophy">
-          <article><span>01</span><h3>Intelligibility</h3><p>AI systems should communicate the evidence, uncertainty, and limitations behind their outputs.</p></article>
-          <article><span>02</span><h3>Integration</h3><p>Intelligence becomes most useful when models, sensors, simulations, and human expertise work together.</p></article>
-          <article><span>03</span><h3>Impact</h3><p>Research should improve consequential systems, from safer mobility and energy to resilient communities.</p></article>
+          <Link className="text-link" href="/about">Meet Dr. Judith Njoku-Vowels <ArrowUpRight size={16} /></Link>
         </div>
       </section>
 
@@ -259,7 +243,7 @@ export default function Home() {
                 <div className="tags">
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
-                <span className="project-link">View related publication <ArrowUpRight size={15} /></span>
+                <span className="project-link">Explore this research system <ArrowUpRight size={15} /></span>
               </div>
             </Link>
           ))}
@@ -292,56 +276,19 @@ export default function Home() {
         <Link className="button button-primary section-cta" href="/publications">Browse all publications</Link>
       </section>
 
-      <section className="teaching section" id="teaching">
-        <div className="teaching-copy">
-          <SectionHeading
-            label="Teaching & mentorship"
-            title="I help learners become rigorous, independent problem solvers."
-          />
-          <p>
-            My teaching philosophy connects foundational ideas to authentic
-            systems through active learning, reproducible inquiry, and
-            project-based systems thinking. Students learn not only to build
-            models, but to question assumptions, evaluate limitations, and
-            communicate decisions responsibly.
-          </p>
-          <div className="teaching-stats">
-            <div><Users /><strong>Individualized guidance</strong><span>support that responds to each researcher&apos;s goals and stage</span></div>
-            <div><GraduationCap /><strong>Independent thinking</strong><span>ownership of questions, methods, evidence, and scholarly voice</span></div>
-            <div><ShieldCheck /><strong>High standards with care</strong><span>rigor, honest evaluation, belonging, and professional growth</span></div>
-          </div>
+      <section className="home-news section" id="news">
+        <div className="publications-top">
+          <SectionHeading label="Recent news" title="What I am presenting, publishing, and building." />
+          <Link className="text-link" href="/news">View all news <ArrowUpRight size={16} /></Link>
         </div>
-        <div className="mentorship-panel">
-          <p className="kicker">Mentorship in practice</p>
-          <blockquote>
-            I mentor researchers to become independent thinkers who can frame
-            consequential questions, make defensible technical choices, and
-            communicate what the evidence truly supports.
-          </blockquote>
-          <p>
-            My role is to create structure, remove unnecessary barriers, offer
-            candid feedback, and help each person develop a direction of their
-            own.
-          </p>
-        </div>
-      </section>
-
-      <section className="journey section" id="cv">
-        <SectionHeading label="Academic journey" title="Three countries, three engineering traditions, one evolving research identity." />
-        <div className="journey-grid">
-          {journey.map(([date, role, place]) => (
-            <article key={`${date}-${role}`}>
+        <div className="home-news-grid">
+          {recentNews.map(([date, title, text]) => (
+            <article key={`${date}-${title}`}>
               <span>{date}</span>
-              <div><h3>{role}</h3><p>{place}</p></div>
+              <h3>{title}</h3>
+              <p>{text}</p>
             </article>
           ))}
-        </div>
-        <div className="cv-note">
-          <Download size={18} />
-          <p>
-            View the complete academic record online or download a PDF from the{" "}
-            <Link href="/cv">CV page</Link>.
-          </p>
         </div>
       </section>
 

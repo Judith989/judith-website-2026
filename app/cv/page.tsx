@@ -14,8 +14,11 @@ const education = [
 const appointments = [
   ["2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and Center for Rural Community Resilience and Innovation", "University of Wyoming"],
   ["2024", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory", "Michigan State University"],
+  ["Aug 2022 to Jul 2024", "Research Specialist and Supervisor", "AI-enabled sensing, digital agriculture, explainable machine learning, and international workforce development", "Kyungpook National University, Daegu, South Korea and Michigan State University, East Lansing, Michigan"],
   ["2022 to 2025", "Graduate Research Assistant", "Networked Systems Laboratory", "Kumoh National Institute of Technology"],
   ["2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
+  ["Apr 2017 to Jul 2019", "Customer Experience Management Personnel and IT Buddy", "Customer experience, branch technology support, and ATM operations", "Sterling Bank PLC, Lagos, Nigeria"],
+  ["Nov 2015 to Oct 2016", "National Youth Service Corps Intern", "Energy-sector administration and public service", "Ministry of Energy, Alausa, Ikeja, Lagos, Nigeria"],
 ];
 
 const conferenceReview = ["IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)", "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)", "International Conference on Machine Learning (ICML)", "Conference on Neural Information Processing Systems (NeurIPS)", "International Conference on Computer Vision and Image Processing (CVIP)", "IEEE Wireless Communications and Networking Conference (WCNC)"];

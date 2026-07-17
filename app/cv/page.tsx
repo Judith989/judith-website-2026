@@ -41,7 +41,7 @@ export default function CvPage() {
         <aside className="cv-sidebar">
           <div><strong>1,350+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>
           <h3>Research areas</h3><p>Digital twins, trustworthy AI, computer vision, cyber-physical systems, simulation, and intelligent infrastructure.</p>
-          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Toastmasters International Level 4, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
+          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Women in Machine Learning member and mentor, Toastmasters International Level 4, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
         </aside>
       </section>
       <section className="page-section professional-service">
@@ -58,6 +58,7 @@ export default function CvPage() {
             <h3>Memberships and community leadership</h3>
             <div className="service-entry"><span>2019 to Present</span><p><strong>IEEE Member</strong></p></div>
             <div className="service-entry"><span>2020 to Present</span><p><strong>WomenTech Network Member and Global Ambassador</strong></p></div>
+            <div className="service-entry"><span>2024 to Present</span><p><strong>Women in Machine Learning</strong><br />Member and mentorship-program mentor</p></div>
             <div className="service-entry"><span>2020 to Present</span><p><strong>Toastmasters International</strong><br />Level 4 in communication and leadership</p></div>
           </article>
         </div>

@@ -24,7 +24,7 @@ export const researchProjects: ResearchProject[] = [
     statement: "Can one compact model restore vision across rain, fog, snow, low light, and compound weather?",
     overview: [
       "Autonomous systems need reliable visual perception in the conditions where cameras struggle most. Many restoration models are trained for one degradation at a time, while universal models often become too large for practical edge deployment.",
-      "OmniRestore is my answer to that efficiency gap. Coauthored with Dr. Diksha Shukla, it combines a weather-scene embedder with a lightweight restoration backbone so one model can identify the degradation context and adapt its reconstruction strategy.",
+      "OmniRestore is my answer to that efficiency gap. Coauthored with Prof. Diksha Shukla, it combines a weather-scene embedder with a lightweight restoration backbone so one model can identify the degradation context and adapt its reconstruction strategy.",
     ],
     status: "Presented at the NTIRE Workshop on New Trends in Image Restoration and Enhancement at CVPR 2026",
     question: "How can semantic knowledge about weather guide image restoration without running a large vision-language model for every image?",

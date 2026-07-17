@@ -144,7 +144,7 @@ export const researchProjects: ResearchProject[] = [
     ],
     links: [
       { label: "PANDA repository", href: "https://github.com/Judith989/Panda" },
-      { label: "PANDA paper record", href: "https://scholar.google.com/scholar?q=%22PANDA%3A+A+Lightweight+Digital+Twin+Framework+for+Smart+Parking+Management%22" },
+      { label: "i3CE 2026 conference", href: "https://www.i3ce2026.com/about/03.html" },
     ],
     interpretation: "PANDA focuses on what happens after occupancy has been observed: forecasting how the facility will change and exposing those forecasts spatially. The joint model avoids maintaining a separate predictor for every time horizon and turnover task, which makes repeated digital-twin synchronization more practical.",
     scope: "PANDA currently uses Markov-generated occupancy data calibrated from public patterns. The next phase will validate the framework with live parking sensors, heterogeneous streams, and behavioral simulation.",

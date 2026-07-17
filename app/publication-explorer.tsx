@@ -11,6 +11,7 @@ export type Paper = {
   area: string;
   problem: string;
   doi?: string;
+  url?: string;
   venueType?: "Journal" | "Conference";
   scope?: "International" | "Domestic";
 };
@@ -47,10 +48,25 @@ const defaultPapers: Paper[] = [
   { year: 2021, title: "BLER Performance Evaluation of an Enhanced Channel Autoencoder", venue: "Computer Communications", area: "AI-Enabled Systems", problem: "Wireless systems", doi: "10.1016/j.comcom.2021.05.026" },
 ];
 
+const verifiedPaperUrls: Record<string, string> = {
+  "OmniRestore: A Parameter-Efficient Framework for Universal Adverse-Weather Image Restoration": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Njoku_OmniRestore_A_Parameter-Efficient_Framework_for_Universal_Adverse-Weather_Image_Restoration_CVPRW_2026_paper.pdf",
+  "PANDA: A Lightweight Digital Twin Framework for Smart Parking Management": "/research/panda",
+  "BridgeSync: A Digital Twin Framework for Secure and Intelligent Smart Bridge Monitoring": "https://doi.org/10.1109/ICUFN65838.2025.11169959",
+  "MetaHate: Text-Based Hate Speech Detection for Metaverse Applications Using Deep Learning": "https://ieeexplore.ieee.org/document/10392437",
+  "The Role of 5G Wireless Communication System in the Metaverse": "https://www.researchgate.net/publication/364731444_The_Role_of_5G_Wireless_Communication_System_in_the_Metaverse",
+  "Hunger Marketing and Blockchain Technology: Applications in Wireless Spectrum Management": "https://www.researchgate.net/publication/337335916_Hunger_marketing_and_Blockchain_Technology_Applications_in_Wireless_Spectrum_Management",
+  "Multi-Feature Concatenation for Speech Dependent Automatic Speaker Identification in Maritime Autonomous Vehicles": "https://www.researchgate.net/publication/373755841_Multi-Feature_Concatenation_for_Speech_Dependent_Automatic_Speaker_Identification_in_Maritime_Autonomous_Vehicles",
+  "Metaverse and Digital Twin for BMS Using MATLAB and Unreal Engine": "https://www.researchgate.net/publication/371911768_Metaverse_and_Digital_Twin_for_BMS_using_MATLAB_and_Unreal_Engine",
+  "Model Comparison and Selection for Battery Digital Twin Development Using PyBaMM": "https://www.researchgate.net/publication/370636700_Model_Comparison_and_Selection_for_Battery_Digital_Twin_Development_using_PyBaMM",
+  "Analysis of Deep Neural Networks-Based Digital Twin for Lithium-Ion Batteries": "https://www.researchgate.net/publication/365878142_Analysis_of_Deep_Neural_Networks-Based_Digital_Twin_for_Lithium-ion_Batteries",
+  "Evaluation of Spectrograms for Keyword Spotting in Control of Autonomous Vehicles for the Metaverse": "https://www.researchgate.net/publication/361558505_Evaluation_of_Spectrograms_for_Keyword_Spotting_in_Control_of_Autonomous_Vehicles_for_The_Metaverse",
+  "Real-Time Deep Learning-Based Scene Recognition Model for Metaverse Applications": "https://www.researchgate.net/publication/358947984_Real-time_Deep_Learning-based_Scene_Recognition_Model_For_Metaverse_Applications",
+  "Optimizing Spectrum Sharing in UAV-to-UAV Cellular Communications": "https://www.researchgate.net/publication/358916150_Optimizing_Spectrum_Sharing_in_UAV-to-UAV_Cellular_Communications",
+  "Automatic Radar Waveform Recognition Using the Wigner-Ville Distribution and AlexNet-SVM": "https://www.researchgate.net/publication/343712491_Automatic_Radar_Waveform_Recognition_using_the_Wigner-Ville_distribution_and_AlexNet-SVM",
+};
+
 function paperUrl(paper: Paper) {
-  return paper.doi
-    ? `https://doi.org/${paper.doi}`
-    : `https://scholar.google.com/scholar?q=${encodeURIComponent(`"${paper.title}"`)}`;
+  return paper.doi ? `https://doi.org/${paper.doi}` : paper.url || verifiedPaperUrls[paper.title];
 }
 
 function AuthorLine({ authors }: { authors?: string }) {
@@ -125,14 +141,9 @@ export default function PublicationExplorer({ papers = defaultPapers }: { papers
       </div>
 
       <div className="publication-list">
-        {visible.map((paper) => (
-          <a
-            className="publication"
-            href={paperUrl(paper)}
-            target="_blank"
-            rel="noreferrer"
-            key={`${paper.year}-${paper.title}`}
-          >
+        {visible.map((paper) => {
+          const href = paperUrl(paper);
+          const content = <>
             <span className="pub-year">{paper.year}</span>
             <div>
               <h3>{paper.title}</h3>
@@ -144,9 +155,14 @@ export default function PublicationExplorer({ papers = defaultPapers }: { papers
                 {paper.scope && <span>{paper.scope}</span>}
               </div>
             </div>
-            <ArrowUpRight className="pub-arrow" size={20} />
-          </a>
-        ))}
+            {href && <ArrowUpRight className="pub-arrow" size={20} />}
+          </>;
+          return href ? (
+            <a className="publication" href={href} target={href.startsWith("/") ? undefined : "_blank"} rel={href.startsWith("/") ? undefined : "noreferrer"} key={`${paper.year}-${paper.title}`}>{content}</a>
+          ) : (
+            <article className="publication publication-record-only" key={`${paper.year}-${paper.title}`}>{content}</article>
+          );
+        })}
       </div>
     </>
   );

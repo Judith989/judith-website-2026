@@ -38,10 +38,11 @@ function loadPapers(): Paper[] {
       const booktitle = field(block, "booktitle");
       const year = Number(field(block, "year")) || 0;
       const doi = field(block, "doi") || undefined;
+      const url = field(block, "url") || undefined;
       const authors = formatAuthors(field(block, "author"));
       const venueType = /^@article/i.test(block) ? "Journal" as const : "Conference" as const;
       const scope = /keywords=\{domestic\}/i.test(block) || /Korean|KICS|Korea/i.test(journal || booktitle) ? "Domestic" as const : "International" as const;
-      return { year, title, venue: journal || booktitle, authors, doi, venueType, scope, ...taxonomy(title) };
+      return { year, title, venue: journal || booktitle, authors, doi, url, venueType, scope, ...taxonomy(title) };
     })
     .filter((paper) => paper.title && paper.year)
     .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));

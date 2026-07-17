@@ -242,7 +242,8 @@ function newsDateValue(date: string) {
   const year = Number(date.match(/\b(20\d{2})\b/)?.[1] ?? 0);
   const monthName = Object.keys(monthAbbreviations).find((month) => date.includes(month));
   const month = monthName ? Object.keys(monthAbbreviations).indexOf(monthName) : 0;
-  const day = monthName ? Number(date.slice(date.indexOf(monthName) + monthName.length).match(/\d+/)?.[0] ?? 1) : 1;
+  const dayMatch = monthName ? date.match(new RegExp(`${monthName}\\s+(\\d{1,2})(?=\\s|,)`)) : null;
+  const day = Number(dayMatch?.[1] ?? 1);
   return Date.UTC(year, month, day);
 }
 

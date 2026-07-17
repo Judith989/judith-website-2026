@@ -255,6 +255,10 @@ footer p { margin: 0; }
 .philosophy-logo img { object-fit: contain; }
 .education-values h2 { font-family: Georgia, serif; font-size: clamp(30px, 3.5vw, 45px); font-weight: 500; line-height: 1.18; }
 .education-values > div > p:last-child { color: var(--muted); font-size: 16px; line-height: 1.85; }
+.personal-maxim { border-left: 3px solid var(--gold); margin: 30px 0; padding: 4px 0 4px 24px; }
+.personal-maxim p { color: var(--maroon); font-family: Georgia, serif; font-size: clamp(21px, 2.1vw, 29px); line-height: 1.45; margin: 0 0 10px; }
+.personal-maxim cite { color: var(--muted); display: block; font-size: 13px; font-style: normal; letter-spacing: .04em; line-height: 1.5; }
+.philosophy-maxim { margin-top: 34px; max-width: 650px; }
 .theme-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .theme-grid article { border: 1px solid var(--line); margin: -1px 0 0 -1px; padding: 38px; }
 .theme-grid article > span { color: var(--gold); font-family: Georgia, serif; }

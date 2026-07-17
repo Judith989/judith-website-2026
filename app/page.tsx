@@ -94,7 +94,7 @@ const projects = [
 const recentNews = [
   ["Jun 17, 2026", "PANDA presented at i3CE 2026", "I presented our predictive smart-parking digital twin virtually at the ASCE International Conference on Computing in Civil Engineering."],
   ["Jun 3 to 7, 2026", "OmniRestore presented at CVPR Workshops", "I presented our parameter-efficient adverse-weather image-restoration framework at the Colorado Convention Center in Denver."],
-  ["Jun 2026", "Invited University of Wyoming REU colloquium talk", "I delivered Can AI Drive in the Storm? Restoring Vision for Autonomous Vehicles to an undergraduate research cohort."],
+  ["Jun 12, 2026", "Invited University of Wyoming REU colloquium talk", "I delivered Can AI Drive in the Storm? Restoring Vision for Autonomous Vehicles to an undergraduate research cohort."],
   ["May 20, 2026", "Remote practical training research published", "Our paper on developing future workforce skills through remote practical training was published in Computers and Education Open."],
 ];
 

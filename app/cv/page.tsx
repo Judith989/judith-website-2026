@@ -18,7 +18,7 @@ const appointments = [
   ["2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
 ];
 
-const conferenceReview = ["IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)", "International Conference on Machine Learning (ICML)", "Conference on Neural Information Processing Systems (NeurIPS)", "International Conference on Computer Vision and Image Processing (CVIP)", "IEEE Wireless Communications and Networking Conference (WCNC)"];
+const conferenceReview = ["IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)", "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)", "International Conference on Machine Learning (ICML)", "Conference on Neural Information Processing Systems (NeurIPS)", "International Conference on Computer Vision and Image Processing (CVIP)", "IEEE Wireless Communications and Networking Conference (WCNC)"];
 
 const journalReview = ["IEEE Transactions on Industrial Informatics", "IEEE Internet of Things Journal", "IEEE Access", "IEEE Communications Letters", "IET Communications", "Engineering Applications of Artificial Intelligence", "Journal of Retailing and Consumer Services", "Electronics (MDPI)", "Sensors (MDPI)", "Algorithms (MDPI)", "Cogent Arts & Humanities"];
 

@@ -22,9 +22,15 @@ const pandaPresentation = [
 ];
 
 const metaverseWorkshop = [
-  { src: "/gallery/metaverse-workshop-day-1.jpg", alt: "Metaverse and The Industry Workshop program and opening session", caption: "The two-day workshop I co-organized with the ICT Convergence Research Center at Kumoh National Institute of Technology brought together eight presentations on metaverse foundations and industry applications." },
-  { src: "/gallery/metaverse-workshop-transportation.jpg", alt: "Judith Njoku-Vowels presenting transportation applications of the metaverse", caption: "I presented Metaverse Applicability to Transportation Systems, examining how virtual environments and digital twins could extend transportation monitoring, interaction, and decision support." },
-  { src: "/gallery/metaverse-workshop-nft.jpg", alt: "Metaverse and NFT with Creativia workshop presentation", caption: "Metaverse and NFT with Creativia was one session in a program spanning manufacturing, blockchain, NFTs, artificial intelligence, transportation, research trends, and security." },
+  { src: "/gallery/metaverse-workshop-day-1.jpg", alt: "Metaverse and The Industry Workshop program", caption: "The two-day workshop I co-organized with the ICT Convergence Research Center at Kumoh National Institute of Technology brought together eight presentations on metaverse foundations and industry applications." },
+  { src: "/gallery/metaverse-workshop-introduction.jpg", alt: "Introduction to the Metaverse workshop presentation", caption: "The program opened by establishing the technologies, virtual environments, and interaction models that shape the metaverse." },
+  { src: "/gallery/metaverse-workshop-manufacturing.jpg", alt: "Metaverse applicability to manufacturing workshop presentation", caption: "The manufacturing session examined how immersive environments and digital representations can support industrial operations and collaboration." },
+  { src: "/gallery/metaverse-workshop-blockchain.jpg", alt: "Pure Wallet and offline blockchain transactions workshop presentation", caption: "The blockchain session explored Pure Wallet and offline transactions as infrastructure for trusted exchange in connected virtual environments." },
+  { src: "/gallery/metaverse-workshop-nft-full.jpg", alt: "Metaverse and NFT with Creativia workshop presentation", caption: "Metaverse and NFT with Creativia connected digital ownership, creative practice, and exhibition experiences inside virtual worlds." },
+  { src: "/gallery/metaverse-workshop-ai.jpg", alt: "Artificial Intelligence and Metaverse workshop presentation", caption: "The artificial intelligence session examined how learning systems can support perception, interaction, and adaptive experiences in the metaverse." },
+  { src: "/gallery/metaverse-workshop-transportation-full.jpg", alt: "Judith Njoku-Vowels presenting transportation applications of the metaverse", caption: "I delivered Metaverse Applicability to Transportation Systems, examining how virtual environments and digital twins could extend transportation monitoring, interaction, and decision support." },
+  { src: "/gallery/metaverse-workshop-trends.jpg", alt: "Global metaverse research trends workshop presentation", caption: "The research-trends session mapped the emerging domains, questions, and international directions shaping metaverse scholarship." },
+  { src: "/gallery/metaverse-workshop-security.jpg", alt: "Security in the Metaverse workshop presentation", caption: "The closing security session considered the threats, trust requirements, and safeguards needed as metaverse systems become more connected." },
 ];
 
 const uwDigitalTwinsMeetup = [
@@ -91,19 +97,6 @@ function GalleryDetail({ text }: { text: string }) {
   return <>{before}<cite>{paperTitle}</cite>{after}</>;
 }
 
-function StoryPhotoGrid({ images }: { images: { src: string; alt: string; caption: string }[] }) {
-  return (
-    <div className="story-photo-grid">
-      {images.map((image) => (
-        <figure key={image.src}>
-          <div><Image src={image.src} alt={image.alt} fill sizes="(max-width: 700px) 92vw, 30vw" /></div>
-          <figcaption><span>{image.caption}</span></figcaption>
-        </figure>
-      ))}
-    </div>
-  );
-}
-
 export default function GalleryPage() {
   return (
     <main>
@@ -115,10 +108,10 @@ export default function GalleryPage() {
       </section>
 
       <section className="page-section gallery-highlight-grid">
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 17, 2026, virtual presentation</p><h2>PANDA at the ASCE International Conference on Computing in Civil Engineering</h2><p>I presented PANDA virtually during i3CE 2026, hosted at Songdo Convensia in Songdo, Incheon, South Korea. The presentation demonstrated how a lightweight forecasting model and a Cesium digital twin can turn limited parking data into multi-horizon occupancy and turnover predictions that operators can inspect spatially.</p></div><StoryPhotoGrid images={pandaPresentation} /></article>
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 3 to 7, 2026, Denver, Colorado</p><h2>OmniRestore at the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops</h2><p>I presented OmniRestore, coauthored with Dr. Diksha Shukla, at the Colorado Convention Center. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions. Presenting it at CVPR brought this research into conversation with the international computer vision community and marked an important expansion of my work into robust autonomous perception.</p></div><StoryPhotoGrid images={cvprPresentation} /></article>
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 6, 2026, Laramie, Wyoming</p><h2>Facilitating a University of Wyoming community conversation on digital twins</h2><p>I facilitated the School of Computing&apos;s Digital Twins Computing Meet Up at Altitude Chophouse and presented a battery-management digital twin case study. Six lightning talks brought complementary views of digital twins into one room.</p></div><StoryPhotoGrid images={uwDigitalTwinsMeetup} /></article>
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 25 to 26, 2022, Gumi, South Korea</p><h2>Metaverse and The Industry Workshop</h2><p>I co-organized this two-day workshop with the ICT Convergence Research Center and delivered the transportation-systems presentation. Eight sessions connected metaverse foundations with manufacturing, blockchain, NFTs, artificial intelligence, transportation, research trends, and security.</p></div><StoryPhotoGrid images={metaverseWorkshop} /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 17, 2026, virtual presentation</p><h2>PANDA at the ASCE International Conference on Computing in Civil Engineering</h2><p>I presented PANDA virtually during i3CE 2026, hosted at Songdo Convensia in Songdo, Incheon, South Korea. The presentation demonstrated how a lightweight forecasting model and a Cesium digital twin can turn limited parking data into multi-horizon occupancy and turnover predictions that operators can inspect spatially.</p></div><PhotoStoryCarousel images={pandaPresentation} label="PANDA presentation" /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 3 to 7, 2026, Denver, Colorado</p><h2>OmniRestore at the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops</h2><p>I presented OmniRestore, coauthored with Dr. Diksha Shukla, at the Colorado Convention Center. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions. Presenting it at CVPR brought this research into conversation with the international computer vision community and marked an important expansion of my work into robust autonomous perception.</p></div><PhotoStoryCarousel images={cvprPresentation} label="OmniRestore at CVPR" /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 6, 2026, Laramie, Wyoming</p><h2>Facilitating a University of Wyoming community conversation on digital twins</h2><p>I facilitated the School of Computing&apos;s Digital Twins Computing Meet Up at Altitude Chophouse and presented a battery-management digital twin case study. Six lightning talks brought complementary views of digital twins into one room.</p></div><PhotoStoryCarousel images={uwDigitalTwinsMeetup} label="University of Wyoming Digital Twins Computing Meet Up" /></article>
+        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 25 to 26, 2022, Gumi, South Korea</p><h2>Metaverse and The Industry Workshop</h2><p>I co-organized this two-day workshop with the ICT Convergence Research Center and delivered the transportation-systems presentation. Eight sessions connected metaverse foundations with manufacturing, blockchain, NFTs, artificial intelligence, transportation, research trends, and security.</p></div><PhotoStoryCarousel images={metaverseWorkshop} label="Metaverse and The Industry Workshop" /></article>
       </section>
 
       <section className="page-section photo-grid">

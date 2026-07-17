@@ -389,13 +389,15 @@ footer p { margin: 0; }
 .gallery-highlight-card { background: white; border: 1px solid var(--line); display: flex; flex-direction: column; overflow: hidden; }
 .gallery-highlight-card .featured-story-copy { padding: 28px; }
 .gallery-highlight-card .featured-story-copy h2 { font-size: clamp(28px, 3vw, 40px); }
-.gallery-highlight-card .story-photo-grid { margin-top: auto; padding: 0 20px 20px; }
-.story-photo-grid { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
-.story-photo-grid figure { background: white; border: 1px solid var(--line); margin: 0; overflow: hidden; }
-.story-photo-grid figure > div { aspect-ratio: 4 / 5; max-height: 310px; overflow: hidden; position: relative; }
-.story-photo-grid img { object-fit: contain; background: #f2e7ea; }
-.story-photo-grid figcaption { padding: 14px 15px 17px; }
-.story-photo-grid figcaption span { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.gallery-highlight-card .photo-story { margin-top: auto; padding: 0 20px 20px; }
+.photo-story-frame { aspect-ratio: 16 / 10; background: #f5eff1; border: 1px solid var(--line); overflow: hidden; position: relative; }
+.photo-story-frame img { object-fit: contain; }
+.story-arrow { align-items: center; background: rgba(67,7,24,.92); border: 0; border-radius: 50%; color: white; cursor: pointer; display: flex; height: 42px; justify-content: center; position: absolute; top: 50%; transform: translateY(-50%); transition: background .2s ease, transform .2s ease; width: 42px; z-index: 2; }
+.story-arrow:hover { background: var(--gold); transform: translateY(-50%) scale(1.05); }
+.story-arrow-left { left: 14px; }
+.story-arrow-right { right: 14px; }
+.story-count { background: rgba(67,7,24,.9); bottom: 12px; color: white; font-size: 11px; padding: 6px 9px; position: absolute; right: 12px; z-index: 2; }
+.story-image-caption { color: var(--muted); font-size: 12px; line-height: 1.65; margin: 0; min-height: 62px; padding: 13px 3px 0; }
 .photo-grid { background: var(--cream); column-count: 4; column-gap: 16px; display: block; padding-top: 55px; }
 .photo-grid figure { background: white; border: 1px solid var(--line); break-inside: avoid; display: inline-block; margin: 0 0 16px; overflow: hidden; width: 100%; }
 .photo-grid figure > div { aspect-ratio: 4 / 5; max-height: 310px; overflow: hidden; position: relative; }

@@ -19,7 +19,10 @@ export default function ContactPage() {
         <div>
           <p className="kicker">Direct contact</p>
           <h2>Tell me what question has stayed with you.</h2>
-          <a className="contact-email" href="mailto:judithnjoku24@gmail.com"><Mail />judithnjoku24@gmail.com</a>
+          <div className="contact-emails">
+            <a className="contact-email" href="mailto:jnjoku@uwyo.edu"><Mail />jnjoku@uwyo.edu</a>
+            <a className="contact-email" href="mailto:judithnjoku24@gmail.com"><Mail />judithnjoku24@gmail.com</a>
+          </div>
           <p><MapPin size={17} /> Laramie, Wyoming, USA</p>
         </div>
         <div className="contact-directory">

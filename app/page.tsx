@@ -14,7 +14,7 @@ import {
 import { TypingHeadline } from "./typing-headline";
 
 const links = {
-  email: "mailto:judithnjoku24@gmail.com",
+  email: "mailto:jnjoku@uwyo.edu",
   scholar: "https://scholar.google.com/citations?user=Ag2gYzIAAAAJ",
   orcid: "https://orcid.org/0000-0002-2294-9204",
   linkedin: "https://linkedin.com/in/judith989",
@@ -353,7 +353,7 @@ export default function Home() {
           talks, interdisciplinary projects, and student mentorship.
         </p>
         <Link href="/contact" className="button button-light">
-          <Mail size={17} /> judithnjoku24@gmail.com
+          <Mail size={17} /> jnjoku@uwyo.edu
         </Link>
         <div className="socials">
           <ExternalLink href={links.scholar}><BookOpen size={18} /> Scholar</ExternalLink>

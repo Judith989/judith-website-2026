@@ -52,7 +52,7 @@ export default function PublicationsPage() {
   const papers = loadPapers();
   return (
     <main>
-      <PageHero label="Publications" title="The ideas I have tested, built, and shared." text="Explore my work by the research question, real-world problem, year, venue, or community it was written to serve." />
+      <PageHero label="Publications" title="The ideas I have tested, built, and shared." />
       <section className="page-section publications-page">
         <PublicationExplorer papers={papers} />
       </section>

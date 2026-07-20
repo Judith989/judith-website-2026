@@ -1,0 +1,76 @@
+.world { background: #17281d; color: #fff9f1; height: 100dvh; inset: 0; max-width: 100vw; overflow: hidden; position: fixed; width: 100vw; z-index: 1000; }
+.canvas { display: block; height: 100%; touch-action: none; width: 100%; }
+.portal { align-items: center; background: radial-gradient(circle at 50% 45%, rgba(83, 111, 63, .34), transparent 30%), linear-gradient(155deg, #17080d, #36101e 55%, #14291d); display: flex; flex-direction: column; height: 100%; justify-content: center; overflow: hidden; padding: 32px 22px; position: relative; text-align: center; }
+.portal::before { background-image: radial-gradient(circle, rgba(238, 190, 101, .5) 0 1px, transparent 1.7px); background-size: 46px 46px; content: ""; inset: 0; mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent); opacity: .28; position: absolute; }
+.portalGlow { animation: breathe 5s ease-in-out infinite; background: radial-gradient(circle, rgba(225, 181, 87, .28), rgba(113, 24, 57, .12) 42%, transparent 68%); border: 1px solid rgba(232, 189, 101, .23); border-radius: 50%; height: min(68vw, 720px); position: absolute; width: min(68vw, 720px); }
+.logo { filter: drop-shadow(0 0 24px rgba(237, 193, 102, .3)); height: 100px; object-fit: contain; position: relative; width: 100px; }
+.eyebrow { color: #e8ba63; font-size: 11px; font-weight: 800; letter-spacing: .2em; margin: 24px 0 15px; position: relative; text-transform: uppercase; }
+.portal h1 { font-family: Georgia, serif; font-size: clamp(48px, 7vw, 102px); font-weight: 400; letter-spacing: -.055em; line-height: .95; margin: 0; max-width: 950px; position: relative; }
+.portal h1 em { color: #e7bd6d; font-weight: 400; }
+.intro { color: rgba(255, 245, 238, .73); font-size: clamp(15px, 1.45vw, 19px); line-height: 1.75; margin: 28px auto; max-width: 720px; position: relative; }
+.portalActions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; position: relative; }
+.portalActions button { align-items: center; background: #f5d28d; border: 1px solid #f5d28d; color: #3f091a; display: flex; font-size: 12px; font-weight: 800; gap: 9px; letter-spacing: .08em; padding: 14px 22px; text-transform: uppercase; }
+.portalActions .quietButton { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.3); color: #fff8ef; }
+.soundNote { color: rgba(255,255,255,.46); font-size: 11px; margin: 16px 0 0; position: relative; }
+.returnLink { align-items: center; bottom: 28px; color: rgba(255,255,255,.72); display: flex; font-size: 12px; gap: 8px; left: 28px; position: absolute; }
+.vignette { background: radial-gradient(circle, transparent 56%, rgba(24, 5, 12, .32)); inset: 0; pointer-events: none; position: absolute; }
+.worldHeader { align-items: center; background: linear-gradient(to bottom, rgba(26, 8, 14, .86), transparent); display: grid; grid-template-columns: 1fr auto 1fr; left: 0; padding: 20px 24px 42px; pointer-events: none; position: absolute; right: 0; top: 0; }
+.worldHeader > a { align-items: center; color: white; display: flex; font-size: 12px; gap: 8px; pointer-events: auto; width: fit-content; }
+.worldHeader > div:nth-child(2) { display: grid; text-align: center; }
+.worldHeader strong { font-family: Georgia, serif; font-size: 17px; font-weight: 500; }
+.worldHeader span { color: #f0c772; font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
+.headerControls { display: flex; gap: 8px; justify-content: flex-end; pointer-events: auto; }
+.headerControls button, .mapPanel > button { align-items: center; background: rgba(53, 14, 28, .72); border: 1px solid rgba(244, 206, 132, .36); border-radius: 50%; color: #fff8ef; display: flex; height: 40px; justify-content: center; width: 40px; }
+.guide { bottom: 26px; color: rgba(255,255,255,.72); display: flex; font-size: 10px; gap: 19px; left: 50%; letter-spacing: .08em; position: absolute; text-transform: uppercase; transform: translateX(-50%); white-space: nowrap; }
+.guide span + span::before { color: #efc877; content: "•"; margin-right: 19px; }
+.touchControls { bottom: 60px; display: grid; gap: 4px; left: 22px; position: absolute; }
+.touchControls > button { margin: auto; }
+.touchControls > div { display: flex; gap: 4px; }
+.touchControls button { background: rgba(46, 16, 24, .68); border: 1px solid rgba(242, 201, 119, .44); border-radius: 5px; color: #f9d993; height: 42px; touch-action: manipulation; width: 42px; }
+.portalCard { background: rgba(35, 10, 18, .92); border: 1px solid color-mix(in srgb, var(--portal-color), white 20%); bottom: 78px; box-shadow: 0 22px 70px rgba(0,0,0,.32); max-width: 390px; padding: 27px; position: absolute; right: 24px; width: calc(100% - 48px); }
+.portalCard::before { background: var(--portal-color); content: ""; height: 3px; left: 0; position: absolute; right: 0; top: 0; }
+.portalCard > button { background: transparent; border: 0; color: white; position: absolute; right: 14px; top: 14px; }
+.portalCard p { color: var(--portal-color); font-size: 10px; font-weight: 800; letter-spacing: .14em; margin: 0 0 10px; text-transform: uppercase; }
+.portalCard h2 { font-family: Georgia, serif; font-size: 35px; font-weight: 500; margin: 0 0 12px; }
+.portalCard > span { color: rgba(255,255,255,.72); display: block; font-size: 14px; line-height: 1.65; }
+.portalCard a { align-items: center; color: #f5d28d; display: flex; font-size: 12px; font-weight: 800; gap: 7px; margin-top: 20px; }
+.mapPanel { background: rgba(28, 8, 15, .97); border-left: 1px solid rgba(244, 205, 127, .35); bottom: 0; box-shadow: -20px 0 70px rgba(0,0,0,.35); max-width: 430px; overflow-y: auto; padding: 32px; position: absolute; right: 0; top: 0; width: min(92vw, 430px); }
+.mapPanel > button { position: absolute; right: 20px; top: 20px; }
+.mapPanel > p { align-items: center; color: #eac270; display: flex; font-size: 10px; font-weight: 800; gap: 8px; letter-spacing: .14em; text-transform: uppercase; }
+.mapPanel h2 { font-family: Georgia, serif; font-size: 38px; font-weight: 500; line-height: 1.08; margin: 30px 0; }
+.mapPanel ol { list-style: none; margin: 0; padding: 0; }
+.mapPanel li { border-top: 1px solid rgba(255,255,255,.1); }
+.mapPanel li button { align-items: center; background: transparent; border: 0; color: white; display: grid; font-family: Georgia, serif; font-size: 19px; gap: 3px 12px; grid-template-columns: 10px 1fr; padding: 18px 0; text-align: left; width: 100%; }
+.mapPanel li button > span { border-radius: 50%; grid-row: span 2; height: 8px; width: 8px; }
+.mapPanel small { color: rgba(255,255,255,.48); font-family: Arial, sans-serif; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.mapPanel > a { color: #f0c773; display: inline-block; font-size: 12px; margin-top: 28px; text-decoration: underline; text-underline-offset: 5px; }
+.qualityNotice { background: rgba(30, 10, 16, .7); bottom: 18px; color: rgba(255,255,255,.65); font-size: 10px; margin: 0; padding: 8px 12px; position: absolute; right: 20px; }
+.watermark { align-items: center; color: rgba(255,255,255,.5); display: flex; font-family: Georgia, serif; font-size: 12px; gap: 7px; left: 24px; position: absolute; top: 86px; }
+
+@keyframes breathe { 50% { transform: scale(1.08); opacity: .7; } }
+
+@media (max-width: 700px) {
+  .portal { box-sizing: border-box; justify-content: center; width: 100%; }
+  .portalGlow { height: 115vw; width: 115vw; }
+  .logo { height: 86px; width: 86px; }
+  .eyebrow { font-size: 9px; letter-spacing: .15em; margin-top: 18px; max-width: 100%; }
+  .portal h1 { font-size: clamp(40px, 13vw, 58px); max-width: 100%; overflow-wrap: anywhere; }
+  .intro { font-size: 14px; line-height: 1.6; margin: 22px auto; max-width: 100%; }
+  .portalActions { max-width: 310px; width: 100%; }
+  .portalActions button { justify-content: center; width: 100%; }
+  .soundNote { max-width: 290px; }
+  .worldHeader { grid-template-columns: 1fr auto; padding: 14px 14px 36px; }
+  .worldHeader > div:nth-child(2) { display: none; }
+  .worldHeader > a span { display: none; }
+  .guide { bottom: 16px; font-size: 8px; gap: 8px; }
+  .guide span + span::before { margin-right: 8px; }
+  .touchControls { bottom: 52px; left: 14px; }
+  .portalCard { bottom: 112px; left: 14px; max-width: none; right: 14px; width: auto; }
+  .portalCard h2 { font-size: 29px; }
+  .watermark { left: 14px; top: 68px; }
+  .returnLink { bottom: 18px; left: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portalGlow { animation: none; }
+}

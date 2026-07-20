@@ -7,6 +7,7 @@ const navigation = [
   ["Home", "/"],
   ["About", "/about"],
   ["Research", "/research"],
+  ["World", "/research-world"],
   ["Publications", "/publications"],
   ["News", "/news"],
   ["Gallery", "/gallery"],
@@ -41,6 +42,7 @@ export function SiteFooter() {
         <Link href="/about">About</Link>
         <Link href="/news">News</Link>
         <Link href="/gallery">Gallery</Link>
+        <Link href="/research-world">Research World</Link>
         <Link href="/cv">CV</Link>
         <Link href="/contact">Contact</Link>
       </div>

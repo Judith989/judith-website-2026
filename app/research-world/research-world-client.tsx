@@ -21,6 +21,19 @@ type Category = "Research" | "News" | "Milestone" | "Teaching" | "Mentorship" | 
 type Exhibit = { title: string; kind: string; category?: Category; description: string; href: string; image: string; position: [number, number, number] };
 
 const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
+const worldGates = [
+  { z:-13, title:"Research Gate", color:categoryColors.Research },
+  { z:-27, title:"Milestone Gate", color:categoryColors.Milestone },
+  { z:-41, title:"Teaching Gate", color:categoryColors.Teaching },
+  { z:-55, title:"Mentorship Gate", color:categoryColors.Mentorship },
+  { z:-67, title:"Service Gate", color:categoryColors.Service },
+];
+
+function shuffledChallenges() {
+  const deck=Array.from({length:10},(_,index)=>index);
+  for(let index=deck.length-1;index>0;index-=1){const swap=Math.floor(Math.random()*(index+1));[deck[index],deck[swap]]=[deck[swap],deck[index]];}
+  return deck;
+}
 
 const exhibits: Exhibit[] = [
   { title: "OmniRestore", kind: "Computer vision system", category:"Research", description: "Lightweight universal adverse-weather image restoration for safer autonomous perception.", href: "/research/omnirestore", image: "/gallery/cvpr_2026.jpg", position: [-4.8,0,-6] },
@@ -168,13 +181,19 @@ export default function ResearchWorldClient() {
   const [qualityNotice, setQualityNotice] = useState("");
   const [activeExhibit, setActiveExhibit] = useState<Exhibit | null>(null);
   const [challengeSeed, setChallengeSeed] = useState<number | null>(null);
+  const [challengeTitle, setChallengeTitle] = useState("Research Gate");
   const challengeOpenRef = useRef(false);
   const completedGatesRef = useRef(new Set<number>());
+  const challengeDeckRef = useRef<number[]>([]);
 
   const openChallenge = useCallback((gate: number) => {
     if (challengeOpenRef.current || completedGatesRef.current.has(gate)) return;
     challengeOpenRef.current = true;
-    setChallengeSeed(Math.floor(Math.random() * 10));
+    if (challengeDeckRef.current.length === 0) {
+      challengeDeckRef.current = shuffledChallenges();
+    }
+    setChallengeTitle(worldGates[gate].title);
+    setChallengeSeed(challengeDeckRef.current.shift()!);
   }, []);
   const completeChallenge = useCallback(() => {
     const gate = Number(document.body.dataset.researchGate ?? 0);
@@ -250,11 +269,12 @@ export default function ResearchWorldClient() {
     path.receiveShadow = true;
     scene.add(path);
 
-    [-19, -43, -63].forEach((z, index) => {
-      const gate = new THREE.Mesh(new THREE.TorusGeometry(2.55, .085, 10, 64), new THREE.MeshStandardMaterial({ color: 0xe4b65e, emissive: 0x8b3a31, emissiveIntensity: 1.8, metalness: .4 }));
-      gate.position.set(0, 2.5, z); scene.add(gate);
-      const sign = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(`Research Gate ${index + 1}`, "#e4b65e"), transparent: true }));
-      sign.position.set(0, 5.7, z); sign.scale.set(3.8, .9, 1); scene.add(sign);
+    worldGates.forEach((worldGate) => {
+      const gate = new THREE.Mesh(new THREE.TorusGeometry(2.55, .085, 10, 64), new THREE.MeshStandardMaterial({ color: worldGate.color, emissive: worldGate.color, emissiveIntensity: 1.35, metalness: .4 }));
+      gate.position.set(0, 2.5, worldGate.z); scene.add(gate);
+      const color=`#${worldGate.color.toString(16).padStart(6,"0")}`;
+      const sign = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(worldGate.title, color), transparent: true }));
+      sign.position.set(0, 5.7, worldGate.z); sign.scale.set(3.8, .9, 1); scene.add(sign);
     });
 
     const river = new THREE.Mesh(new THREE.PlaneGeometry(34, 16), new THREE.MeshPhysicalMaterial({ color: 0x3b8a91, transparent: true, opacity: .74, roughness: .16, metalness: .05 }));
@@ -451,10 +471,9 @@ export default function ResearchWorldClient() {
       if (keys.has("s") || keys.has("arrowdown")) camera.position.addScaledVector(forward, -speed);
       if (keys.has("a") || keys.has("arrowleft")) camera.position.addScaledVector(right, -speed);
       if (keys.has("d") || keys.has("arrowright")) camera.position.addScaledVector(right, speed);
-      const gates = [-19, -43, -63];
-      gates.forEach((gateZ, gate) => {
-        if (camera.position.z < gateZ && !completedGatesRef.current.has(gate)) {
-          camera.position.z = gateZ + .15;
+      worldGates.forEach((worldGate, gate) => {
+        if (camera.position.z < worldGate.z && !completedGatesRef.current.has(gate)) {
+          camera.position.z = worldGate.z + .15;
           document.body.dataset.researchGate = String(gate);
           keys.clear();
           openChallenge(gate);
@@ -589,12 +608,12 @@ export default function ResearchWorldClient() {
               <h2>Portals, research trees, and photograph exhibits</h2>
               <div className={styles.mapLegend}>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</div>
               <ol>{portals.map((portal) => <li key={portal.title}><button type="button" onClick={() => { setActivePortal(portal); setMapOpen(false); }}><span style={{ background: `#${portal.color.toString(16).padStart(6, "0")}` }} />{portal.title}<small>{portal.subtitle}</small></button></li>)}</ol>
-              <p className={styles.mapNote}>Every tree carries a story from my research, news, milestones, teaching, mentorship, or service. Featured clearings include a teaching studio and a consultation office, while three gates draw from the ten-game collection.</p>
+              <p className={styles.mapNote}>Every tree carries a story from my research, news, milestones, teaching, mentorship, or service. Five themed gates draw without repetition from the ten-game collection, so every challenge in one exploration is different.</p>
               <Link href="/research" target="_blank">Open the research index in a new tab</Link>
             </aside>
           )}
 
-          {challengeSeed !== null && <ResearchChallenge key={challengeSeed} seed={challengeSeed} onComplete={completeChallenge} />}
+          {challengeSeed !== null && <ResearchChallenge key={challengeSeed} seed={challengeSeed} gateTitle={challengeTitle} onComplete={completeChallenge} />}
 
           {qualityNotice && <p className={styles.qualityNotice}>{qualityNotice}</p>}
           <div className={styles.watermark}><Music size={14} /> A digital twin of my research life</div>

@@ -14,7 +14,7 @@ const bank: Challenge[] = [
   { type:"quiz", title:"Place the research", prompt:"Where was OmniRestore presented in 2026?", options:["ICUFN","CVPR Workshops","ICTC"], answer:1, hint:"It entered the international computer-vision community in Denver." },
   { type:"quiz", title:"Mentorship grove", prompt:"The international internship connected Kyungpook National University with which US university?", options:["University of Wyoming","Michigan State University","MIT"], answer:1, hint:"The collaboration included the CLIMDES laboratory." },
   { type:"quiz", title:"Research language", prompt:"Which system uses language models to explain battery digital-twin insights?", options:["BAT-GPT","PANDA","MetaWatch"], answer:0, hint:"GPT appears directly in the system's name." },
-  { type:"quiz", title:"Safety signal", prompt:"MetaHate studies which problem in metaverse environments?", options:["Weather restoration","Hate-speech detection","Battery capacity"], answer:1, hint:"The second half of the project name identifies the harmful behavior." },
+  { type:"quiz", title:"Service signal", prompt:"Which community role expands opportunities for women in technology across borders?", options:["WomenTech Global Ambassador","Battery modeler","Bridge inspector"], answer:0, hint:"The role explicitly combines a global community with ambassadorship." },
   { type:"sudoku", title:"JN logic grid", prompt:"Complete the 4 by 4 research Sudoku. Each row and column needs 1, 2, 3, and 4." },
   { type:"snake", title:"Data trail", prompt:"Guide the research signal to collect three gold data points." },
 ];
@@ -22,7 +22,7 @@ const bank: Challenge[] = [
 const sudokuStart=[1,0,0,4,0,4,1,0,0,1,4,0,4,0,0,1];
 const sudokuSolution=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1];
 
-export function ResearchChallenge({seed,onComplete}:{seed:number;onComplete:()=>void}) {
+export function ResearchChallenge({seed,gateTitle,onComplete}:{seed:number;gateTitle:string;onComplete:()=>void}) {
   const challenge=bank[seed%bank.length];
   const [message,setMessage]=useState("");
   const [success,setSuccess]=useState(false);
@@ -38,7 +38,7 @@ export function ResearchChallenge({seed,onComplete}:{seed:number;onComplete:()=>
   const snakeHint=()=>{const horizontal=snake.target.x>snake.x?"right":snake.target.x<snake.x?"left":"";const vertical=snake.target.y>snake.y?"down":snake.target.y<snake.y?"up":"";setSuccess(false);setMessage(`Hint: move ${[horizontal,vertical].filter(Boolean).join(" and ")} toward the glowing data point.`);};
 
   return <section className={styles.challenge} role="dialog" aria-modal="true" aria-label="Research trail challenge"><div className={styles.challengeInner}>
-    <p><Gamepad2 size={17}/> Research gate</p><h2>{challenge.title}</h2><span>{challenge.prompt}</span>
+    <p><Gamepad2 size={17}/> {gateTitle}</p><h2>{challenge.title}</h2><span>{challenge.prompt}</span>
     {challenge.type==="quiz"&&<><div className={styles.answers}>{challenge.options?.map((option,index)=><button key={option} onClick={()=>answer(index)}>{option}</button>)}</div><button className={styles.hintButton} onClick={()=>{setSuccess(false);setMessage(`Hint: ${challenge.hint}`);}}><Lightbulb size={15}/> Give me a hint</button></>}
     {challenge.type==="sudoku"&&<><div className={styles.sudoku}>{grid.map((value,index)=><button key={index} className={sudokuStart[index]?styles.given:""} onClick={()=>setCell(index,value===4?1:value+1)}>{value||"·"}</button>)}</div><small>Tap an empty square to cycle from 1 to 4.</small><div className={styles.helperActions}><button onClick={checkSudoku}>Check my grid</button><button onClick={hintSudoku}><Lightbulb size={14}/> Reveal one square</button></div></>}
     {challenge.type==="snake"&&<><div className={styles.snakeBoard}>{Array.from({length:25},(_,i)=>{const x=i%5,y=Math.floor(i/5);return <i key={i} className={x===snake.x&&y===snake.y?styles.snakeHead:x===snake.target.x&&y===snake.target.y?styles.snakeTarget:""}/>;})}</div><div className={styles.snakeControls}><button onClick={()=>move(0,-1)} aria-label="Move up"><ArrowUp/></button><div><button onClick={()=>move(-1,0)} aria-label="Move left"><ArrowLeft/></button><button onClick={()=>move(0,1)} aria-label="Move down"><ArrowDown/></button><button onClick={()=>move(1,0)} aria-label="Move right"><ArrowRight/></button></div><small>{snake.score} / 3 data points</small></div><button className={styles.hintButton} onClick={snakeHint}><Lightbulb size={15}/> Direction hint</button></>}

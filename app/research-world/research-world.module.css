@@ -55,9 +55,12 @@
 .answers { display: grid; gap: 9px; margin-top: 26px; }
 .answers button { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.2); color: white; font-size: 13px; padding: 14px; }
 .answers button:hover { border-color: #edc36e; color: #f6d99e; }
+.hintButton { align-items: center; background: transparent; border: 0; color: #e8c781; display: inline-flex; font-size: 11px; gap: 6px; margin-top: 14px; text-decoration: underline; text-underline-offset: 4px; }
 .sudoku { display: grid; gap: 3px; grid-template-columns: repeat(4,52px); justify-content: center; margin: 25px auto 12px; }
 .sudoku button { background: #f7ecef; border: 0; color: #43091b; font-family: Georgia,serif; font-size: 21px; height: 52px; }
 .sudoku .given { background: #deb767; font-weight: 800; }
+.helperActions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+.helperActions button { align-items: center; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); color: white; display: flex; font-size: 11px; gap: 6px; padding: 10px 13px; }
 .challengeInner small { color: #bca8ae; }
 .snakeBoard { background: #16281d; border: 1px solid #52735a; display: grid; gap: 3px; grid-template-columns: repeat(5,38px); justify-content: center; margin: 24px auto 12px; padding: 8px; width: fit-content; }
 .snakeBoard i { background: #294531; display: block; height: 38px; width: 38px; }
@@ -68,7 +71,10 @@
 .snakeControls > div { display: flex; gap: 4px; }
 .snakeControls button { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.22); color: white; height: 40px; width: 44px; }
 .snakeControls small { margin-top: 7px; }
-.challengeMessage { align-items: center; color: #f1ca78; display: flex; gap: 7px; justify-content: center; margin-top: 18px; }
+.challengeMessage { align-items: flex-start; display: flex; font-size: 12px; gap: 7px; justify-content: center; line-height: 1.5; margin-top: 18px; }
+.challengeMessage svg { flex: 0 0 auto; margin-top: 1px; }
+.challengeMessage.correct { color: #bfe3b5; }
+.challengeMessage.feedback { color: #f1ca78; }
 .challengeNote { color: rgba(255,255,255,.42); font-size: 10px; line-height: 1.5; margin: 18px 0 0; }
 .qualityNotice { background: rgba(30, 10, 16, .7); bottom: 18px; color: rgba(255,255,255,.65); font-size: 10px; margin: 0; padding: 8px 12px; position: absolute; right: 20px; }
 .watermark { align-items: center; color: rgba(255,255,255,.5); display: flex; font-family: Georgia, serif; font-size: 12px; gap: 7px; left: 24px; position: absolute; top: 86px; }

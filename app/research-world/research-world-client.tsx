@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ExternalLink, Map, Music, Music2, Volume2, VolumeX, X } from "lucide-react";
 import * as THREE from "three";
 import styles from "./research-world.module.css";
+import { ResearchChallenge } from "./research-challenges";
 
 type Portal = {
   title: string;
@@ -15,6 +16,23 @@ type Portal = {
   color: number;
   position: [number, number, number];
 };
+
+type Exhibit = { title: string; kind: string; description: string; href: string; image: string; position: [number, number, number] };
+
+const exhibits: Exhibit[] = [
+  { title: "OmniRestore", kind: "Computer vision system", description: "Lightweight universal adverse-weather image restoration for safer autonomous perception.", href: "/research/omnirestore", image: "/gallery/cvpr_2026.jpg", position: [-4.8,0,-6] },
+  { title: "SmartParking", kind: "Intelligent transportation", description: "Object detection for vehicles, pedestrians, and traffic signs in smart parking environments.", href: "/research/smartparking", image: "/research/smartparking/system.png", position: [4.8,0,-14] },
+  { title: "BatteryMetrix", kind: "PhD research program", description: "Predictive, explainable, secure, and immersive battery digital twins.", href: "/research/batterymetrix", image: "/research/battery-p297-img0.png", position: [-4.8,0,-22] },
+  { title: "MetaHate", kind: "Responsible metaverse AI", description: "Deep-learning methods for detecting hate speech in metaverse applications.", href: "/research/metahate", image: "/research/metahate/system-model.png", position: [4.8,0,-30] },
+  { title: "PANDA", kind: "Predictive digital twin", description: "Multi-horizon occupancy and turnover forecasting in an inspectable parking twin.", href: "/research/panda", image: "/digital_twin_i3ce.png", position: [-4.8,0,-38] },
+  { title: "Secure AV Voice", kind: "Autonomous systems", description: "Speaker identification and blockchain event recording for accountable autonomous vehicles.", href: "/research/secure-av-voice", image: "/research/secure-av-voice/av4.png", position: [4.8,0,-46] },
+  { title: "BridgeSync", kind: "Intelligent infrastructure", description: "Secure bridge sensing, digital representation, and decision support.", href: "/research/bridgesync", image: "/research/bridge-p5-img1.png", position: [-4.8,0,-54] },
+  { title: "BAT-GPT", kind: "Interactive battery intelligence", description: "Language models that make battery digital-twin insights understandable and actionable.", href: "/research/bat-gpt", image: "/research/bat-gpt/system-overview.png", position: [4.8,0,-62] },
+  { title: "Metaverse BMS", kind: "Immersive digital twin", description: "MATLAB, Unreal Engine, and battery simulation joined in a metaverse interface.", href: "/research/metaverse-bms", image: "/research/metaverse-bms/system-model.jpg", position: [-4.8,0,-69] },
+  { title: "IoT Protocol Twin", kind: "Connected vehicle research", description: "A physical and virtual electric-vehicle testbed comparing digital-twin communication protocols.", href: "/research/iot-protocols", image: "/research/iot-protocols/jcn1.png", position: [8,0,-20] },
+  { title: "Service Advisor AI", kind: "Explainable operational AI", description: "Interpretable models for understanding service-advisor performance in automotive dealerships.", href: "/research/service-advisor-ai", image: "/research/service-advisor-ai/dealer2.png", position: [-8,0,-34] },
+  { title: "Explainable Battery Twins", kind: "Trustworthy battery intelligence", description: "SHAP, LIME, and surrogate explanations for battery state predictions.", href: "/research/explainable-battery-twins", image: "/research/explainable-battery-twins/sys1.png", position: [8,0,-50] },
+];
 
 const portals: Portal[] = [
   { title: "OmniRestore", subtitle: "The Weather Garden", description: "Walk into my work on lightweight image restoration for autonomous systems navigating rain, snow, fog, low light, and composite weather.", href: "/research/omnirestore", color: 0xd2a23a, position: [-8, 1.7, -12] },
@@ -118,6 +136,22 @@ export default function ResearchWorldClient() {
   const [activePortal, setActivePortal] = useState<Portal | null>(null);
   const [mapOpen, setMapOpen] = useState(false);
   const [qualityNotice, setQualityNotice] = useState("");
+  const [activeExhibit, setActiveExhibit] = useState<Exhibit | null>(null);
+  const [challengeSeed, setChallengeSeed] = useState<number | null>(null);
+  const challengeOpenRef = useRef(false);
+  const completedGatesRef = useRef(new Set<number>());
+
+  const openChallenge = useCallback((gate: number) => {
+    if (challengeOpenRef.current || completedGatesRef.current.has(gate)) return;
+    challengeOpenRef.current = true;
+    setChallengeSeed(Math.floor(Math.random() * 10));
+  }, []);
+  const completeChallenge = useCallback(() => {
+    const gate = Number(document.body.dataset.researchGate ?? 0);
+    completedGatesRef.current.add(gate);
+    challengeOpenRef.current = false;
+    setChallengeSeed(null);
+  }, []);
 
   const startSound = useCallback(() => {
     if (!audioRef.current) audioRef.current = createAmbientSound();
@@ -186,6 +220,13 @@ export default function ResearchWorldClient() {
     path.receiveShadow = true;
     scene.add(path);
 
+    [-19, -43, -63].forEach((z, index) => {
+      const gate = new THREE.Mesh(new THREE.TorusGeometry(2.55, .085, 10, 64), new THREE.MeshStandardMaterial({ color: 0xe4b65e, emissive: 0x8b3a31, emissiveIntensity: 1.8, metalness: .4 }));
+      gate.position.set(0, 2.5, z); scene.add(gate);
+      const sign = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(`Research Gate ${index + 1}`, "#e4b65e"), transparent: true }));
+      sign.position.set(0, 5.7, z); sign.scale.set(3.8, .9, 1); scene.add(sign);
+    });
+
     const river = new THREE.Mesh(new THREE.PlaneGeometry(34, 16), new THREE.MeshPhysicalMaterial({ color: 0x3b8a91, transparent: true, opacity: .74, roughness: .16, metalness: .05 }));
     river.rotation.x = -Math.PI / 2;
     river.position.set(0, .06, -78);
@@ -221,13 +262,28 @@ export default function ResearchWorldClient() {
     scene.add(mist);
 
     const treeGroups: THREE.Group[] = [];
+    const exhibitMeshes: THREE.Object3D[] = [];
     for (let index = 0; index < 105; index += 1) {
       const side = index % 2 === 0 ? -1 : 1;
       const x = side * (6 + Math.random() * 35);
       const z = 10 - Math.random() * 105;
       if (z < -73 && Math.abs(x) < 19) continue;
-      treeGroups.push(addTree(scene, x, z, .65 + Math.random() * .75, index % 4 === 0 ? 0x5d7f42 : 0x2f693d));
+      const tree = addTree(scene, x, z, .65 + Math.random() * .75, index % 4 === 0 ? 0x5d7f42 : 0x2f693d);
+      const research = exhibits[index % exhibits.length];
+      tree.traverse((object) => { object.userData.exhibit = research; exhibitMeshes.push(object); });
+      treeGroups.push(tree);
     }
+
+    const textureLoader = new THREE.TextureLoader();
+    exhibits.forEach((exhibit, index) => {
+      const [x,,z] = exhibit.position;
+      const tree = addTree(scene, x, z, 1.05, index % 2 ? 0x6f833d : 0x3f7546);
+      tree.traverse((object) => { object.userData.exhibit = exhibit; exhibitMeshes.push(object); });
+      const label = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(exhibit.title, "#e4b65e"), transparent: true }));
+      label.position.set(x, 5.25, z); label.scale.set(3.5, .82, 1); label.userData.exhibit = exhibit; scene.add(label); exhibitMeshes.push(label);
+      const photo = new THREE.Mesh(new THREE.PlaneGeometry(2.15, 1.35), new THREE.MeshBasicMaterial({ map: textureLoader.load(exhibit.image), side: THREE.DoubleSide }));
+      photo.position.set(x > 0 ? x - 1.25 : x + 1.25, 2.15, z + .8); photo.rotation.y = x > 0 ? -.45 : .45; photo.userData.exhibit = exhibit; scene.add(photo); exhibitMeshes.push(photo);
+    });
 
     const firefliesGeometry = new THREE.BufferGeometry();
     const fireflyPositions = new Float32Array(240 * 3);
@@ -304,8 +360,9 @@ export default function ResearchWorldClient() {
       pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
       pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(portalMeshes, false)[0];
-      if (hit?.object.userData.portal) setActivePortal(hit.object.userData.portal as Portal);
+      const hit = raycaster.intersectObjects([...portalMeshes, ...exhibitMeshes], false)[0];
+      if (hit?.object.userData.portal) { setActiveExhibit(null); setActivePortal(hit.object.userData.portal as Portal); }
+      if (hit?.object.userData.exhibit) { setActivePortal(null); setActiveExhibit(hit.object.userData.exhibit as Exhibit); }
     };
     const onResize = () => {
       camera.aspect = container.clientWidth / container.clientHeight;
@@ -344,6 +401,15 @@ export default function ResearchWorldClient() {
       if (keys.has("s") || keys.has("arrowdown")) camera.position.addScaledVector(forward, -speed);
       if (keys.has("a") || keys.has("arrowleft")) camera.position.addScaledVector(right, -speed);
       if (keys.has("d") || keys.has("arrowright")) camera.position.addScaledVector(right, speed);
+      const gates = [-19, -43, -63];
+      gates.forEach((gateZ, gate) => {
+        if (camera.position.z < gateZ && !completedGatesRef.current.has(gate)) {
+          camera.position.z = gateZ + .15;
+          document.body.dataset.researchGate = String(gate);
+          keys.clear();
+          openChallenge(gate);
+        }
+      });
       camera.position.x = THREE.MathUtils.clamp(camera.position.x, -22, 22);
       camera.position.z = THREE.MathUtils.clamp(camera.position.z, -76, 10);
       camera.position.y = 1.7 + Math.sin(clock.elapsedTime * 7) * ((keys.size > 0) ? .018 : .006);
@@ -407,7 +473,7 @@ export default function ResearchWorldClient() {
       treeGroups.length = 0;
       rocks.length = 0;
     };
-  }, [entered]);
+  }, [entered, openChallenge]);
 
   return (
     <main className={styles.world} ref={worldRef}>
@@ -440,7 +506,7 @@ export default function ResearchWorldClient() {
             </div>
           </header>
 
-          <div className={styles.guide}><span>WASD or arrows to walk</span><span>Drag to look</span><span>Click glowing portals</span></div>
+          <div className={styles.guide}><span>WASD or arrows to walk</span><span>Drag to look</span><span>Click research trees and photographs</span></div>
           <div className={styles.touchControls} aria-label="Movement controls">
             <button type="button" data-move="w" aria-label="Move forward">▲</button>
             <div><button type="button" data-move="a" aria-label="Move left">◀</button><button type="button" data-move="s" aria-label="Move backward">▼</button><button type="button" data-move="d" aria-label="Move right">▶</button></div>
@@ -452,7 +518,16 @@ export default function ResearchWorldClient() {
               <p>{activePortal.subtitle}</p>
               <h2>{activePortal.title}</h2>
               <span>{activePortal.description}</span>
-              <Link href={activePortal.href}>Enter this project <ExternalLink size={15} /></Link>
+              <Link href={activePortal.href} target="_blank" rel="noreferrer">Open in a new tab <ExternalLink size={15} /></Link>
+            </aside>
+          )}
+
+          {activeExhibit && (
+            <aside className={`${styles.portalCard} ${styles.exhibitCard}`} style={{ "--portal-color": "#e4b65e" } as React.CSSProperties}>
+              <button type="button" onClick={() => setActiveExhibit(null)} aria-label="Close research exhibit"><X size={17} /></button>
+              <Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />
+              <p>{activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
+              <Link href={activeExhibit.href} target="_blank" rel="noreferrer">Explore without leaving the world <ExternalLink size={15} /></Link>
             </aside>
           )}
 
@@ -460,11 +535,14 @@ export default function ResearchWorldClient() {
             <aside className={styles.mapPanel}>
               <button type="button" onClick={() => setMapOpen(false)} aria-label="Close map"><X size={18} /></button>
               <p><Map size={16} /> Research trail</p>
-              <h2>Five portals through my work</h2>
+              <h2>Portals, research trees, and photograph exhibits</h2>
               <ol>{portals.map((portal) => <li key={portal.title}><button type="button" onClick={() => { setActivePortal(portal); setMapOpen(false); }}><span style={{ background: `#${portal.color.toString(16).padStart(6, "0")}` }} />{portal.title}<small>{portal.subtitle}</small></button></li>)}</ol>
-              <Link href="/research">Use the accessible research index</Link>
+              <p className={styles.mapNote}>Every tree carries a paper or project. Twelve featured trees and photograph panels mark major systems, while three gates draw a game from the ten-challenge collection.</p>
+              <Link href="/research" target="_blank">Open the research index in a new tab</Link>
             </aside>
           )}
+
+          {challengeSeed !== null && <ResearchChallenge key={challengeSeed} seed={challengeSeed} onComplete={completeChallenge} />}
 
           {qualityNotice && <p className={styles.qualityNotice}>{qualityNotice}</p>}
           <div className={styles.watermark}><Music size={14} /> A digital twin of my research life</div>

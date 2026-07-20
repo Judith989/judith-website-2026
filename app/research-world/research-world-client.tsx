@@ -17,10 +17,13 @@ type Portal = {
   position: [number, number, number];
 };
 
-type Exhibit = { title: string; kind: string; description: string; href: string; image: string; position: [number, number, number] };
+type Category = "Research" | "News" | "Milestone" | "Teaching" | "Mentorship" | "Service";
+type Exhibit = { title: string; kind: string; category?: Category; description: string; href: string; image: string; position: [number, number, number] };
+
+const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
 
 const exhibits: Exhibit[] = [
-  { title: "OmniRestore", kind: "Computer vision system", description: "Lightweight universal adverse-weather image restoration for safer autonomous perception.", href: "/research/omnirestore", image: "/gallery/cvpr_2026.jpg", position: [-4.8,0,-6] },
+  { title: "OmniRestore", kind: "Computer vision system", category:"Research", description: "Lightweight universal adverse-weather image restoration for safer autonomous perception.", href: "/research/omnirestore", image: "/gallery/cvpr_2026.jpg", position: [-4.8,0,-6] },
   { title: "SmartParking", kind: "Intelligent transportation", description: "Object detection for vehicles, pedestrians, and traffic signs in smart parking environments.", href: "/research/smartparking", image: "/research/smartparking/system.png", position: [4.8,0,-14] },
   { title: "BatteryMetrix", kind: "PhD research program", description: "Predictive, explainable, secure, and immersive battery digital twins.", href: "/research/batterymetrix", image: "/research/battery-p297-img0.png", position: [-4.8,0,-22] },
   { title: "MetaHate", kind: "Responsible metaverse AI", description: "Deep-learning methods for detecting hate speech in metaverse applications.", href: "/research/metahate", image: "/research/metahate/system-model.png", position: [4.8,0,-30] },
@@ -32,6 +35,19 @@ const exhibits: Exhibit[] = [
   { title: "IoT Protocol Twin", kind: "Connected vehicle research", description: "A physical and virtual electric-vehicle testbed comparing digital-twin communication protocols.", href: "/research/iot-protocols", image: "/research/iot-protocols/jcn1.png", position: [8,0,-20] },
   { title: "Service Advisor AI", kind: "Explainable operational AI", description: "Interpretable models for understanding service-advisor performance in automotive dealerships.", href: "/research/service-advisor-ai", image: "/research/service-advisor-ai/dealer2.png", position: [-8,0,-34] },
   { title: "Explainable Battery Twins", kind: "Trustworthy battery intelligence", description: "SHAP, LIME, and surrogate explanations for battery state predictions.", href: "/research/explainable-battery-twins", image: "/research/explainable-battery-twins/sys1.png", position: [8,0,-50] },
+];
+
+const forestStories: Exhibit[] = [
+  ...exhibits,
+  { title:"PhD conferred", kind:"August 22, 2025", category:"Milestone", description:"My PhD in IT Convergence Engineering brought BatteryMetrix together as a predictive, explainable, secure, and immersive battery digital twin.", href:"/gallery", image:"/gallery/phd_grad1.jpeg", position:[0,0,0] },
+  { title:"MSc in Electronics Engineering", kind:"August 20, 2021", category:"Milestone", description:"My MSc chapter at Kumoh National Institute of Technology established my foundation in deep learning for wireless systems.", href:"/gallery", image:"/gallery/msc_grad.jpeg", position:[0,0,0] },
+  { title:"Distinguished Postdoctoral Fellowship", kind:"University of Wyoming", category:"News", description:"I joined the Secure Sensing and Learning Research Lab to advance trustworthy vision, infrastructure, and cyber-physical intelligence.", href:"/news", image:"/judith_pic.png", position:[0,0,0] },
+  { title:"CVPR Workshops 2026", kind:"Conference news", category:"News", description:"OmniRestore entered the international computer-vision community through a workshop presentation in Denver.", href:"/gallery", image:"/gallery/cvpr_2026.jpg", position:[0,0,0] },
+  { title:"Teaching philosophy", kind:"Learning through systems", category:"Teaching", description:"I teach by connecting mathematical foundations, computational experiments, and consequential physical-world problems.", href:"/about", image:"/logo-judith.png", position:[0,0,0] },
+  { title:"Mentorship philosophy", kind:"Ownership, rigor, and confidence", category:"Mentorship", description:"I help emerging researchers move from guided participation toward intellectual ownership, publication, and independent judgment.", href:"/about", image:"/gallery/uw-digital-twins-meetup-3.jpg", position:[0,0,0] },
+  { title:"International internship cohorts", kind:"Research mentorship", category:"Mentorship", description:"I recruited and supervised more than fifteen students across Kyungpook National University, Michigan State University, and CLIMDES collaborations.", href:"/news", image:"/logo-judith.png", position:[0,0,0] },
+  { title:"WomenTech Global Ambassador", kind:"Community leadership", category:"Service", description:"I connect and amplify women in technology across borders while supporting more inclusive technical leadership.", href:"/news", image:"/judith_pic.png", position:[0,0,0] },
+  { title:"Peer review and technical service", kind:"Academic service", category:"Service", description:"My service spans leading computer-vision, machine-learning, wireless-communication, and intelligent-systems venues.", href:"/cv", image:"/logo-judith.png", position:[0,0,0] },
 ];
 
 const portals: Portal[] = [
@@ -78,6 +94,20 @@ function addTree(scene: THREE.Scene, x: number, z: number, scale: number, tone: 
   group.position.set(x, 0, z);
   scene.add(group);
   return group;
+}
+
+function addPerson(group: THREE.Group, x:number, z:number, color:number, seated=false) {
+  const person=new THREE.Group();
+  const body=new THREE.Mesh(new THREE.CapsuleGeometry(.22,.72,5,10),new THREE.MeshStandardMaterial({color})); body.position.y=seated?.85:1.15; person.add(body);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.23,16,12),new THREE.MeshStandardMaterial({color:0x8b5e45})); head.position.y=seated?1.55:1.95; person.add(head);
+  const hair=new THREE.Mesh(new THREE.SphereGeometry(.25,12,8,0,Math.PI*2,0,Math.PI*.55),new THREE.MeshStandardMaterial({color:0x211310})); hair.position.y=head.position.y+.07; person.add(hair);
+  person.position.set(x,0,z); group.add(person); return person;
+}
+
+function makeBoardTexture(title:string, lines:string[]) {
+  const canvas=document.createElement("canvas"); canvas.width=1024; canvas.height=600; const context=canvas.getContext("2d"); if(!context)return new THREE.Texture();
+  context.fillStyle="#173c31";context.fillRect(0,0,1024,600);context.strokeStyle="#d6b76f";context.lineWidth=12;context.strokeRect(10,10,1004,580);context.fillStyle="#fff8e9";context.font="bold 48px Georgia";context.fillText(title,55,85);context.font="30px Georgia";lines.forEach((line,index)=>context.fillText(line,55,165+index*72));
+  const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return texture;
 }
 
 function createAmbientSound() {
@@ -268,22 +298,42 @@ export default function ResearchWorldClient() {
       const x = side * (6 + Math.random() * 35);
       const z = 10 - Math.random() * 105;
       if (z < -73 && Math.abs(x) < 19) continue;
-      const tree = addTree(scene, x, z, .65 + Math.random() * .75, index % 4 === 0 ? 0x5d7f42 : 0x2f693d);
-      const research = exhibits[index % exhibits.length];
-      tree.traverse((object) => { object.userData.exhibit = research; exhibitMeshes.push(object); });
+      const story = forestStories[index % forestStories.length];
+      const tree = addTree(scene, x, z, .65 + Math.random() * .75, categoryColors[story.category ?? "Research"]);
+      tree.traverse((object) => { object.userData.exhibit = story; exhibitMeshes.push(object); });
       treeGroups.push(tree);
     }
 
     const textureLoader = new THREE.TextureLoader();
-    exhibits.forEach((exhibit, index) => {
+    exhibits.forEach((exhibit) => {
       const [x,,z] = exhibit.position;
-      const tree = addTree(scene, x, z, 1.05, index % 2 ? 0x6f833d : 0x3f7546);
+      const tree = addTree(scene, x, z, 1.05, categoryColors[exhibit.category ?? "Research"]);
       tree.traverse((object) => { object.userData.exhibit = exhibit; exhibitMeshes.push(object); });
       const label = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(exhibit.title, "#e4b65e"), transparent: true }));
       label.position.set(x, 5.25, z); label.scale.set(3.5, .82, 1); label.userData.exhibit = exhibit; scene.add(label); exhibitMeshes.push(label);
       const photo = new THREE.Mesh(new THREE.PlaneGeometry(2.15, 1.35), new THREE.MeshBasicMaterial({ map: textureLoader.load(exhibit.image), side: THREE.DoubleSide }));
       photo.position.set(x > 0 ? x - 1.25 : x + 1.25, 2.15, z + .8); photo.rotation.y = x > 0 ? -.45 : .45; photo.userData.exhibit = exhibit; scene.add(photo); exhibitMeshes.push(photo);
     });
+
+    const teachingStory=forestStories.find(item=>item.title==="Teaching philosophy")!;
+    const classroom=new THREE.Group();classroom.position.set(-12,0,-36);
+    const teachingFloor=new THREE.Mesh(new THREE.CircleGeometry(5,40),new THREE.MeshStandardMaterial({color:0x6f5790,transparent:true,opacity:.28}));teachingFloor.rotation.x=-Math.PI/2;classroom.add(teachingFloor);
+    const teacher=addPerson(classroom,0,0,0x6f1737);teacher.scale.setScalar(1.15);
+    [[-2,-1.7],[0,-2.4],[2,-1.7],[-3,-.2],[3,-.2]].forEach(([x,z],index)=>{const student=addPerson(classroom,x,z,index%2?0x315b67:0xc18b3d,true);student.lookAt(0,1,0);});
+    const teachingBoard=new THREE.Mesh(new THREE.PlaneGeometry(5.8,2.8),new THREE.MeshBasicMaterial({map:makeBoardTexture("Teaching through systems",["Observe the physical world","Model the governing process","Test, explain, and improve"])}));teachingBoard.position.set(0,2.6,2.3);teachingBoard.rotation.y=Math.PI;classroom.add(teachingBoard);
+    const teachingLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("Teaching & Mentorship Studio","#9f7ac1"),transparent:true}));teachingLabel.position.set(0,5.3,0);teachingLabel.scale.set(5.5,1.25,1);classroom.add(teachingLabel);
+    classroom.traverse(object=>{object.userData.exhibit=teachingStory;exhibitMeshes.push(object);});scene.add(classroom);
+
+    const officeStory:Exhibit={title:"Consultation Office",kind:"Meet Dr. Judith Njoku-Vowels",category:"Teaching",description:"A space for research consultation, student questions, collaboration, and working through the mathematics behind trustworthy battery digital twins.",href:"/contact",image:"/judith_pic2.png",position:[12,0,-58]};
+    const office=new THREE.Group();office.position.set(12,0,-58);
+    const roomFloor=new THREE.Mesh(new THREE.BoxGeometry(9,.15,7),new THREE.MeshStandardMaterial({color:0x7a6049}));office.add(roomFloor);
+    const desk=new THREE.Mesh(new THREE.BoxGeometry(4,.25,1.6),new THREE.MeshStandardMaterial({color:0x5b301f}));desk.position.set(0,1.15,0);office.add(desk);
+    const deskLegs=[[-1.7,.55,-.55],[1.7,.55,-.55],[-1.7,.55,.55],[1.7,.55,.55]];deskLegs.forEach(([x,y,z])=>{const leg=new THREE.Mesh(new THREE.BoxGeometry(.18,1.1,.18),new THREE.MeshStandardMaterial({color:0x3b2118}));leg.position.set(x,y,z);office.add(leg);});
+    addPerson(office,0,1.3,0x6f1737,true);
+    const monitor=new THREE.Mesh(new THREE.BoxGeometry(1.8,1.1,.12),new THREE.MeshStandardMaterial({color:0x17191b,emissive:0x315f6b,emissiveIntensity:.6}));monitor.position.set(0,1.95,-.25);office.add(monitor);
+    const nameplate=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("Dr. Judith Njoku-Vowels","#e4b65e"),transparent:true}));nameplate.position.set(0,1.55,.9);nameplate.scale.set(3.2,.75,1);office.add(nameplate);
+    const dfnBoard=new THREE.Mesh(new THREE.PlaneGeometry(6.8,3.8),new THREE.MeshBasicMaterial({map:makeBoardTexture("Battery DFN model",["∂cₛ/∂t = (1/r²) ∂/∂r (Dₛr² ∂cₛ/∂r)","∂(εₑcₑ)/∂t = ∂/∂x (Dₑeff ∂cₑ/∂x) + source","∂/∂x (σeff ∂φₛ/∂x) = reaction current","From electrochemistry to explainable digital twins"])}));dfnBoard.position.set(0,3,-3.2);office.add(dfnBoard);
+    office.traverse(object=>{object.userData.exhibit=officeStory;exhibitMeshes.push(object);});scene.add(office);
 
     const firefliesGeometry = new THREE.BufferGeometry();
     const fireflyPositions = new Float32Array(240 * 3);
@@ -507,6 +557,7 @@ export default function ResearchWorldClient() {
           </header>
 
           <div className={styles.guide}><span>WASD or arrows to walk</span><span>Drag to look</span><span>Click research trees and photographs</span></div>
+          <aside className={styles.trailLegend}><strong>Follow a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</aside>
           <div className={styles.touchControls} aria-label="Movement controls">
             <button type="button" data-move="w" aria-label="Move forward">▲</button>
             <div><button type="button" data-move="a" aria-label="Move left">◀</button><button type="button" data-move="s" aria-label="Move backward">▼</button><button type="button" data-move="d" aria-label="Move right">▶</button></div>
@@ -523,10 +574,10 @@ export default function ResearchWorldClient() {
           )}
 
           {activeExhibit && (
-            <aside className={`${styles.portalCard} ${styles.exhibitCard}`} style={{ "--portal-color": "#e4b65e" } as React.CSSProperties}>
+            <aside className={`${styles.portalCard} ${styles.exhibitCard}`} style={{ "--portal-color": `#${categoryColors[activeExhibit.category??"Research"].toString(16).padStart(6,"0")}` } as React.CSSProperties}>
               <button type="button" onClick={() => setActiveExhibit(null)} aria-label="Close research exhibit"><X size={17} /></button>
               <Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />
-              <p>{activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
+              <p>{activeExhibit.category??"Research"} · {activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
               <Link href={activeExhibit.href} target="_blank" rel="noreferrer">Explore without leaving the world <ExternalLink size={15} /></Link>
             </aside>
           )}
@@ -536,8 +587,9 @@ export default function ResearchWorldClient() {
               <button type="button" onClick={() => setMapOpen(false)} aria-label="Close map"><X size={18} /></button>
               <p><Map size={16} /> Research trail</p>
               <h2>Portals, research trees, and photograph exhibits</h2>
+              <div className={styles.mapLegend}>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</div>
               <ol>{portals.map((portal) => <li key={portal.title}><button type="button" onClick={() => { setActivePortal(portal); setMapOpen(false); }}><span style={{ background: `#${portal.color.toString(16).padStart(6, "0")}` }} />{portal.title}<small>{portal.subtitle}</small></button></li>)}</ol>
-              <p className={styles.mapNote}>Every tree carries a paper or project. Twelve featured trees and photograph panels mark major systems, while three gates draw a game from the ten-challenge collection.</p>
+              <p className={styles.mapNote}>Every tree carries a story from my research, news, milestones, teaching, mentorship, or service. Featured clearings include a teaching studio and a consultation office, while three gates draw from the ten-game collection.</p>
               <Link href="/research" target="_blank">Open the research index in a new tab</Link>
             </aside>
           )}

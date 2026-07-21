@@ -240,6 +240,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const [entered, setEntered] = useState(false);
   const [welcomeOpen, setWelcomeOpen] = useState(false);
   const [narrationOn, setNarrationOn] = useState(true);
+  const [voiceNotice, setVoiceNotice] = useState("");
   const [muted, setMuted] = useState(false);
   const [activePortal, setActivePortal] = useState<Portal | null>(null);
   const [mapOpen, setMapOpen] = useState(false);
@@ -289,18 +290,50 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   }, []);
 
   const speakWelcome = useCallback(() => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      setNarrationOn(false);
+      setVoiceNotice("Feminine narration is not supported by this browser. The written welcome remains available.");
+      return;
+    }
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(welcomeNarration);
-    const voices = window.speechSynthesis.getVoices();
-    utterance.voice = voices.find((voice) => /samantha|zira|ava|jenny|female/i.test(voice.name)) ?? voices.find((voice) => voice.lang.startsWith("en")) ?? null;
-    utterance.rate = .92;
-    utterance.pitch = 1.02;
-    if (audioRef.current) audioRef.current.master.gain.setTargetAtTime(.11, audioRef.current.context.currentTime, .12);
-    utterance.onend = () => {
-      if (audioRef.current && !muted) audioRef.current.master.gain.setTargetAtTime(.3, audioRef.current.context.currentTime, .18);
+    setVoiceNotice("");
+    let resolved = false;
+    const playWithFeminineVoice = (voices: SpeechSynthesisVoice[]) => {
+      if (resolved || voices.length === 0) return;
+      resolved = true;
+      const africanFeminine = /asilia|ayanda|im[aâ]ni|zuri|ezinne|adjoa|ama|sade/i;
+      const feminine = /aria|jenny|zira|samantha|ava|susan|hazel|libby|sonia|natasha|joanna|salli|kendra|ivy|kimberly|victoria|tessa|karen|moira|fiona|female/i;
+      const voice = voices.find((candidate) => africanFeminine.test(candidate.name) && candidate.lang.startsWith("en"))
+        ?? voices.find((candidate) => feminine.test(candidate.name) && candidate.lang.startsWith("en"));
+      if (!voice) {
+        setNarrationOn(false);
+        setVoiceNotice("A feminine narration voice is unavailable in this browser. The written welcome remains available.");
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(welcomeNarration);
+      utterance.voice = voice;
+      utterance.rate = .92;
+      utterance.pitch = 1.04;
+      if (audioRef.current) audioRef.current.master.gain.setTargetAtTime(.11, audioRef.current.context.currentTime, .12);
+      utterance.onend = () => {
+        if (audioRef.current && !muted) audioRef.current.master.gain.setTargetAtTime(.3, audioRef.current.context.currentTime, .18);
+      };
+      window.speechSynthesis.speak(utterance);
     };
-    window.speechSynthesis.speak(utterance);
+    const voices = window.speechSynthesis.getVoices();
+    playWithFeminineVoice(voices);
+    if (!resolved) {
+      const handleVoices = () => playWithFeminineVoice(window.speechSynthesis.getVoices());
+      window.speechSynthesis.addEventListener("voiceschanged", handleVoices, { once: true });
+      window.setTimeout(() => {
+        if (!resolved) playWithFeminineVoice(window.speechSynthesis.getVoices());
+        if (!resolved) {
+          resolved = true;
+          setNarrationOn(false);
+          setVoiceNotice("A feminine narration voice is unavailable in this browser. The written welcome remains available.");
+        }
+      }, 1000);
+    }
   }, [muted]);
 
   const enterWorld = useCallback((withSound: boolean) => {
@@ -388,6 +421,13 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     scene.fog = new THREE.FogExp2(0x9ab6a7, .012);
     const camera = new THREE.PerspectiveCamera(68, container.clientWidth / container.clientHeight, .1, 180);
     camera.position.set(0, 1.7, 7);
+
+    const guideTexture = new THREE.TextureLoader().load("/research-world/judith-guide-avatar.png");
+    guideTexture.colorSpace = THREE.SRGBColorSpace;
+    const entranceGuide = new THREE.Sprite(new THREE.SpriteMaterial({ map:guideTexture, transparent:true, depthWrite:false }));
+    entranceGuide.position.set(window.innerWidth <= 700 ? -.8 : -2.35,1.92,1.4);
+    entranceGuide.scale.set(1.7,3.4,1);
+    scene.add(entranceGuide);
 
     scene.add(new THREE.HemisphereLight(0xeaf5df, 0x34211f, 2.25));
     const sun = new THREE.DirectionalLight(0xffe4ad, 2.8);
@@ -916,30 +956,21 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
           </div>
 
           {welcomeOpen && (
-            <section className={styles.welcomeGuide} role="dialog" aria-modal="true" aria-labelledby="welcome-guide-title">
-              <div className={styles.welcomeBackdrop} />
-              <div className={styles.avatarStage} aria-hidden="true">
-                <span className={styles.avatarHalo} />
-                <Image src="/research-world/judith-guide-avatar.png" alt="" width={887} height={1774} priority className={styles.guideAvatar} />
-                <span className={styles.avatarPedestal}>Dr. Judith Njoku-Vowels<small>Your research guide</small></span>
+            <aside className={styles.welcomeSpeech} role="dialog" aria-labelledby="welcome-guide-title">
+              <p className={styles.welcomeEyebrow}>Dr. Judith, your research guide</p>
+              <h2 id="welcome-guide-title">Welcome to My Research World</h2>
+              <p className={styles.welcomeTranscript}>{welcomeNarration}</p>
+              <div className={styles.navigationBrief}>
+                <span><strong>Desktop</strong> WASD or arrows to move, then drag to look.</span>
+                <span><strong>Mobile</strong> Hold the VR Console arrows, then drag to look.</span>
+                <span><strong>Navigate</strong> Open Navigate to travel directly.</span>
               </div>
-              <div className={styles.welcomeDialogue}>
-                <p className={styles.welcomeEyebrow}>Your guided introduction</p>
-                <h2 id="welcome-guide-title">Welcome to My Research World</h2>
-                <p className={styles.welcomeTranscript}>{welcomeNarration}</p>
-                <div className={styles.navigationBrief}>
-                  <span><strong>Desktop</strong> Use WASD or arrow keys to move, then drag to look.</span>
-                  <span><strong>Mobile</strong> Touch and hold the VR Console arrows, then drag the world to look around.</span>
-                  <span><strong>Explore</strong> Select exhibits, follow signs, or open Navigate for direct travel.</span>
-                </div>
-                <div className={styles.welcomeActions}>
-                  <button type="button" className={styles.beginButton} onClick={closeWelcome}>Begin Exploring</button>
-                  <button type="button" className={styles.narrationButton} onClick={toggleNarration}>{narrationOn ? <VolumeX size={17} /> : <Volume2 size={17} />}{narrationOn ? "Turn narration off" : "Play narration"}</button>
-                  <button type="button" className={styles.skipIntroduction} onClick={closeWelcome}>Skip introduction</button>
-                </div>
-                <small className={styles.subtitleLabel}>Narration transcript shown above</small>
+              {voiceNotice && <small className={styles.voiceNotice}>{voiceNotice}</small>}
+              <div className={styles.welcomeActions}>
+                <button type="button" className={styles.beginButton} onClick={closeWelcome}>Proceed</button>
+                <button type="button" className={styles.narrationButton} onClick={toggleNarration}>{narrationOn ? <VolumeX size={17} /> : <Volume2 size={17} />}{narrationOn ? "Narration off" : "Play feminine voice"}</button>
               </div>
-            </section>
+            </aside>
           )}
 
           {activePortal && (

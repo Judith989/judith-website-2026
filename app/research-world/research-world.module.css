@@ -44,27 +44,19 @@
 .consolePad button span { color: rgba(255,255,255,.52); font-size: 6px; letter-spacing: .09em; text-transform: uppercase; }
 .consolePad button:active { background: #e4bd6c; color: #3c0c1d; transform: translateY(1px); }
 .consoleCore { align-items: center; background: radial-gradient(circle,#b78644,#5a1930 70%); border: 1px solid rgba(245,214,152,.5); border-radius: 50%; color: #fff4db; display: flex; font-family: Georgia,serif; font-size: 9px; height: 34px; justify-content: center; width: 34px; }
-.welcomeGuide { align-items: end; display: grid; grid-template-columns: minmax(280px, .82fr) minmax(460px, 1.18fr); inset: 0; overflow: hidden; padding: clamp(72px, 8vw, 110px) clamp(36px, 7vw, 118px) clamp(30px, 5vw, 72px); position: absolute; z-index: 30; }
-.welcomeBackdrop { backdrop-filter: blur(8px); background: radial-gradient(circle at 23% 52%, rgba(205,157,70,.21),transparent 30%),linear-gradient(100deg,rgba(19,7,11,.94),rgba(39,11,22,.9) 56%,rgba(14,28,20,.88)); inset: 0; position: absolute; }
-.avatarStage { align-items: center; align-self: stretch; display: flex; justify-content: center; min-height: 0; perspective: 900px; position: relative; }
-.avatarHalo { animation: guideGlow 4s ease-in-out infinite; background: radial-gradient(circle,rgba(239,194,105,.35),rgba(116,31,58,.17) 43%,transparent 69%); border: 1px solid rgba(238,196,111,.2); border-radius: 50%; height: min(53vw,640px); position: absolute; width: min(53vw,640px); }
-.guideAvatar { filter: drop-shadow(0 24px 35px rgba(0,0,0,.55)); height: min(71vh,720px); max-width: 100%; object-fit: contain; object-position: center bottom; position: relative; transform: rotateY(5deg) translateY(4%); width: auto; }
-.avatarPedestal { background: rgba(30,8,16,.88); border: 1px solid rgba(239,197,113,.42); bottom: 3%; box-shadow: 0 16px 40px rgba(0,0,0,.35); color: #fff8ee; display: grid; font-family: Georgia,serif; font-size: clamp(17px,1.7vw,24px); left: 50%; min-width: min(88%,340px); padding: 12px 18px; position: absolute; text-align: center; transform: translateX(-50%); }
-.avatarPedestal small { color: #e9bf6b; font-family: Arial,sans-serif; font-size: 8px; font-weight: 800; letter-spacing: .17em; margin-top: 4px; text-transform: uppercase; }
-.welcomeDialogue { align-self: center; background: rgba(36,9,19,.88); border: 1px solid rgba(240,200,119,.36); box-shadow: 0 28px 80px rgba(0,0,0,.4); max-height: calc(100dvh - 110px); overflow-y: auto; padding: clamp(28px,4vw,56px); position: relative; }
-.welcomeDialogue::before { background: linear-gradient(90deg,#e6ba63,#8b1738); content: ""; height: 4px; left: 0; position: absolute; right: 0; top: 0; }
+.welcomeSpeech { backdrop-filter: blur(13px); background: rgba(35,9,18,.9); border: 1px solid rgba(240,200,119,.42); bottom: 72px; box-shadow: 0 24px 70px rgba(0,0,0,.4); max-height: calc(100dvh - 145px); max-width: 520px; overflow-y: auto; padding: 26px 28px; position: absolute; right: 28px; width: calc(100% - 56px); z-index: 12; }
+.welcomeSpeech::before { border-color: transparent rgba(240,200,119,.42) transparent transparent; border-style: solid; border-width: 12px 18px 12px 0; content: ""; left: -18px; position: absolute; top: 52px; }
 .welcomeEyebrow { color: #e8bd6a; font-size: 9px; font-weight: 800; letter-spacing: .18em; margin: 0 0 14px; text-transform: uppercase; }
-.welcomeDialogue h2 { font-family: Georgia,serif; font-size: clamp(38px,4.5vw,67px); font-weight: 400; letter-spacing: -.035em; line-height: .98; margin: 0 0 22px; }
-.welcomeTranscript { color: rgba(255,247,239,.82); font-family: Georgia,serif; font-size: clamp(15px,1.25vw,19px); line-height: 1.72; margin: 0; }
-.navigationBrief { border-bottom: 1px solid rgba(255,255,255,.1); border-top: 1px solid rgba(255,255,255,.1); display: grid; gap: 9px; margin: 24px 0; padding: 17px 0; }
+.welcomeSpeech h2 { font-family: Georgia,serif; font-size: clamp(30px,3vw,45px); font-weight: 400; letter-spacing: -.035em; line-height: 1; margin: 0 0 16px; }
+.welcomeTranscript { color: rgba(255,247,239,.82); font-family: Georgia,serif; font-size: 14px; line-height: 1.62; margin: 0; }
+.navigationBrief { border-bottom: 1px solid rgba(255,255,255,.1); border-top: 1px solid rgba(255,255,255,.1); display: grid; gap: 7px; margin: 18px 0; padding: 13px 0; }
 .navigationBrief span { color: rgba(255,255,255,.67); font-size: 11px; line-height: 1.5; }
 .navigationBrief strong { color: #f0ca7d; font-size: 9px; letter-spacing: .1em; margin-right: 7px; text-transform: uppercase; }
 .welcomeActions { align-items: center; display: flex; flex-wrap: wrap; gap: 9px; }
 .welcomeActions button { align-items: center; border-radius: 2px; display: inline-flex; font-size: 9px; font-weight: 800; gap: 7px; justify-content: center; letter-spacing: .09em; min-height: 43px; padding: 12px 16px; text-transform: uppercase; }
 .beginButton { background: #f0c978; border: 1px solid #f0c978; color: #380b1a; }
 .narrationButton { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.24); color: #fff8ef; }
-.skipIntroduction { background: transparent; border: 0; color: rgba(255,255,255,.58); text-decoration: underline; text-underline-offset: 4px; }
-.subtitleLabel { color: rgba(255,255,255,.38); display: block; font-size: 8px; letter-spacing: .08em; margin-top: 14px; text-transform: uppercase; }
+.voiceNotice { color: #f0ca7d; display: block; font-size: 10px; line-height: 1.5; margin: -7px 0 14px; }
 .portalCard { background: rgba(35, 10, 18, .92); border: 1px solid color-mix(in srgb, var(--portal-color), white 20%); bottom: 78px; box-shadow: 0 22px 70px rgba(0,0,0,.32); max-width: 390px; padding: 27px; position: absolute; right: 24px; width: calc(100% - 48px); }
 .portalCard::before { background: var(--portal-color); content: ""; height: 3px; left: 0; position: absolute; right: 0; top: 0; }
 .portalCard > button { background: transparent; border: 0; color: white; position: absolute; right: 14px; top: 14px; }
@@ -139,7 +131,6 @@
 .watermark { align-items: center; color: rgba(255,255,255,.5); display: flex; font-family: Georgia, serif; font-size: 12px; gap: 7px; left: 24px; position: absolute; top: 86px; }
 
 @keyframes breathe { 50% { transform: scale(1.08); opacity: .7; } }
-@keyframes guideGlow { 50% { opacity: .68; transform: scale(1.05); } }
 
 @media (max-width: 700px) {
   .portal { box-sizing: border-box; justify-content: flex-start; overflow-y: auto; padding: 28px 18px 84px; width: 100%; }
@@ -181,14 +172,9 @@
   .challengeInner h2 { font-size: 34px; }
   .answers button,.helperActions button,.museumSkip { min-height: 44px; }
   .qualityNotice { bottom: 10px; max-width: 55vw; right: 10px; }
-  .welcomeGuide { align-items: stretch; display: block; overflow-y: auto; padding: 68px 14px 24px; }
-  .welcomeBackdrop { position: fixed; }
-  .avatarStage { height: 29dvh; min-height: 190px; }
-  .avatarHalo { height: 310px; width: 310px; }
-  .guideAvatar { height: 31dvh; min-height: 205px; transform: translateY(5%); }
-  .avatarPedestal { bottom: -4px; font-size: 16px; min-width: min(82%,280px); padding: 9px 12px; }
-  .welcomeDialogue { max-height: none; overflow: visible; padding: 27px 20px 24px; }
-  .welcomeDialogue h2 { font-size: 37px; }
+  .welcomeSpeech { bottom: 12px; left: 12px; max-height: 48dvh; max-width: none; padding: 20px; right: 12px; width: auto; }
+  .welcomeSpeech::before { display: none; }
+  .welcomeSpeech h2 { font-size: 30px; }
   .welcomeTranscript { font-size: 14px; line-height: 1.62; }
   .navigationBrief { margin: 18px 0; }
   .welcomeActions { display: grid; }
@@ -212,21 +198,15 @@
   .guide { display: none; }
   .portalCard { max-height: calc(100dvh - 68px); top: 60px; }
   .mapPanel { padding-top: 18px; }
-  .welcomeGuide { display: grid; grid-template-columns: 190px minmax(0,1fr); overflow: hidden; padding: 54px 18px 14px; }
-  .avatarStage { height: auto; min-height: 0; }
-  .guideAvatar { height: 75dvh; min-height: 0; }
-  .avatarPedestal { bottom: 0; font-size: 13px; min-width: 185px; padding: 7px; }
-  .welcomeDialogue { max-height: calc(100dvh - 68px); overflow-y: auto; padding: 20px 22px; }
-  .welcomeDialogue h2 { font-size: 31px; margin-bottom: 12px; }
+  .welcomeSpeech { bottom: 10px; left: auto; max-height: calc(100dvh - 66px); max-width: 430px; padding: 17px 20px; right: 12px; width: calc(100% - 250px); }
+  .welcomeSpeech h2 { font-size: 27px; margin-bottom: 10px; }
   .welcomeTranscript { font-size: 12px; line-height: 1.48; }
   .navigationBrief { gap: 5px; margin: 12px 0; padding: 10px 0; }
   .navigationBrief span { font-size: 9px; }
   .welcomeActions { display: flex; }
   .welcomeActions button { min-height: 38px; padding: 9px 11px; width: auto; }
-  .subtitleLabel { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .portalGlow { animation: none; }
-  .avatarHalo { animation: none; }
 }

@@ -19,7 +19,7 @@ type Portal = {
 };
 
 type Category = "Research" | "News" | "Milestone" | "Teaching" | "Mentorship" | "Service";
-type Exhibit = { title: string; kind: string; category?: Category; description: string; href: string; image: string; position: [number, number, number] };
+type Exhibit = { title: string; kind: string; category?: Category; description: string; href: string; image: string; position: [number, number, number]; isPaper?: boolean };
 export type ConferencePaper = { title: string; venue: string; authors: string; year: number; href: string };
 type ResearchKiosk = "metahate" | "batgpt";
 type FacultyTourStop = { title:string; district:string; position:[number,number,number]; argument:string; evidence:string[]; links:{label:string;href:string}[]; final?:boolean };
@@ -734,7 +734,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
         const paper=conferencePapers[nextPosterIndex];const index=nextPosterIndex;const side=index%2===0?-1:1;const slot=Math.floor(index/2);const z=27-slot*2.18;
         const frame=new THREE.Mesh(new THREE.BoxGeometry(.16,2.18,1.62),new THREE.MeshStandardMaterial({color:index%4===0?0xb68a3d:0x4b2231,metalness:.2,roughness:.55}));frame.position.set(side*6.79,2.55,z);hall.add(frame);
         const poster=new THREE.Mesh(new THREE.PlaneGeometry(1.48,2.02),new THREE.MeshBasicMaterial({map:makePosterTexture(paper,index),side:THREE.DoubleSide}));poster.position.set(side*6.68,2.55,z);poster.rotation.y=side<0?Math.PI/2:-Math.PI/2;
-        const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z]};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
+        const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z],isPaper:true};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
       }
       if(nextPosterIndex<conferencePapers.length)posterBuildTimer=window.setTimeout(buildPosterBatch,45);
     };
@@ -1056,11 +1056,11 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <button type="button" onClick={() => setActiveExhibit(null)} aria-label="Close research exhibit"><X size={17} /></button>
               <Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />
               <p>{activeExhibit.category??"Research"} · {activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
-              <button type="button" className={styles.evidenceButton} onClick={()=>setEvidenceOpen(open=>!open)}>{evidenceOpen?"Hide evidence":"Show evidence"}</button>
-              {evidenceOpen&&<div className={styles.exhibitEvidence}><strong>Evidence behind this exhibit</strong><ul>{(projectEvidence[activeExhibit.title]??["Dedicated project page with system description and research context","Related peer-reviewed record in the publication archive","Connection to the wider trustworthy intelligent-systems agenda"]).map(item=><li key={item}>{item}</li>)}</ul></div>}
+              {projectEvidence[activeExhibit.title]&&<button type="button" className={styles.evidenceButton} onClick={()=>setEvidenceOpen(open=>!open)}>{evidenceOpen?"Hide project evidence":"Show project evidence"}</button>}
+              {evidenceOpen&&projectEvidence[activeExhibit.title]&&<div className={styles.exhibitEvidence}><strong>Evidence from this project</strong><ul>{projectEvidence[activeExhibit.title].map(item=><li key={item}>{item}</li>)}</ul></div>}
               {activeExhibit.title==="OmniRestore"&&!restoredVision&&<button type="button" className={styles.restoreButton} onClick={activateRestoration}>Activate Restore Vision</button>}
               {activeExhibit.title==="OmniRestore"&&restoredVision&&<b className={styles.restoredNotice}>Weather suppressed. Restored evidence revealed.</b>}
-              <Link href={activeExhibit.href} target="_blank" rel="noreferrer">Explore without leaving the world <ExternalLink size={15} /></Link>
+              <Link href={activeExhibit.href} target="_blank" rel="noreferrer">{activeExhibit.isPaper?"Open the paper online":activeExhibit.href.startsWith("/research/")?"Open the full project page":"Open the related page"} <ExternalLink size={15} /></Link>
             </aside>
           )}
 

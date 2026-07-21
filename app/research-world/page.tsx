@@ -17,17 +17,23 @@ function field(block: string, name: string) {
 function conferencePapers(): ConferencePaper[] {
   const source = fs.readFileSync(path.join(process.cwd(), "own-bib.bib"), "utf8");
   return source.split(/\n(?=@)/).filter((block) => /^@inproceedings\{/i.test(block)).map((block) => {
+    const title = field(block, "title");
     const doi = field(block, "doi");
     const url = field(block, "url");
+    const verifiedPaperLinks: Record<string, string> = {
+      "A Review of Intrusion Detection Techniques in MQTT-Enabled IoT Networks": "https://www.researchgate.net/publication/388024448_A_Review_of_Intrusion_Detection_Techniques_in_MQTT-Enabled_IoT_Networks",
+    };
     return {
-      title: field(block, "title"),
+      title,
       venue: field(block, "booktitle"),
       authors: field(block, "author").split(/\s+and\s+/).map((author) => {
         const [family, ...given] = author.split(",").map((part) => part.trim());
         return given.length ? `${given.join(" ")} ${family}` : family;
       }).join(", "),
       year: Number(field(block, "year")),
-      href: doi ? `https://doi.org/${doi}` : url || "/publications",
+      href: doi
+        ? `https://doi.org/${doi}`
+        : url || verifiedPaperLinks[title] || `https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=${encodeURIComponent(title)}`,
     };
   }).filter((paper) => paper.title && paper.venue && paper.year).sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
 }

@@ -676,11 +676,16 @@ export default function ResearchWorldClient() {
             </div>
           </header>
 
-          <div className={styles.guide}><span>WASD or arrows to walk</span><span>Drag to look</span><span>Click research trees and photographs</span></div>
+          <div className={styles.guide}><span>WASD or arrows to move</span><span>Drag to look</span><span>Select exhibits to inspect</span></div>
           <aside className={styles.trailLegend}><strong>Follow a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</aside>
-          <div className={styles.touchControls} aria-label="Movement controls">
-            <button type="button" data-move="w" aria-label="Move forward">▲</button>
-            <div><button type="button" data-move="a" aria-label="Move left">◀</button><button type="button" data-move="s" aria-label="Move backward">▼</button><button type="button" data-move="d" aria-label="Move right">▶</button></div>
+          <div className={styles.vrConsole} aria-label="VR navigation console">
+            <div className={styles.consoleHeader}><span>VR navigation</span><i aria-hidden="true" /></div>
+            <div className={styles.consoleReadout}><strong>Explore</strong><span>Touch and hold to move</span></div>
+            <div className={styles.consolePad}>
+              <button type="button" data-move="w" aria-label="Move forward"><span>Forward</span>▲</button>
+              <div><button type="button" data-move="a" aria-label="Move left"><span>Left</span>◀</button><span className={styles.consoleCore} aria-hidden="true">JN</span><button type="button" data-move="d" aria-label="Move right"><span>Right</span>▶</button></div>
+              <button type="button" data-move="s" aria-label="Move backward"><span>Back</span>▼</button>
+            </div>
           </div>
 
           {activePortal && (

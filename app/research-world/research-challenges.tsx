@@ -22,7 +22,7 @@ const bank: Challenge[] = [
 const sudokuStart=[1,0,0,4,0,4,1,0,0,1,4,0,4,0,0,1];
 const sudokuSolution=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1];
 
-export function ResearchChallenge({seed,gateTitle,onComplete}:{seed:number;gateTitle:string;onComplete:()=>void}) {
+export function ResearchChallenge({seed,gateTitle,onComplete,onSkip}:{seed:number;gateTitle:string;onComplete:()=>void;onSkip:()=>void}) {
   const challenge=bank[seed%bank.length];
   const [message,setMessage]=useState("");
   const [success,setSuccess]=useState(false);
@@ -43,6 +43,7 @@ export function ResearchChallenge({seed,gateTitle,onComplete}:{seed:number;gateT
     {challenge.type==="sudoku"&&<><div className={styles.sudoku}>{grid.map((value,index)=><button key={index} className={sudokuStart[index]?styles.given:""} onClick={()=>setCell(index,value===4?1:value+1)}>{value||"·"}</button>)}</div><small>Tap an empty square to cycle from 1 to 4.</small><div className={styles.helperActions}><button onClick={checkSudoku}>Check my grid</button><button onClick={hintSudoku}><Lightbulb size={14}/> Reveal one square</button></div></>}
     {challenge.type==="snake"&&<><div className={styles.snakeBoard}>{Array.from({length:25},(_,i)=>{const x=i%5,y=Math.floor(i/5);return <i key={i} className={x===snake.x&&y===snake.y?styles.snakeHead:x===snake.target.x&&y===snake.target.y?styles.snakeTarget:""}/>;})}</div><div className={styles.snakeControls}><button onClick={()=>move(0,-1)} aria-label="Move up"><ArrowUp/></button><div><button onClick={()=>move(-1,0)} aria-label="Move left"><ArrowLeft/></button><button onClick={()=>move(0,1)} aria-label="Move down"><ArrowDown/></button><button onClick={()=>move(1,0)} aria-label="Move right"><ArrowRight/></button></div><small>{snake.score} / 3 data points</small></div><button className={styles.hintButton} onClick={snakeHint}><Lightbulb size={15}/> Direction hint</button></>}
     {message&&<b className={`${styles.challengeMessage} ${success?styles.correct:styles.feedback}`}>{success?<CheckCircle2 size={17}/>:<CircleAlert size={17}/>}<span>{message}</span></b>}
-    <p className={styles.challengeNote}>Complete this short challenge to continue along the research trail.</p>
+    <button className={styles.museumSkip} onClick={onSkip}>Continue in museum viewing mode</button>
+    <p className={styles.challengeNote}>Solve the challenge for the full experience, or continue directly in museum viewing mode.</p>
   </div></section>;
 }

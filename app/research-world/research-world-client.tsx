@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ExternalLink, Map, Music, Music2, Volume2, VolumeX, X } from "lucide-react";
+import { Activity, ArrowLeft, ExternalLink, Map, Music, Music2, Volume2, VolumeX, X } from "lucide-react";
 import * as THREE from "three";
 import styles from "./research-world.module.css";
 import { ResearchChallenge } from "./research-challenges";
@@ -182,6 +182,10 @@ export default function ResearchWorldClient() {
   const [activeExhibit, setActiveExhibit] = useState<Exhibit | null>(null);
   const [challengeSeed, setChallengeSeed] = useState<number | null>(null);
   const [challengeTitle, setChallengeTitle] = useState("Research Gate");
+  const [restoredVision, setRestoredVision] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const restoredVisionRef = useRef(false);
+  const reducedMotionRef = useRef(false);
   const challengeOpenRef = useRef(false);
   const completedGatesRef = useRef(new Set<number>());
   const challengeDeckRef = useRef<number[]>([]);
@@ -201,6 +205,8 @@ export default function ResearchWorldClient() {
     challengeOpenRef.current = false;
     setChallengeSeed(null);
   }, []);
+  const activateRestoration = useCallback(() => { restoredVisionRef.current=true; setRestoredVision(true); }, []);
+  const toggleMotion = useCallback(() => { const next=!reducedMotionRef.current; reducedMotionRef.current=next; setReducedMotion(next); }, []);
 
   const startSound = useCallback(() => {
     if (!audioRef.current) audioRef.current = createAmbientSound();
@@ -225,6 +231,9 @@ export default function ResearchWorldClient() {
 
   useEffect(() => {
     document.body.classList.add("research-world-active");
+    const prefersReduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    reducedMotionRef.current=prefersReduced;
+    if(prefersReduced) window.setTimeout(()=>setReducedMotion(true),0);
     return () => document.body.classList.remove("research-world-active");
   }, []);
 
@@ -256,6 +265,7 @@ export default function ResearchWorldClient() {
     sun.castShadow = renderer.shadowMap.enabled;
     sun.shadow.mapSize.set(1024, 1024);
     scene.add(sun);
+    const proximityLabels: THREE.Sprite[] = [];
 
     const ground = new THREE.Mesh(new THREE.PlaneGeometry(120, 180, 1, 1), new THREE.MeshStandardMaterial({ color: 0x365c35, roughness: 1 }));
     ground.rotation.x = -Math.PI / 2;
@@ -275,6 +285,7 @@ export default function ResearchWorldClient() {
       const color=`#${worldGate.color.toString(16).padStart(6,"0")}`;
       const sign = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(worldGate.title, color), transparent: true }));
       sign.position.set(0, 5.7, worldGate.z); sign.scale.set(3.8, .9, 1); scene.add(sign);
+      proximityLabels.push(sign);
     });
 
     const river = new THREE.Mesh(new THREE.PlaneGeometry(34, 16), new THREE.MeshPhysicalMaterial({ color: 0x3b8a91, transparent: true, opacity: .74, roughness: .16, metalness: .05 }));
@@ -313,9 +324,9 @@ export default function ResearchWorldClient() {
 
     const treeGroups: THREE.Group[] = [];
     const exhibitMeshes: THREE.Object3D[] = [];
-    for (let index = 0; index < 105; index += 1) {
+    for (let index = 0; index < 44; index += 1) {
       const side = index % 2 === 0 ? -1 : 1;
-      const x = side * (6 + Math.random() * 35);
+      const x = side * (9 + Math.random() * 27);
       const z = 10 - Math.random() * 105;
       if (z < -73 && Math.abs(x) < 19) continue;
       const story = forestStories[index % forestStories.length];
@@ -330,10 +341,52 @@ export default function ResearchWorldClient() {
       const tree = addTree(scene, x, z, 1.05, categoryColors[exhibit.category ?? "Research"]);
       tree.traverse((object) => { object.userData.exhibit = exhibit; exhibitMeshes.push(object); });
       const label = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeLabel(exhibit.title, "#e4b65e"), transparent: true }));
-      label.position.set(x, 5.25, z); label.scale.set(3.5, .82, 1); label.userData.exhibit = exhibit; scene.add(label); exhibitMeshes.push(label);
+      label.position.set(x, 5.25, z); label.scale.set(4.4, 1.02, 1); label.userData.exhibit = exhibit; scene.add(label); exhibitMeshes.push(label);
+      proximityLabels.push(label);
       const photo = new THREE.Mesh(new THREE.PlaneGeometry(2.15, 1.35), new THREE.MeshBasicMaterial({ map: textureLoader.load(exhibit.image), side: THREE.DoubleSide }));
       photo.position.set(x > 0 ? x - 1.25 : x + 1.25, 2.15, z + .8); photo.rotation.y = x > 0 ? -.45 : .45; photo.userData.exhibit = exhibit; scene.add(photo); exhibitMeshes.push(photo);
     });
+
+    const registerExhibit=(group:THREE.Object3D,exhibit:Exhibit)=>group.traverse(object=>{object.userData.exhibit=exhibit;exhibitMeshes.push(object);});
+    const addCar=(parent:THREE.Group,x:number,z:number,color:number,rotation=0)=>{const car=new THREE.Group();const body=new THREE.Mesh(new THREE.BoxGeometry(1.15,.35,2.05),new THREE.MeshStandardMaterial({color,metalness:.25,roughness:.45}));body.position.y=.38;car.add(body);const roof=new THREE.Mesh(new THREE.BoxGeometry(.82,.34,1.05),new THREE.MeshStandardMaterial({color:0xc7d2d0,metalness:.35,roughness:.25}));roof.position.y=.72;car.add(roof);[-.48,.48].forEach(wx=>[-.68,.68].forEach(wz=>{const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.12,12),new THREE.MeshStandardMaterial({color:0x161616}));wheel.rotation.z=Math.PI/2;wheel.position.set(wx,.22,wz);car.add(wheel);}));car.position.set(x,0,z);car.rotation.y=rotation;parent.add(car);return car;};
+
+    const museumRoad=new THREE.Mesh(new THREE.PlaneGeometry(7,76),new THREE.MeshStandardMaterial({color:0x34383a,roughness:1}));museumRoad.rotation.x=-Math.PI/2;museumRoad.position.set(11,.025,-34);scene.add(museumRoad);
+    for(let z=1;z>-72;z-=5){const stripe=new THREE.Mesh(new THREE.PlaneGeometry(.12,2.4),new THREE.MeshBasicMaterial({color:0xe8c760}));stripe.rotation.x=-Math.PI/2;stripe.position.set(11,.04,z);scene.add(stripe);}
+
+    const parkingStory=exhibits.find(item=>item.title==="SmartParking")!;
+    const parkingDistrict=new THREE.Group();parkingDistrict.position.set(11,0,-17);
+    const lot=new THREE.Mesh(new THREE.PlaneGeometry(13,15),new THREE.MeshStandardMaterial({color:0x464b4d,roughness:1}));lot.rotation.x=-Math.PI/2;parkingDistrict.add(lot);
+    [-4,-2,0,2,4].forEach(x=>{[-4.7,4.7].forEach(z=>{const line=new THREE.Mesh(new THREE.PlaneGeometry(.08,3.3),new THREE.MeshBasicMaterial({color:0xf4eee2}));line.rotation.x=-Math.PI/2;line.position.set(x,.02,z);parkingDistrict.add(line);});});
+    [[-3,-4.2,0x7d1837],[0,-4.2,0x315b67],[3,-4.2,0xc48b3d],[-3,4.2,0x365c35],[3,4.2,0xd7d0c2]].forEach(([x,z,color])=>addCar(parkingDistrict,x,z,color));
+    const occupancy=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SmartParking: 7 of 10 spaces available","#e4b65e"),transparent:true}));occupancy.position.set(0,4,0);occupancy.scale.set(6,1.35,1);parkingDistrict.add(occupancy);registerExhibit(parkingDistrict,parkingStory);scene.add(parkingDistrict);
+    proximityLabels.push(occupancy);
+
+    const pandaStory=exhibits.find(item=>item.title==="PANDA")!;
+    const pandaDistrict=new THREE.Group();pandaDistrict.position.set(-11,0,-40);
+    const pandaLot=new THREE.Mesh(new THREE.PlaneGeometry(12,12),new THREE.MeshStandardMaterial({color:0x3e4546}));pandaLot.rotation.x=-Math.PI/2;pandaDistrict.add(pandaLot);
+    [-3.5,-1.2,1.2,3.5].forEach((x,index)=>{addCar(pandaDistrict,x,index%2?2.5:-2.5,index%2?0x315b67:0x8b1738);const beacon=new THREE.PointLight(index%2?0x6fd48a:0xe7b85e,2.5,4);beacon.position.set(x,1.2,index%2?2.5:-2.5);pandaDistrict.add(beacon);});
+    const forecast=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("PANDA: now → 15 min → 30 min","#e4b65e"),transparent:true}));forecast.position.set(0,4,0);forecast.scale.set(6,1.35,1);pandaDistrict.add(forecast);registerExhibit(pandaDistrict,pandaStory);scene.add(pandaDistrict);
+    proximityLabels.push(forecast);
+
+    const batteryStory=exhibits.find(item=>item.title==="BatteryMetrix")!;
+    const batteryDistrict=new THREE.Group();batteryDistrict.position.set(11,0,-32);
+    for(let row=0;row<3;row+=1)for(let column=0;column<5;column+=1){const cell=new THREE.Mesh(new THREE.CylinderGeometry(.38,.38,2.4,20),new THREE.MeshStandardMaterial({color:row===1?0x8b1738:0xb68942,metalness:.5,roughness:.3}));cell.position.set((column-2)*.9,1.2,(row-1)*.9);batteryDistrict.add(cell);}
+    const batteryLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("BatteryMetrix: SoC · SoH · RUL · XAI","#e4b65e"),transparent:true}));batteryLabel.position.set(0,4.2,0);batteryLabel.scale.set(6,1.35,1);batteryDistrict.add(batteryLabel);registerExhibit(batteryDistrict,batteryStory);scene.add(batteryDistrict);
+    proximityLabels.push(batteryLabel);
+
+    const bridgeStory=exhibits.find(item=>item.title==="BridgeSync")!;
+    const bridgeDistrict=new THREE.Group();bridgeDistrict.position.set(-11,0,-56);
+    const deck=new THREE.Mesh(new THREE.BoxGeometry(12,.35,2.3),new THREE.MeshStandardMaterial({color:0x77746e,metalness:.25}));deck.position.y=2.2;bridgeDistrict.add(deck);
+    [-5,0,5].forEach(x=>{const pier=new THREE.Mesh(new THREE.BoxGeometry(.6,2.2,1.3),new THREE.MeshStandardMaterial({color:0x565754}));pier.position.set(x,1,0);bridgeDistrict.add(pier);const sensor=new THREE.PointLight(0x66c8d4,3,5);sensor.position.set(x,2.65,0);bridgeDistrict.add(sensor);});
+    const bridgeLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("BridgeSync: secure structural intelligence","#e4b65e"),transparent:true}));bridgeLabel.position.set(0,4.5,0);bridgeLabel.scale.set(6,1.35,1);bridgeDistrict.add(bridgeLabel);registerExhibit(bridgeDistrict,bridgeStory);scene.add(bridgeDistrict);
+    proximityLabels.push(bridgeLabel);
+
+    const omniStory=exhibits.find(item=>item.title==="OmniRestore")!;
+    const omniDistrict=new THREE.Group();omniDistrict.position.set(-10,0,-9);addCar(omniDistrict,0,0,0xf0eee7);
+    const visionScreen=new THREE.Mesh(new THREE.PlaneGeometry(5.8,3.2),new THREE.MeshBasicMaterial({map:textureLoader.load("/research/omnirestore-fog-example.png"),side:THREE.DoubleSide}));visionScreen.position.set(0,3,-2);omniDistrict.add(visionScreen);
+    const rainGeometry=new THREE.BufferGeometry();const rainPositions=new Float32Array(420*3);for(let i=0;i<rainPositions.length;i+=3){rainPositions[i]=(Math.random()-.5)*9;rainPositions[i+1]=Math.random()*8;rainPositions[i+2]=(Math.random()-.5)*8;}rainGeometry.setAttribute("position",new THREE.BufferAttribute(rainPositions,3));const rainMaterial=new THREE.PointsMaterial({color:0xc8e6ec,size:.055,transparent:true,opacity:.88});const weatherRain=new THREE.Points(rainGeometry,rainMaterial);omniDistrict.add(weatherRain);
+    const omniLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("OmniRestore Weather Chamber","#e4b65e"),transparent:true}));omniLabel.position.set(0,6,0);omniLabel.scale.set(6,1.35,1);omniDistrict.add(omniLabel);registerExhibit(omniDistrict,omniStory);scene.add(omniDistrict);
+    proximityLabels.push(omniLabel);
 
     const teachingStory=forestStories.find(item=>item.title==="Teaching philosophy")!;
     const classroom=new THREE.Group();classroom.position.set(-12,0,-36);
@@ -342,11 +395,16 @@ export default function ResearchWorldClient() {
     [[-2,-1.7],[0,-2.4],[2,-1.7],[-3,-.2],[3,-.2]].forEach(([x,z],index)=>{const student=addPerson(classroom,x,z,index%2?0x315b67:0xc18b3d,true);student.lookAt(0,1,0);});
     const teachingBoard=new THREE.Mesh(new THREE.PlaneGeometry(5.8,2.8),new THREE.MeshBasicMaterial({map:makeBoardTexture("Teaching through systems",["Observe the physical world","Model the governing process","Test, explain, and improve"])}));teachingBoard.position.set(0,2.6,2.3);teachingBoard.rotation.y=Math.PI;classroom.add(teachingBoard);
     const teachingLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("Teaching & Mentorship Studio","#9f7ac1"),transparent:true}));teachingLabel.position.set(0,5.3,0);teachingLabel.scale.set(5.5,1.25,1);classroom.add(teachingLabel);
+    proximityLabels.push(teachingLabel);
     classroom.traverse(object=>{object.userData.exhibit=teachingStory;exhibitMeshes.push(object);});scene.add(classroom);
 
-    const officeStory:Exhibit={title:"Consultation Office",kind:"Meet Dr. Judith Njoku-Vowels",category:"Teaching",description:"A space for research consultation, student questions, collaboration, and working through the mathematics behind trustworthy battery digital twins.",href:"/contact",image:"/judith_pic2.png",position:[12,0,-58]};
-    const office=new THREE.Group();office.position.set(12,0,-58);
+    const officeStory:Exhibit={title:"Consultation Office",kind:"Meet Dr. Judith Njoku-Vowels",category:"Teaching",description:"A space for research consultation, student questions, collaboration, and working through the mathematics behind trustworthy battery digital twins.",href:"/contact",image:"/judith_pic2.png",position:[11,0,-68]};
+    const office=new THREE.Group();office.position.set(11,0,-68);
     const roomFloor=new THREE.Mesh(new THREE.BoxGeometry(9,.15,7),new THREE.MeshStandardMaterial({color:0x7a6049}));office.add(roomFloor);
+    const wallMaterial=new THREE.MeshStandardMaterial({color:0x5a2033,roughness:.8});
+    [[0,2.7,-3.45,9,.25],[ -4.4,2.7,0,.25,7],[4.4,2.7,0,.25,7],[-3,2.7,3.45,2.8,.25],[3,2.7,3.45,2.8,.25]].forEach(([x,y,z,width,depth])=>{const wall=new THREE.Mesh(new THREE.BoxGeometry(width,5.4,depth),wallMaterial);wall.position.set(x,y,z);office.add(wall);});
+    const officeSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("Consultation Office","#e4b65e"),transparent:true}));officeSign.position.set(0,5.9,3.5);officeSign.scale.set(5.2,1.2,1);office.add(officeSign);
+    proximityLabels.push(officeSign);
     const desk=new THREE.Mesh(new THREE.BoxGeometry(4,.25,1.6),new THREE.MeshStandardMaterial({color:0x5b301f}));desk.position.set(0,1.15,0);office.add(desk);
     const deskLegs=[[-1.7,.55,-.55],[1.7,.55,-.55],[-1.7,.55,.55],[1.7,.55,.55]];deskLegs.forEach(([x,y,z])=>{const leg=new THREE.Mesh(new THREE.BoxGeometry(.18,1.1,.18),new THREE.MeshStandardMaterial({color:0x3b2118}));leg.position.set(x,y,z);office.add(leg);});
     addPerson(office,0,1.3,0x6f1737,true);
@@ -459,6 +517,7 @@ export default function ResearchWorldClient() {
     canvas.addEventListener("pointerup", onPointerUp);
 
     const clock = new THREE.Clock();
+    const labelPosition=new THREE.Vector3();
     let frame = 0;
     let animationId = 0;
     const animate = () => {
@@ -481,12 +540,14 @@ export default function ResearchWorldClient() {
       });
       camera.position.x = THREE.MathUtils.clamp(camera.position.x, -22, 22);
       camera.position.z = THREE.MathUtils.clamp(camera.position.z, -76, 10);
-      camera.position.y = 1.7 + Math.sin(clock.elapsedTime * 7) * ((keys.size > 0) ? .018 : .006);
+      camera.position.y = reducedMotionRef.current ? 1.7 : 1.7 + Math.sin(clock.elapsedTime * 7) * ((keys.size > 0) ? .018 : .006);
       camera.rotation.order = "YXZ";
       camera.rotation.y = yaw;
       camera.rotation.x = pitch;
 
-      waterfallMaterial.opacity = .66 + Math.sin(clock.elapsedTime * 3.2) * .08;
+      waterfallMaterial.opacity = reducedMotionRef.current ? .7 : .66 + Math.sin(clock.elapsedTime * 3.2) * .08;
+      rainMaterial.opacity = restoredVisionRef.current ? .08 : .88;
+      if(!reducedMotionRef.current&&!restoredVisionRef.current){const rain=rainGeometry.attributes.position.array as Float32Array;for(let index=1;index<rain.length;index+=3){rain[index]-=delta*7;if(rain[index]<0)rain[index]=8;}rainGeometry.attributes.position.needsUpdate=true;}
       const positions = mistGeometry.attributes.position.array as Float32Array;
       for (let index = 1; index < positions.length; index += 3) {
         positions[index] += delta * (.3 + (index % 7) * .025);
@@ -494,6 +555,7 @@ export default function ResearchWorldClient() {
       }
       mistGeometry.attributes.position.needsUpdate = true;
       fireflies.rotation.y = Math.sin(clock.elapsedTime * .08) * .12;
+      proximityLabels.forEach(label=>{label.getWorldPosition(labelPosition);const distance=camera.position.distanceTo(labelPosition);const opacity=THREE.MathUtils.clamp((18-distance)/5,0,1);const material=label.material as THREE.SpriteMaterial;material.opacity=opacity;label.visible=opacity>.02;});
       portalMeshes.forEach((mesh, index) => {
         if (mesh.geometry instanceof THREE.TorusGeometry) mesh.rotation.z += delta * (.22 + index * .005);
       });
@@ -552,6 +614,7 @@ export default function ResearchWorldClient() {
           <Image src="/logo-judith.png" alt="Judith Njoku-Vowels monogram" width={160} height={160} priority className={styles.logo} />
           <p className={styles.eyebrow}>An immersive research experience</p>
           <h1>Enter my <em>Research World</em></h1>
+          <p className={styles.identity}>AI Researcher · Digital Twins · Computer Vision · Cyber-Physical Systems</p>
           <p className={styles.intro}>A living digital twin of the ideas, places, systems, and questions that have shaped my academic life. Follow the garden path, listen to the landscape, and enter each research portal.</p>
           <div className={styles.portalActions}>
             <button type="button" onClick={() => enterWorld(true)}><Volume2 size={18} /> Enter with sound</button>
@@ -571,6 +634,7 @@ export default function ResearchWorldClient() {
             <div><strong>Judith Njoku-Vowels</strong><span>Research World</span></div>
             <div className={styles.headerControls}>
               <button type="button" onClick={() => setMapOpen((open) => !open)} aria-label="Open research world map"><Map size={18} /></button>
+              <button type="button" onClick={toggleMotion} aria-label={reducedMotion?"Enable ambient motion":"Reduce motion"}><Activity size={18} /></button>
               <button type="button" onClick={toggleSound} aria-label={muted ? "Turn sound on" : "Mute sound"}>{muted ? <VolumeX size={18} /> : <Music2 size={18} />}</button>
             </div>
           </header>
@@ -597,6 +661,8 @@ export default function ResearchWorldClient() {
               <button type="button" onClick={() => setActiveExhibit(null)} aria-label="Close research exhibit"><X size={17} /></button>
               <Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />
               <p>{activeExhibit.category??"Research"} · {activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
+              {activeExhibit.title==="OmniRestore"&&!restoredVision&&<button type="button" className={styles.restoreButton} onClick={activateRestoration}>Activate Restore Vision</button>}
+              {activeExhibit.title==="OmniRestore"&&restoredVision&&<b className={styles.restoredNotice}>Weather suppressed. Restored evidence revealed.</b>}
               <Link href={activeExhibit.href} target="_blank" rel="noreferrer">Explore without leaving the world <ExternalLink size={15} /></Link>
             </aside>
           )}
@@ -613,7 +679,7 @@ export default function ResearchWorldClient() {
             </aside>
           )}
 
-          {challengeSeed !== null && <ResearchChallenge key={challengeSeed} seed={challengeSeed} gateTitle={challengeTitle} onComplete={completeChallenge} />}
+          {challengeSeed !== null && <ResearchChallenge key={challengeSeed} seed={challengeSeed} gateTitle={challengeTitle} onComplete={completeChallenge} onSkip={completeChallenge} />}
 
           {qualityNotice && <p className={styles.qualityNotice}>{qualityNotice}</p>}
           <div className={styles.watermark}><Music size={14} /> A digital twin of my research life</div>

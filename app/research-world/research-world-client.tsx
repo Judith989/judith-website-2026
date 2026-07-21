@@ -597,7 +597,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     [-7,7].forEach(x=>{const wall=new THREE.Mesh(new THREE.BoxGeometry(.3,6.4,66),hallWallMaterial);wall.position.set(x,3.2,0);hall.add(wall);});
     const hallBack=new THREE.Mesh(new THREE.BoxGeometry(14,6.4,.3),hallWallMaterial);hallBack.position.set(0,3.2,-33);hall.add(hallBack);
     const roof=new THREE.Mesh(new THREE.BoxGeometry(14.3,.18,66),new THREE.MeshPhysicalMaterial({color:0xd8e4e1,transparent:true,opacity:.48,transmission:.2,roughness:.22}));roof.position.y=6.4;hall.add(roof);
-    const hallSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(`CONFERENCE POSTER HALL | ${conferencePapers.length} PAPERS`,"#e4b65e"),transparent:true}));hallSign.position.set(0,7,31);hallSign.scale.set(9,2.1,1);hall.add(hallSign);proximityLabels.push(hallSign);
+    const hallSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("CONFERENCE PAPERS","#e4b65e"),transparent:true}));hallSign.position.set(0,7.6,31);hallSign.scale.set(7.2,1.8,1);hall.add(hallSign);proximityLabels.push(hallSign);
     const hallInstruction=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SELECT ANY POSTER TO OPEN ITS PAPER RECORD","#72a9b5"),transparent:true}));hallInstruction.position.set(0,5.25,29.5);hallInstruction.scale.set(8.2,1.9,1);hall.add(hallInstruction);proximityLabels.push(hallInstruction);
     [
       {z:18,title:"Conference Poster Hall",lines:[`${conferencePapers.length} peer-reviewed conference papers`,"A complete walk through the conference record"]},
@@ -628,7 +628,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     for(let z=-27;z<=27;z+=9){const light=new THREE.PointLight(0xffe2ae,2.2,10);light.position.set(0,5.7,z);hall.add(light);}
     scene.add(hall);
     const hallApproach=new THREE.Mesh(new THREE.PlaneGeometry(22,5),new THREE.MeshStandardMaterial({color:0x8f765d,roughness:1}));hallApproach.rotation.x=-Math.PI/2;hallApproach.position.set(21,.025,-10);scene.add(hallApproach);
-    const hallDirection=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(`POSTER HALL → ${conferencePapers.length} CONFERENCE PAPERS`,"#e4b65e"),transparent:true}));hallDirection.position.set(16,4.8,-5);hallDirection.scale.set(8.5,2,1);scene.add(hallDirection);proximityLabels.push(hallDirection);
+    const hallDirection=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("CONFERENCE PAPERS →","#e4b65e"),transparent:true}));hallDirection.position.set(27.5,7.4,-6.5);hallDirection.scale.set(6.8,1.7,1);scene.add(hallDirection);proximityLabels.push(hallDirection);
 
     const firefliesGeometry = new THREE.BufferGeometry();
     const fireflyPositions = new Float32Array(240 * 3);

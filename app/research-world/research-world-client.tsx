@@ -920,7 +920,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <div className={styles.welcomeBackdrop} />
               <div className={styles.avatarStage} aria-hidden="true">
                 <span className={styles.avatarHalo} />
-                <Image src="/judith_pic2.png" alt="" width={720} height={900} priority className={styles.guideAvatar} />
+                <Image src="/research-world/judith-guide-avatar.png" alt="" width={887} height={1774} priority className={styles.guideAvatar} />
                 <span className={styles.avatarPedestal}>Dr. Judith Njoku-Vowels<small>Your research guide</small></span>
               </div>
               <div className={styles.welcomeDialogue}>

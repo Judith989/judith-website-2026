@@ -23,6 +23,8 @@ type Exhibit = { title: string; kind: string; category?: Category; description: 
 export type ConferencePaper = { title: string; venue: string; authors: string; year: number; href: string };
 type ResearchKiosk = "metahate" | "batgpt";
 
+const welcomeNarration = "Welcome to My Research World. I am Dr. Judith Njoku-Vowels, an engineer and researcher building intelligent systems that help the physical world see, predict, and decide. This immersive world brings together my research, publications, teaching, mentorship, and academic journey. Follow the signs, explore the exhibits, and use the VR Console whenever you want to move directly to a destination.";
+
 const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
 const worldGates = [
   { z:-13, title:"Research Gate", color:categoryColors.Research },
@@ -236,6 +238,8 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const worldRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<ReturnType<typeof createAmbientSound>>(null);
   const [entered, setEntered] = useState(false);
+  const [welcomeOpen, setWelcomeOpen] = useState(false);
+  const [narrationOn, setNarrationOn] = useState(true);
   const [muted, setMuted] = useState(false);
   const [activePortal, setActivePortal] = useState<Portal | null>(null);
   const [mapOpen, setMapOpen] = useState(false);
@@ -280,10 +284,51 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     setMuted(false);
   }, []);
 
+  const stopNarration = useCallback(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
+  }, []);
+
+  const speakWelcome = useCallback(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(welcomeNarration);
+    const voices = window.speechSynthesis.getVoices();
+    utterance.voice = voices.find((voice) => /samantha|zira|ava|jenny|female/i.test(voice.name)) ?? voices.find((voice) => voice.lang.startsWith("en")) ?? null;
+    utterance.rate = .92;
+    utterance.pitch = 1.02;
+    if (audioRef.current) audioRef.current.master.gain.setTargetAtTime(.11, audioRef.current.context.currentTime, .12);
+    utterance.onend = () => {
+      if (audioRef.current && !muted) audioRef.current.master.gain.setTargetAtTime(.3, audioRef.current.context.currentTime, .18);
+    };
+    window.speechSynthesis.speak(utterance);
+  }, [muted]);
+
   const enterWorld = useCallback((withSound: boolean) => {
     setEntered(true);
-    if (withSound) startSound();
-  }, [startSound]);
+    setWelcomeOpen(true);
+    setNarrationOn(withSound);
+    if (withSound) {
+      startSound();
+      speakWelcome();
+    }
+  }, [speakWelcome, startSound]);
+
+  const toggleNarration = useCallback(() => {
+    if (narrationOn) {
+      stopNarration();
+      setNarrationOn(false);
+      if (audioRef.current && !muted) audioRef.current.master.gain.setTargetAtTime(.3, audioRef.current.context.currentTime, .12);
+      return;
+    }
+    setNarrationOn(true);
+    speakWelcome();
+  }, [muted, narrationOn, speakWelcome, stopNarration]);
+
+  const closeWelcome = useCallback(() => {
+    stopNarration();
+    setWelcomeOpen(false);
+    if (audioRef.current && !muted) audioRef.current.master.gain.setTargetAtTime(.3, audioRef.current.context.currentTime, .12);
+  }, [muted, stopNarration]);
 
   const toggleSound = useCallback(() => {
     if (!audioRef.current) {
@@ -322,7 +367,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     return () => document.body.classList.remove("research-world-active");
   }, []);
 
-  useEffect(() => () => audioRef.current?.stop(), []);
+  useEffect(() => () => { stopNarration(); audioRef.current?.stop(); }, [stopNarration]);
 
   useEffect(() => {
     if (!entered || !canvasRef.current || !worldRef.current) return;
@@ -869,6 +914,33 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <button type="button" data-move="s" aria-label="Move backward"><span>Back</span>▼</button>
             </div>
           </div>
+
+          {welcomeOpen && (
+            <section className={styles.welcomeGuide} role="dialog" aria-modal="true" aria-labelledby="welcome-guide-title">
+              <div className={styles.welcomeBackdrop} />
+              <div className={styles.avatarStage} aria-hidden="true">
+                <span className={styles.avatarHalo} />
+                <Image src="/judith_pic2.png" alt="" width={720} height={900} priority className={styles.guideAvatar} />
+                <span className={styles.avatarPedestal}>Dr. Judith Njoku-Vowels<small>Your research guide</small></span>
+              </div>
+              <div className={styles.welcomeDialogue}>
+                <p className={styles.welcomeEyebrow}>Your guided introduction</p>
+                <h2 id="welcome-guide-title">Welcome to My Research World</h2>
+                <p className={styles.welcomeTranscript}>{welcomeNarration}</p>
+                <div className={styles.navigationBrief}>
+                  <span><strong>Desktop</strong> Use WASD or arrow keys to move, then drag to look.</span>
+                  <span><strong>Mobile</strong> Touch and hold the VR Console arrows, then drag the world to look around.</span>
+                  <span><strong>Explore</strong> Select exhibits, follow signs, or open Navigate for direct travel.</span>
+                </div>
+                <div className={styles.welcomeActions}>
+                  <button type="button" className={styles.beginButton} onClick={closeWelcome}>Begin Exploring</button>
+                  <button type="button" className={styles.narrationButton} onClick={toggleNarration}>{narrationOn ? <VolumeX size={17} /> : <Volume2 size={17} />}{narrationOn ? "Turn narration off" : "Play narration"}</button>
+                  <button type="button" className={styles.skipIntroduction} onClick={closeWelcome}>Skip introduction</button>
+                </div>
+                <small className={styles.subtitleLabel}>Narration transcript shown above</small>
+              </div>
+            </section>
+          )}
 
           {activePortal && (
             <aside className={styles.portalCard} style={{ "--portal-color": `#${activePortal.color.toString(16).padStart(6, "0")}` } as React.CSSProperties}>

@@ -67,7 +67,7 @@ const forestStories: Exhibit[] = [
 const portals: Portal[] = [
   { title: "OmniRestore", subtitle: "The Weather Garden", description: "Walk into my work on lightweight image restoration for autonomous systems navigating rain, snow, fog, low light, and composite weather.", href: "/research/omnirestore", color: 0xd2a23a, position: [-8, 1.7, -12] },
   { title: "BatteryMetrix", subtitle: "The Energy Grove", description: "My doctoral research world brings battery prediction, explainable AI, secure records, and immersive digital twins into one user-centered system.", href: "/research/batterymetrix", color: 0x8d173b, position: [8, 1.7, -25] },
-  { title: "PANDA", subtitle: "The Mobility Clearing", description: "A predictive parking digital twin that turns limited observations into occupancy and turnover forecasts people can inspect spatially.", href: "/research/panda", color: 0xc47c2b, position: [-8, 1.7, -39] },
+  { title: "PANDA", subtitle: "Smart Parking Predictive Twin", description: "Inside the Smart Parking district, PANDA turns limited observations into occupancy and turnover forecasts people can inspect spatially.", href: "/research/panda", color: 0xc47c2b, position: [17, 1.7, -17] },
   { title: "BridgeSync", subtitle: "The Resilience Crossing", description: "A secure intelligent bridge-monitoring framework connecting structural sensing, digital representation, and decision support.", href: "/research/bridgesync", color: 0x77213d, position: [8, 1.7, -53] },
   { title: "Research Archive", subtitle: "The Waterfall Library", description: "Continue beyond the waterfall to explore publications, systems, and the complete research record behind this world.", href: "/publications", color: 0xe0b15b, position: [0, 2.2, -70] },
 ];
@@ -86,7 +86,12 @@ function makeLabel(text: string, color: string) {
   context.lineWidth = 4;
   context.stroke();
   context.fillStyle = "#fff8f0";
-  context.font = "600 54px Georgia";
+  let fontSize = 54;
+  context.font = `600 ${fontSize}px Georgia`;
+  while (context.measureText(text).width > 700 && fontSize > 25) {
+    fontSize -= 2;
+    context.font = `600 ${fontSize}px Georgia`;
+  }
   context.textAlign = "center";
   context.fillText(text, 384, 105);
   const texture = new THREE.CanvasTexture(canvas);
@@ -352,7 +357,7 @@ export default function ResearchWorldClient() {
 
     const treeGroups: THREE.Group[] = [];
     const exhibitMeshes: THREE.Object3D[] = [];
-    const districtClearings=[{x:-10,z:-9,r:8},{x:11,z:-17,r:9},{x:11,z:-32,r:8},{x:-11,z:-40,r:8},{x:-11,z:-56,r:8},{x:-12,z:-36,r:6},{x:11,z:-68,r:8}];
+    const districtClearings=[{x:-10,z:-9,r:8},{x:11,z:-17,r:10},{x:11,z:-32,r:8},{x:-11,z:-56,r:8},{x:-12,z:-36,r:6},{x:11,z:-68,r:8}];
     for (let index = 0; index < 44; index += 1) {
       const side = index % 2 === 0 ? -1 : 1;
       const x = side * (9 + Math.random() * 27);
@@ -415,14 +420,13 @@ export default function ResearchWorldClient() {
     const lot=new THREE.Mesh(new THREE.PlaneGeometry(13,15),new THREE.MeshStandardMaterial({color:0x464b4d,roughness:1}));lot.rotation.x=-Math.PI/2;parkingDistrict.add(lot);
     [-4,-2,0,2,4].forEach(x=>{[-4.7,4.7].forEach(z=>{const line=new THREE.Mesh(new THREE.PlaneGeometry(.08,3.3),new THREE.MeshBasicMaterial({color:0xf4eee2}));line.rotation.x=-Math.PI/2;line.position.set(x,.02,z);parkingDistrict.add(line);});});
     [[-3,-4.2,0x7d1837],[0,-4.2,0x315b67],[3,-4.2,0xc48b3d],[-3,4.2,0x365c35],[3,4.2,0xd7d0c2]].forEach(([x,z,color])=>addCar(parkingDistrict,x,z,color));
-    const occupancy=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SmartParking: 7 of 10 spaces available","#e4b65e"),transparent:true}));occupancy.position.set(0,4,0);occupancy.scale.set(6,1.35,1);parkingDistrict.add(occupancy);registerExhibit(parkingDistrict,parkingStory);scene.add(parkingDistrict);
+    const occupancy=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SMART PARKING | 7 OF 10 SPACES OPEN","#e4b65e"),transparent:true}));occupancy.position.set(0,4,-2.5);occupancy.scale.set(7.2,1.7,1);parkingDistrict.add(occupancy);registerExhibit(parkingDistrict,parkingStory);scene.add(parkingDistrict);
     proximityLabels.push(occupancy);
 
     const pandaStory=exhibits.find(item=>item.title==="PANDA")!;
-    const pandaDistrict=new THREE.Group();pandaDistrict.position.set(-11,0,-40);
-    const pandaLot=new THREE.Mesh(new THREE.PlaneGeometry(12,12),new THREE.MeshStandardMaterial({color:0x3e4546}));pandaLot.rotation.x=-Math.PI/2;pandaDistrict.add(pandaLot);
-    [-3.5,-1.2,1.2,3.5].forEach((x,index)=>{addCar(pandaDistrict,x,index%2?2.5:-2.5,index%2?0x315b67:0x8b1738);const beacon=new THREE.PointLight(index%2?0x6fd48a:0xe7b85e,2.5,4);beacon.position.set(x,1.2,index%2?2.5:-2.5);pandaDistrict.add(beacon);});
-    const forecast=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("PANDA: now → 15 min → 30 min","#e4b65e"),transparent:true}));forecast.position.set(0,4,0);forecast.scale.set(6,1.35,1);pandaDistrict.add(forecast);registerExhibit(pandaDistrict,pandaStory);scene.add(pandaDistrict);
+    const pandaLayer=new THREE.Group();
+    [-3,0,3].forEach((x,index)=>{const beacon=new THREE.PointLight(index===0?0x6fd48a:index===1?0xe7b85e:0x66c8d4,3,5);beacon.position.set(x,1.3,3.8);pandaLayer.add(beacon);const marker=new THREE.Mesh(new THREE.CylinderGeometry(.11,.11,1.6,10),new THREE.MeshStandardMaterial({color:index===0?0x6fd48a:index===1?0xe7b85e:0x66c8d4,emissive:index===0?0x245a34:index===1?0x6a4618:0x245e66}));marker.position.set(x,.8,3.8);pandaLayer.add(marker);});
+    const forecast=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("PANDA FORECAST | NOW · 15 MIN · 30 MIN","#66c8d4"),transparent:true}));forecast.position.set(0,5.7,2.5);forecast.scale.set(7.2,1.7,1);pandaLayer.add(forecast);registerExhibit(pandaLayer,pandaStory);parkingDistrict.add(pandaLayer);
     proximityLabels.push(forecast);
 
     const batteryStory=exhibits.find(item=>item.title==="BatteryMetrix")!;

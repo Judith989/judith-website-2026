@@ -120,7 +120,7 @@
 @keyframes breathe { 50% { transform: scale(1.08); opacity: .7; } }
 
 @media (max-width: 700px) {
-  .portal { box-sizing: border-box; justify-content: center; width: 100%; }
+  .portal { box-sizing: border-box; justify-content: flex-start; overflow-y: auto; padding: 28px 18px 84px; width: 100%; }
   .portalGlow { height: 115vw; width: 115vw; }
   .logo { height: 86px; width: 86px; }
   .eyebrow { font-size: 9px; letter-spacing: .15em; margin-top: 18px; max-width: 100%; }
@@ -130,22 +130,54 @@
   .portalActions { max-width: 310px; width: 100%; }
   .portalActions button { justify-content: center; width: 100%; }
   .soundNote { max-width: 290px; }
-  .worldHeader { grid-template-columns: 1fr auto; padding: 14px 14px 36px; }
+  .worldHeader { grid-template-columns: 1fr auto; padding: 12px 12px 34px; }
   .worldHeader > div:nth-child(2) { display: none; }
   .worldHeader > a span { display: none; }
   .navigateButton span { display: none; }
   .headerControls .navigateButton { padding: 0; width: 40px; }
-  .guide { bottom: 16px; font-size: 8px; gap: 8px; }
+  .headerControls { gap: 5px; }
+  .headerControls button,.headerControls .navigateButton { height: 38px; width: 38px; }
+  .guide { bottom: 13px; font-size: 7px; gap: 7px; max-width: calc(100vw - 24px); white-space: normal; }
+  .guide span:first-child { display: none; }
   .guide span + span::before { margin-right: 8px; }
   .vrConsole { bottom: 48px; left: 14px; transform: scale(.88); transform-origin: bottom left; }
-  .portalCard { bottom: 112px; left: 14px; max-width: none; right: 14px; width: auto; }
-  .exhibitCard { max-height: 62dvh; overflow-y: auto; }
+  .portalCard { bottom: auto; left: 12px; max-height: calc(100dvh - 92px); max-width: none; overflow-y: auto; padding: 22px; right: 12px; top: 76px; width: auto; }
+  .exhibitCard,.kioskPanel { max-height: calc(100dvh - 92px); overflow-y: auto; }
+  .exhibitCard > img { margin-bottom: 14px; max-height: 28dvh; }
   .portalCard h2 { font-size: 29px; }
-  .watermark { left: 14px; top: 68px; }
-  .trailLegend { left: 14px; top: 112px; }
-  .trailLegend strong { display: none; }
-  .trailLegend span { font-size: 0; }
-  .returnLink { bottom: 18px; left: 18px; }
+  .portalCard > button,.mapPanel > button { min-height: 42px; min-width: 42px; }
+  .watermark,.trailLegend { display: none; }
+  .returnLink { bottom: 16px; left: 16px; position: fixed; }
+  .mapPanel { box-sizing: border-box; max-width: none; padding: 24px 18px 40px; width: 100%; }
+  .mapPanel h2 { font-size: 30px; margin: 34px 0 22px; }
+  .destinationGrid button { min-height: 52px; padding: 12px 13px; }
+  .mapPanel li button { min-height: 54px; padding: 14px 0; }
+  .kioskExamples button { min-height: 38px; }
+  .kioskSubmit { min-height: 44px; }
+  .challenge { padding: 10px; }
+  .challengeInner { max-height: calc(100dvh - 20px); padding: 25px 18px; }
+  .challengeInner h2 { font-size: 34px; }
+  .answers button,.helperActions button,.museumSkip { min-height: 44px; }
+  .qualityNotice { bottom: 10px; max-width: 55vw; right: 10px; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .portal { align-items: center; display: grid; grid-template-columns: 90px minmax(0,1fr); grid-template-rows: auto auto auto auto; column-gap: 22px; padding: 18px 28px; text-align: left; }
+  .portalGlow { display: none; }
+  .logo { grid-column: 1; grid-row: 1 / 6; height: 78px; justify-self: center; width: 78px; }
+  .eyebrow,.portal h1,.identity,.intro,.portalActions { grid-column: 2; }
+  .eyebrow { margin: 0 0 6px; }
+  .portal h1 { font-size: 38px; }
+  .identity { margin: 8px 0 0; }
+  .intro { font-size: 12px; line-height: 1.45; margin: 8px 0; max-width: 620px; }
+  .portalActions { justify-content: flex-start; max-width: none; }
+  .portalActions button { padding: 10px 14px; width: auto; }
+  .soundNote { display: none; }
+  .worldHeader { padding-top: 8px; }
+  .vrConsole { bottom: 34px; left: 10px; transform: scale(.72); }
+  .guide { display: none; }
+  .portalCard { max-height: calc(100dvh - 68px); top: 60px; }
+  .mapPanel { padding-top: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

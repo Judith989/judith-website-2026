@@ -139,7 +139,7 @@ function wrapCanvasText(context:CanvasRenderingContext2D,text:string,maxWidth:nu
 }
 
 function makePosterTexture(paper:ConferencePaper,index:number) {
-  const canvas=document.createElement("canvas");canvas.width=720;canvas.height=960;const context=canvas.getContext("2d");if(!context)return new THREE.Texture();
+  const canvas=document.createElement("canvas");const resolutionScale=window.innerWidth<=700?.5:1;canvas.width=720*resolutionScale;canvas.height=960*resolutionScale;const context=canvas.getContext("2d");if(!context)return new THREE.Texture();context.scale(resolutionScale,resolutionScale);
   const accents=["#d9ad55","#72a9b5","#9c526b","#6f8d63"];const accent=accents[index%accents.length];
   context.fillStyle="#f7f0e7";context.fillRect(0,0,720,960);context.fillStyle=accent;context.fillRect(0,0,720,72);context.fillStyle="#310b18";context.fillRect(0,72,720,8);
   context.fillStyle="#fffaf2";context.font="700 24px Arial";context.fillText(`CONFERENCE PAPER · ${paper.year}`,38,46);
@@ -329,7 +329,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     const canvas = canvasRef.current;
     const container = worldRef.current;
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
-    const pixelRatio = Math.min(window.devicePixelRatio, 1.75);
+    const pixelRatio = Math.min(window.devicePixelRatio, window.innerWidth <= 700 ? 1.35 : 1.75);
     renderer.setPixelRatio(pixelRatio);
     renderer.setSize(container.clientWidth, container.clientHeight, false);
     renderer.outputColorSpace = THREE.SRGBColorSpace;

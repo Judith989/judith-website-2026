@@ -811,6 +811,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     let yaw = 0;
     let pitch = 0;
     let dragging = false;
+    let dragMode: "look" | "pan" = "look";
     let lastPointerX = 0;
     let lastPointerY = 0;
     let pointerStartX = 0;
@@ -822,7 +823,9 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     const onKeyDown = (event: KeyboardEvent) => keys.add(event.key.toLowerCase());
     const onKeyUp = (event: KeyboardEvent) => keys.delete(event.key.toLowerCase());
     const onPointerDown = (event: PointerEvent) => {
+      if(event.button!==0&&event.button!==1)return;
       dragging = true;
+      dragMode=event.button===1?"pan":"look";
       pointerStartX = event.clientX;
       pointerStartY = event.clientY;
       lastPointerX = event.clientX;
@@ -831,15 +834,24 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     };
     const onPointerMove = (event: PointerEvent) => {
       if (!dragging) return;
-      yaw -= (event.clientX - lastPointerX) * .004;
-      pitch = THREE.MathUtils.clamp(pitch - (event.clientY - lastPointerY) * .003, -.55, .55);
+      const deltaX=event.clientX-lastPointerX;
+      const deltaY=event.clientY-lastPointerY;
+      if(dragMode==="pan"){
+        const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
+        const right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
+        camera.position.addScaledVector(right,-deltaX*.018);
+        camera.position.addScaledVector(forward,deltaY*.018);
+      }else{
+        yaw -= deltaX * .004;
+        pitch = THREE.MathUtils.clamp(pitch - deltaY * .003, -.55, .55);
+      }
       lastPointerX = event.clientX;
       lastPointerY = event.clientY;
     };
     const onPointerUp = (event: PointerEvent) => {
       const moved = Math.abs(event.clientX - pointerStartX) + Math.abs(event.clientY - pointerStartY);
       dragging = false;
-      if (moved > 8) return;
+      if (event.button!==0||moved > 8) return;
       const bounds = canvas.getBoundingClientRect();
       pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
       pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
@@ -848,6 +860,12 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       if (hit?.object.userData.portal) { setActiveExhibit(null); setActivePortal(hit.object.userData.portal as Portal); }
       if (hit?.object.userData.exhibit) { setActivePortal(null); setActiveExhibit(hit.object.userData.exhibit as Exhibit); }
       if (hit?.object.userData.kiosk) { setActivePortal(null);setActiveExhibit(null);setKioskInput("");setKioskResponse("");setActiveKiosk(hit.object.userData.kiosk as ResearchKiosk); }
+    };
+    const onWheel=(event:WheelEvent)=>{
+      event.preventDefault();
+      const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
+      const distance=THREE.MathUtils.clamp(event.deltaY*.008,-2.2,2.2);
+      camera.position.addScaledVector(forward,-distance);
     };
     const onResize = () => {
       camera.aspect = container.clientWidth / container.clientHeight;
@@ -872,6 +890,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     canvas.addEventListener("pointerdown", onPointerDown);
     canvas.addEventListener("pointermove", onPointerMove);
     canvas.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("wheel",onWheel,{passive:false});
 
     const clock = new THREE.Clock();
     const labelPosition=new THREE.Vector3();
@@ -947,6 +966,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("wheel",onWheel);
       buttonHandlers.forEach(({ button, down, up }) => {
         button.removeEventListener("pointerdown", down);
         button.removeEventListener("pointerup", up);
@@ -1002,7 +1022,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
             </div>
           </header>
 
-          <div className={styles.guide}><span>WASD or arrows to move</span><span>Drag to look</span><span>Select exhibits to inspect</span></div>
+          <div className={styles.guide}><span>WASD, arrows, or scroll to move</span><span>Left-drag to look · Wheel-drag to pan</span><span>Select exhibits to inspect</span></div>
           <aside className={`${styles.trailLegend} ${insideConferenceHall?styles.trailLegendHidden:""}`} aria-label="Travel to a themed trail" aria-hidden={insideConferenceHall}><strong>Choose a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><button type="button" key={category} tabIndex={insideConferenceHall?-1:0} onClick={()=>navigateTo(...trailDestinations[category])} title={`Travel to ${category.toLowerCase()} exhibits`}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</button>)}</aside>
           <div className={styles.vrConsole} aria-label="VR navigation console">
             <div className={styles.consoleHeader}><span>VR navigation</span><i aria-hidden="true" /></div>

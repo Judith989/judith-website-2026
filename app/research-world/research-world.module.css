@@ -73,9 +73,9 @@
 .tourEvidence li,.exhibitEvidence li { margin-bottom: 6px; }
 .tourLinks { display: flex; flex-wrap: wrap; gap: 7px; }
 .tourLinks a { align-items: center; border: 1px solid rgba(239,197,113,.3); color: #f1ce88; display: inline-flex; font-size: 9px; font-weight: 800; gap: 6px; padding: 8px 10px; text-transform: uppercase; }
-.interviewAnswer { background: rgba(139,23,56,.24); border-left: 3px solid #e7bd6d; display: grid; gap: 7px; margin-top: 15px; padding: 13px 14px; }
-.interviewAnswer strong { color: #f0cc83; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
-.interviewAnswer span { color: rgba(255,255,255,.77); font-size: 11px; line-height: 1.55; }
+.collaborationAnswer { background: rgba(139,23,56,.24); border-left: 3px solid #e7bd6d; display: grid; gap: 7px; margin-top: 15px; padding: 13px 14px; }
+.collaborationAnswer strong { color: #f0cc83; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+.collaborationAnswer span { color: rgba(255,255,255,.77); font-size: 11px; line-height: 1.55; }
 .tourControls { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 19px; }
 .tourControls button,.tourControls a { align-items: center; background: transparent; border: 1px solid rgba(255,255,255,.22); color: #f7ecdf; display: inline-flex; font-size: 9px; font-weight: 800; justify-content: center; min-height: 40px; padding: 10px 13px; text-transform: uppercase; }
 .tourControls button:disabled { opacity: .3; }

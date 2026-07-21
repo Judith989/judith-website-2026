@@ -24,6 +24,7 @@ export type ConferencePaper = { title: string; venue: string; authors: string; y
 type ResearchKiosk = "metahate" | "batgpt";
 
 const welcomeNarration = "Welcome to My Research World. I am Dr. Judith Njoku-Vowels, an engineer and researcher building intelligent systems that help the physical world see, predict, and decide. This immersive world brings together my research, publications, teaching, mentorship, and academic journey. Follow the signs, explore the exhibits, and use the VR Console whenever you want to move directly to a destination.";
+const spokenWelcomeNarration = "Welcome to My Research World. I am Dr. Judith Vowels, an engineer and researcher building intelligent systems that help the physical world see, predict, and decide. This immersive world brings together my research, publications, teaching, mentorship, and academic journey. Follow the signs, explore the exhibits, and use the VR Console whenever you want to move directly to a destination.";
 
 const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
 const worldGates = [
@@ -310,7 +311,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
         setVoiceNotice("A feminine narration voice is unavailable in this browser. The written welcome remains available.");
         return;
       }
-      const utterance = new SpeechSynthesisUtterance(welcomeNarration);
+      const utterance = new SpeechSynthesisUtterance(spokenWelcomeNarration);
       utterance.voice = voice;
       utterance.rate = .92;
       utterance.pitch = 1.04;
@@ -425,7 +426,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     const guideTexture = new THREE.TextureLoader().load("/research-world/judith-guide-avatar.png");
     guideTexture.colorSpace = THREE.SRGBColorSpace;
     const entranceGuide = new THREE.Sprite(new THREE.SpriteMaterial({ map:guideTexture, transparent:true, depthWrite:false }));
-    entranceGuide.position.set(window.innerWidth <= 700 ? -.8 : -2.35,1.92,1.4);
+    entranceGuide.position.set(window.innerWidth <= 700 ? -.25 : -.65,1.95,2.2);
     entranceGuide.scale.set(1.7,3.4,1);
     scene.add(entranceGuide);
 

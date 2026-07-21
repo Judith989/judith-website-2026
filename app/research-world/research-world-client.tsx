@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Activity, ArrowLeft, ExternalLink, Map, Music, Music2, Volume2, VolumeX, X } from "lucide-react";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import styles from "./research-world.module.css";
 import { ResearchChallenge } from "./research-challenges";
 
@@ -324,11 +325,13 @@ export default function ResearchWorldClient() {
 
     const treeGroups: THREE.Group[] = [];
     const exhibitMeshes: THREE.Object3D[] = [];
+    const districtClearings=[{x:-10,z:-9,r:8},{x:11,z:-17,r:9},{x:11,z:-32,r:8},{x:-11,z:-40,r:8},{x:-11,z:-56,r:8},{x:-12,z:-36,r:6},{x:11,z:-68,r:8}];
     for (let index = 0; index < 44; index += 1) {
       const side = index % 2 === 0 ? -1 : 1;
       const x = side * (9 + Math.random() * 27);
       const z = 10 - Math.random() * 105;
       if (z < -73 && Math.abs(x) < 19) continue;
+      if(districtClearings.some(clearing=>Math.hypot(x-clearing.x,z-clearing.z)<clearing.r))continue;
       const story = forestStories[index % forestStories.length];
       const tree = addTree(scene, x, z, .65 + Math.random() * .75, categoryColors[story.category ?? "Research"]);
       tree.traverse((object) => { object.userData.exhibit = story; exhibitMeshes.push(object); });
@@ -336,7 +339,8 @@ export default function ResearchWorldClient() {
     }
 
     const textureLoader = new THREE.TextureLoader();
-    exhibits.forEach((exhibit) => {
+    const districtExhibits = new Set(["OmniRestore", "SmartParking", "PANDA", "BatteryMetrix", "BridgeSync"]);
+    exhibits.filter((exhibit) => !districtExhibits.has(exhibit.title)).forEach((exhibit) => {
       const [x,,z] = exhibit.position;
       const tree = addTree(scene, x, z, 1.05, categoryColors[exhibit.category ?? "Research"]);
       tree.traverse((object) => { object.userData.exhibit = exhibit; exhibitMeshes.push(object); });
@@ -348,7 +352,33 @@ export default function ResearchWorldClient() {
     });
 
     const registerExhibit=(group:THREE.Object3D,exhibit:Exhibit)=>group.traverse(object=>{object.userData.exhibit=exhibit;exhibitMeshes.push(object);});
-    const addCar=(parent:THREE.Group,x:number,z:number,color:number,rotation=0)=>{const car=new THREE.Group();const body=new THREE.Mesh(new THREE.BoxGeometry(1.15,.35,2.05),new THREE.MeshStandardMaterial({color,metalness:.25,roughness:.45}));body.position.y=.38;car.add(body);const roof=new THREE.Mesh(new THREE.BoxGeometry(.82,.34,1.05),new THREE.MeshStandardMaterial({color:0xc7d2d0,metalness:.35,roughness:.25}));roof.position.y=.72;car.add(roof);[-.48,.48].forEach(wx=>[-.68,.68].forEach(wz=>{const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.12,12),new THREE.MeshStandardMaterial({color:0x161616}));wheel.rotation.z=Math.PI/2;wheel.position.set(wx,.22,wz);car.add(wheel);}));car.position.set(x,0,z);car.rotation.y=rotation;parent.add(car);return car;};
+    const gltfLoader=new GLTFLoader();
+    const carModels=["/models/kenney/car/sedan.glb","/models/kenney/car/suv.glb","/models/kenney/car/hatchback-sports.glb"];
+    let carModelIndex=0;
+    const prepareModel=(model:THREE.Object3D,targetSize:number)=>{
+      model.traverse(object=>{if(object instanceof THREE.Mesh){object.castShadow=true;object.receiveShadow=true;}});
+      const initialBox=new THREE.Box3().setFromObject(model);
+      const size=initialBox.getSize(new THREE.Vector3());
+      model.scale.setScalar(targetSize/Math.max(size.x,size.z));
+      const scaledBox=new THREE.Box3().setFromObject(model);
+      const center=scaledBox.getCenter(new THREE.Vector3());
+      model.position.x-=center.x;
+      model.position.z-=center.z;
+      model.position.y-=scaledBox.min.y;
+    };
+    const loadModel=(url:string,parent:THREE.Object3D,position:[number,number,number],targetSize:number,rotation=0,onLoad?:()=>void)=>{
+      gltfLoader.load(url,({scene:model})=>{prepareModel(model,targetSize);model.position.add(new THREE.Vector3(...position));model.rotation.y=rotation;parent.add(model);const exhibit=parent.userData.exhibit as Exhibit|undefined;if(exhibit){model.traverse(object=>{object.userData.exhibit=exhibit;exhibitMeshes.push(object);});}onLoad?.();},undefined,()=>{});
+    };
+    const addCar=(parent:THREE.Group,x:number,z:number,color:number,rotation=0)=>{
+      const placeholder=new THREE.Group();
+      const body=new THREE.Mesh(new THREE.BoxGeometry(1.15,.35,2.05),new THREE.MeshStandardMaterial({color,metalness:.25,roughness:.45}));body.position.y=.38;placeholder.add(body);
+      const roof=new THREE.Mesh(new THREE.BoxGeometry(.82,.34,1.05),new THREE.MeshStandardMaterial({color:0xc7d2d0,metalness:.35,roughness:.25}));roof.position.y=.72;placeholder.add(roof);
+      [-.48,.48].forEach(wx=>[-.68,.68].forEach(wz=>{const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.12,12),new THREE.MeshStandardMaterial({color:0x161616}));wheel.rotation.z=Math.PI/2;wheel.position.set(wx,.22,wz);placeholder.add(wheel);}));
+      placeholder.position.set(x,0,z);placeholder.rotation.y=rotation;parent.add(placeholder);
+      const modelUrl=carModels[carModelIndex%carModels.length];carModelIndex+=1;
+      loadModel(modelUrl,parent,[x,0,z],2.2,rotation,()=>{placeholder.visible=false;});
+      return placeholder;
+    };
 
     const museumRoad=new THREE.Mesh(new THREE.PlaneGeometry(7,76),new THREE.MeshStandardMaterial({color:0x34383a,roughness:1}));museumRoad.rotation.x=-Math.PI/2;museumRoad.position.set(11,.025,-34);scene.add(museumRoad);
     for(let z=1;z>-72;z-=5){const stripe=new THREE.Mesh(new THREE.PlaneGeometry(.12,2.4),new THREE.MeshBasicMaterial({color:0xe8c760}));stripe.rotation.x=-Math.PI/2;stripe.position.set(11,.04,z);scene.add(stripe);}
@@ -406,12 +436,19 @@ export default function ResearchWorldClient() {
     const officeSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("Consultation Office","#e4b65e"),transparent:true}));officeSign.position.set(0,5.9,3.5);officeSign.scale.set(5.2,1.2,1);office.add(officeSign);
     proximityLabels.push(officeSign);
     const desk=new THREE.Mesh(new THREE.BoxGeometry(4,.25,1.6),new THREE.MeshStandardMaterial({color:0x5b301f}));desk.position.set(0,1.15,0);office.add(desk);
-    const deskLegs=[[-1.7,.55,-.55],[1.7,.55,-.55],[-1.7,.55,.55],[1.7,.55,.55]];deskLegs.forEach(([x,y,z])=>{const leg=new THREE.Mesh(new THREE.BoxGeometry(.18,1.1,.18),new THREE.MeshStandardMaterial({color:0x3b2118}));leg.position.set(x,y,z);office.add(leg);});
+    const deskLegMeshes:THREE.Mesh[]=[];const deskLegs=[[-1.7,.55,-.55],[1.7,.55,-.55],[-1.7,.55,.55],[1.7,.55,.55]];deskLegs.forEach(([x,y,z])=>{const leg=new THREE.Mesh(new THREE.BoxGeometry(.18,1.1,.18),new THREE.MeshStandardMaterial({color:0x3b2118}));leg.position.set(x,y,z);office.add(leg);deskLegMeshes.push(leg);});
     addPerson(office,0,1.3,0x6f1737,true);
     const monitor=new THREE.Mesh(new THREE.BoxGeometry(1.8,1.1,.12),new THREE.MeshStandardMaterial({color:0x17191b,emissive:0x315f6b,emissiveIntensity:.6}));monitor.position.set(0,1.95,-.25);office.add(monitor);
     const nameplate=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("Dr. Judith Njoku-Vowels","#e4b65e"),transparent:true}));nameplate.position.set(0,1.55,.9);nameplate.scale.set(3.2,.75,1);office.add(nameplate);
     const dfnBoard=new THREE.Mesh(new THREE.PlaneGeometry(6.8,3.8),new THREE.MeshBasicMaterial({map:makeBoardTexture("Battery DFN model",["∂cₛ/∂t = (1/r²) ∂/∂r (Dₛr² ∂cₛ/∂r)","∂(εₑcₑ)/∂t = ∂/∂x (Dₑeff ∂cₑ/∂x) + source","∂/∂x (σeff ∂φₛ/∂x) = reaction current","From electrochemistry to explainable digital twins"])}));dfnBoard.position.set(0,3,-3.2);office.add(dfnBoard);
     office.traverse(object=>{object.userData.exhibit=officeStory;exhibitMeshes.push(object);});scene.add(office);
+    loadModel("/models/kenney/furniture/desk.glb",office,[0,0,0],4.2,Math.PI/2,()=>{desk.visible=false;deskLegMeshes.forEach(leg=>{leg.visible=false;});});
+    loadModel("/models/kenney/furniture/chairDesk.glb",office,[0,0,1.45],1.35,Math.PI);
+    loadModel("/models/kenney/furniture/computerScreen.glb",office,[0,1.2,-.25],1.7,Math.PI/2,()=>{monitor.visible=false;});
+    loadModel("/models/kenney/furniture/computerKeyboard.glb",office,[0,1.24,.35],1.05,Math.PI/2);
+    loadModel("/models/kenney/furniture/bookcaseOpen.glb",office,[-3.45,0,-2.45],3.1,0);
+    loadModel("/models/kenney/furniture/pottedPlant.glb",office,[3.45,0,-2.45],1.35,0);
+    loadModel("/models/kenney/city/building-a.glb",office,[6.7,0,-1],6.5,Math.PI/2);
 
     const firefliesGeometry = new THREE.BufferGeometry();
     const fireflyPositions = new Float32Array(240 * 3);

@@ -455,14 +455,14 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     const loadModel=(url:string,parent:THREE.Object3D,position:[number,number,number],targetSize:number,rotation=0,onLoad?:()=>void)=>{
       gltfLoader.load(url,({scene:model})=>{prepareModel(model,targetSize);model.position.add(new THREE.Vector3(...position));model.rotation.y=rotation;parent.add(model);const exhibit=parent.userData.exhibit as Exhibit|undefined;if(exhibit){model.traverse(object=>{object.userData.exhibit=exhibit;exhibitMeshes.push(object);});}onLoad?.();},undefined,()=>{});
     };
-    const addCar=(parent:THREE.Group,x:number,z:number,color:number,rotation=0)=>{
+    const addCar=(parent:THREE.Group,x:number,z:number,color:number,rotation=0,y=0)=>{
       const placeholder=new THREE.Group();
       const body=new THREE.Mesh(new THREE.BoxGeometry(1.15,.35,2.05),new THREE.MeshStandardMaterial({color,metalness:.25,roughness:.45}));body.position.y=.38;placeholder.add(body);
       const roof=new THREE.Mesh(new THREE.BoxGeometry(.82,.34,1.05),new THREE.MeshStandardMaterial({color:0xc7d2d0,metalness:.35,roughness:.25}));roof.position.y=.72;placeholder.add(roof);
       [-.48,.48].forEach(wx=>[-.68,.68].forEach(wz=>{const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,.12,12),new THREE.MeshStandardMaterial({color:0x161616}));wheel.rotation.z=Math.PI/2;wheel.position.set(wx,.22,wz);placeholder.add(wheel);}));
-      placeholder.position.set(x,0,z);placeholder.rotation.y=rotation;parent.add(placeholder);
+      placeholder.position.set(x,y,z);placeholder.rotation.y=rotation;parent.add(placeholder);
       const modelUrl=carModels[carModelIndex%carModels.length];carModelIndex+=1;
-      loadModel(modelUrl,parent,[x,0,z],2.2,rotation,()=>{placeholder.visible=false;});
+      loadModel(modelUrl,parent,[x,y,z],2.2,rotation,()=>{placeholder.visible=false;});
       return placeholder;
     };
     const addKiosk=(mode:ResearchKiosk,title:string,subtitle:string,position:[number,number,number],color:number,rotation=0)=>{
@@ -519,7 +519,13 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     const cableMaterial=new THREE.MeshStandardMaterial({color:0xd2d5d3,metalness:.78,roughness:.24});
     const addCable=(start:THREE.Vector3,end:THREE.Vector3)=>{const direction=end.clone().sub(start);const cable=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,direction.length(),8),cableMaterial);cable.position.copy(start).add(end).multiplyScalar(.5);cable.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),direction.normalize());bridgeDistrict.add(cable);};
     [-1.38,1.38].forEach(z=>{[[-4,-6.5],[-4,-2],[-4,0],[4,0],[4,2],[4,6.5]].forEach(([towerX,anchorX])=>addCable(new THREE.Vector3(towerX,6.72,z),new THREE.Vector3(anchorX,3.48,z)));});
-    addCar(bridgeDistrict,-1.3,0,0x8b1738,Math.PI/2);addCar(bridgeDistrict,2.2,.72,0xd6c16d,Math.PI/2);
+    addCar(bridgeDistrict,-1.3,-.68,0x8b1738,Math.PI/2,3.02);addCar(bridgeDistrict,2.2,.68,0xd6c16d,Math.PI/2,3.02);
+    const boat=new THREE.Group();boat.position.set(0,.12,-2.3);
+    const hull=new THREE.Mesh(new THREE.ConeGeometry(.68,3,16),new THREE.MeshStandardMaterial({color:0x713044,metalness:.18,roughness:.48}));hull.rotation.x=Math.PI/2;hull.position.y=.34;boat.add(hull);
+    const boatDeck=new THREE.Mesh(new THREE.BoxGeometry(.92,.14,1.35),new THREE.MeshStandardMaterial({color:0xd7c5a9,roughness:.75}));boatDeck.position.set(0,.62,.18);boat.add(boatDeck);
+    const cabin=new THREE.Mesh(new THREE.BoxGeometry(.72,.48,.7),new THREE.MeshStandardMaterial({color:0xe7e4da,roughness:.5}));cabin.position.set(0,.9,.25);boat.add(cabin);
+    const windscreen=new THREE.Mesh(new THREE.PlaneGeometry(.5,.25),new THREE.MeshPhysicalMaterial({color:0x72a9b5,transparent:true,opacity:.7,metalness:.1}));windscreen.position.set(0,1.02,-.112);windscreen.rotation.x=-.1;boat.add(windscreen);
+    bridgeDistrict.add(boat);
     [-5.5,-2.8,0,2.8,5.5].forEach((x,index)=>{const sensorColor=index%2?0x66c8d4:0xe4b65e;const sensor=new THREE.PointLight(sensorColor,2.6,4.5);sensor.position.set(x,3.3,index%2?1.45:-1.45);bridgeDistrict.add(sensor);const node=new THREE.Mesh(new THREE.SphereGeometry(.1,12,8),new THREE.MeshStandardMaterial({color:sensorColor,emissive:sensorColor,emissiveIntensity:1.8}));node.position.copy(sensor.position);bridgeDistrict.add(node);});
     const bridgeLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("BRIDGESYNC | SECURE STRUCTURAL INTELLIGENCE","#e4b65e"),transparent:true}));bridgeLabel.position.set(0,8.1,0);bridgeLabel.scale.set(7.2,1.7,1);bridgeDistrict.add(bridgeLabel);registerExhibit(bridgeDistrict,bridgeStory);scene.add(bridgeDistrict);
     proximityLabels.push(bridgeLabel);

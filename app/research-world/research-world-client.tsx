@@ -129,22 +129,47 @@ function createAmbientSound() {
   if (!AudioContextClass) return null;
   const context = new AudioContextClass();
   const master = context.createGain();
-  master.gain.value = .13;
+  master.gain.value = .3;
   master.connect(context.destination);
 
   const padGain = context.createGain();
-  padGain.gain.value = .08;
+  padGain.gain.value = .24;
   padGain.connect(master);
-  const oscillators = [110, 164.81, 220].map((frequency, index) => {
+  const oscillators = [110, 164.81, 220, 329.63].map((frequency, index) => {
     const oscillator = context.createOscillator();
     const gain = context.createGain();
     oscillator.type = index === 1 ? "sine" : "triangle";
     oscillator.frequency.value = frequency;
-    gain.gain.value = index === 1 ? .11 : .055;
+    oscillator.detune.value = index % 2 ? 4 : -4;
+    gain.gain.value = index === 1 ? .12 : .065;
     oscillator.connect(gain).connect(padGain);
     oscillator.start();
     return oscillator;
   });
+
+  const musicGain = context.createGain();
+  musicGain.gain.value = .18;
+  musicGain.connect(master);
+  const melodyNotes = [329.63, 392, 440, 523.25, 440, 392, 349.23, 293.66];
+  const activeNotes = new Set<OscillatorNode>();
+  let melodyIndex = 0;
+  const playMelodyNote = () => {
+    const note = context.createOscillator();
+    const noteGain = context.createGain();
+    note.type = "sine";
+    note.frequency.value = melodyNotes[melodyIndex % melodyNotes.length];
+    melodyIndex += 1;
+    noteGain.gain.setValueAtTime(0, context.currentTime);
+    noteGain.gain.linearRampToValueAtTime(.16, context.currentTime + .35);
+    noteGain.gain.exponentialRampToValueAtTime(.001, context.currentTime + 2.7);
+    note.connect(noteGain).connect(musicGain);
+    activeNotes.add(note);
+    note.onended = () => activeNotes.delete(note);
+    note.start();
+    note.stop(context.currentTime + 2.8);
+  };
+  playMelodyNote();
+  const melodyTimer = window.setInterval(playMelodyNote, 2400);
 
   const buffer = context.createBuffer(1, context.sampleRate * 3, context.sampleRate);
   const data = buffer.getChannelData(0);
@@ -155,8 +180,8 @@ function createAmbientSound() {
   water.buffer = buffer;
   water.loop = true;
   waterFilter.type = "lowpass";
-  waterFilter.frequency.value = 900;
-  waterGain.gain.value = .12;
+  waterFilter.frequency.value = 1250;
+  waterGain.gain.value = .2;
   water.connect(waterFilter).connect(waterGain).connect(master);
   water.start();
 
@@ -164,6 +189,8 @@ function createAmbientSound() {
     context,
     master,
     stop: () => {
+      window.clearInterval(melodyTimer);
+      activeNotes.forEach((note) => note.stop());
       oscillators.forEach((oscillator) => oscillator.stop());
       water.stop();
       void context.close();
@@ -226,7 +253,7 @@ export default function ResearchWorldClient() {
       return;
     }
     const nextMuted = !muted;
-    audioRef.current.master.gain.setTargetAtTime(nextMuted ? 0 : .13, audioRef.current.context.currentTime, .08);
+    audioRef.current.master.gain.setTargetAtTime(nextMuted ? 0 : .3, audioRef.current.context.currentTime, .08);
     setMuted(nextMuted);
   }, [muted, startSound]);
 
@@ -657,7 +684,7 @@ export default function ResearchWorldClient() {
             <button type="button" onClick={() => enterWorld(true)}><Volume2 size={18} /> Enter with sound</button>
             <button type="button" className={styles.quietButton} onClick={() => enterWorld(false)}>Enter quietly</button>
           </div>
-          <p className={styles.soundNote}>Sound begins only after you choose it. Headphones recommended.</p>
+          <p className={styles.soundNote}>Original ambient music and waterfall soundscape. Headphones recommended.</p>
           <Link href="/" className={styles.returnLink}><ArrowLeft size={16} /> Return to the main website</Link>
         </section>
       )}
@@ -672,7 +699,7 @@ export default function ResearchWorldClient() {
             <div className={styles.headerControls}>
               <button type="button" onClick={() => setMapOpen((open) => !open)} aria-label="Open research world map"><Map size={18} /></button>
               <button type="button" onClick={toggleMotion} aria-label={reducedMotion?"Enable ambient motion":"Reduce motion"}><Activity size={18} /></button>
-              <button type="button" onClick={toggleSound} aria-label={muted ? "Turn sound on" : "Mute sound"}>{muted ? <VolumeX size={18} /> : <Music2 size={18} />}</button>
+              <button type="button" onClick={toggleSound} aria-label={muted ? "Play soundtrack" : "Mute soundtrack"}>{muted ? <VolumeX size={18} /> : <Music2 size={18} />}</button>
             </div>
           </header>
 

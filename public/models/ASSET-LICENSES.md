@@ -18,6 +18,6 @@ The Research World uses selected lightweight models from Kenney. Kenney releases
 
 - Source: https://kenney.nl/assets/city-kit-commercial
 - License: CC0 1.0
-- File used: `building-a.glb`
+- Files used: `building-a.glb`, `building-b.glb`, `building-c.glb`, `building-d.glb`, `building-e.glb`
 
 Retrieved July 21, 2026.

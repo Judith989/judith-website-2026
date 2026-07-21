@@ -20,6 +20,8 @@ type Portal = {
 
 type Category = "Research" | "News" | "Milestone" | "Teaching" | "Mentorship" | "Service";
 type Exhibit = { title: string; kind: string; category?: Category; description: string; href: string; image: string; position: [number, number, number] };
+export type ConferencePaper = { title: string; venue: string; authors: string; year: number; href: string };
+type ResearchKiosk = "metahate" | "batgpt";
 
 const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
 const worldGates = [
@@ -117,10 +119,36 @@ function addTree(scene: THREE.Scene, x: number, z: number, scale: number, tone: 
 
 function addPerson(group: THREE.Group, x:number, z:number, color:number, seated=false) {
   const person=new THREE.Group();
-  const body=new THREE.Mesh(new THREE.CapsuleGeometry(.22,.72,5,10),new THREE.MeshStandardMaterial({color})); body.position.y=seated?.85:1.15; person.add(body);
-  const head=new THREE.Mesh(new THREE.SphereGeometry(.23,16,12),new THREE.MeshStandardMaterial({color:0x8b5e45})); head.position.y=seated?1.55:1.95; person.add(head);
-  const hair=new THREE.Mesh(new THREE.SphereGeometry(.25,12,8,0,Math.PI*2,0,Math.PI*.55),new THREE.MeshStandardMaterial({color:0x211310})); hair.position.y=head.position.y+.07; person.add(hair);
+  const clothing=new THREE.MeshStandardMaterial({color,roughness:.72});
+  const skin=new THREE.MeshStandardMaterial({color:0x8b5e45,roughness:.8});
+  const body=new THREE.Mesh(new THREE.CapsuleGeometry(.25,.7,6,12),clothing); body.position.y=seated?.9:1.2; person.add(body);
+  const jacket=new THREE.Mesh(new THREE.ConeGeometry(.34,.78,12),clothing);jacket.position.y=seated?.82:1.12;person.add(jacket);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.23,20,16),skin); head.position.y=seated?1.58:2.02; person.add(head);
+  const hair=new THREE.Mesh(new THREE.SphereGeometry(.25,16,10,0,Math.PI*2,0,Math.PI*.58),new THREE.MeshStandardMaterial({color:0x211310,roughness:1})); hair.position.y=head.position.y+.07; person.add(hair);
+  const legY=seated?.38:.48;[-.14,.14].forEach((offset)=>{const leg=new THREE.Mesh(new THREE.CapsuleGeometry(.075,seated?.38:.72,4,8),new THREE.MeshStandardMaterial({color:0x25262b}));leg.position.set(offset,legY,seated?.18:0);if(seated)leg.rotation.x=Math.PI/2.8;person.add(leg);const shoe=new THREE.Mesh(new THREE.BoxGeometry(.16,.1,.3),new THREE.MeshStandardMaterial({color:0x181313}));shoe.position.set(offset,seated?.12:.08,seated?.48:.08);person.add(shoe);});
+  [-1,1].forEach((side)=>{const arm=new THREE.Mesh(new THREE.CapsuleGeometry(.06,.48,4,8),clothing);arm.position.set(side*.32,seated?1.02:1.24,0);arm.rotation.z=side*(seated?.65:.18);person.add(arm);const hand=new THREE.Mesh(new THREE.SphereGeometry(.075,10,8),skin);hand.position.set(side*(seated?.49:.39),seated?.82:.98,0);person.add(hand);});
+  const eyeMaterial=new THREE.MeshBasicMaterial({color:0x1b1210});[-.08,.08].forEach(offset=>{const eye=new THREE.Mesh(new THREE.SphereGeometry(.018,8,6),eyeMaterial);eye.position.set(offset,head.position.y+.025,.218);person.add(eye);});
   person.position.set(x,0,z); group.add(person); return person;
+}
+
+function wrapCanvasText(context:CanvasRenderingContext2D,text:string,maxWidth:number,maxLines:number) {
+  const words=text.split(/\s+/);const lines:string[]=[];let line="";
+  words.forEach((word)=>{const test=line?`${line} ${word}`:word;if(context.measureText(test).width>maxWidth&&line){lines.push(line);line=word;}else line=test;});
+  if(line)lines.push(line);if(lines.length>maxLines){lines.length=maxLines;lines[maxLines-1]=`${lines[maxLines-1].replace(/[.,;:]?$/,"")}…`;}
+  return lines;
+}
+
+function makePosterTexture(paper:ConferencePaper,index:number) {
+  const canvas=document.createElement("canvas");canvas.width=720;canvas.height=960;const context=canvas.getContext("2d");if(!context)return new THREE.Texture();
+  const accents=["#d9ad55","#72a9b5","#9c526b","#6f8d63"];const accent=accents[index%accents.length];
+  context.fillStyle="#f7f0e7";context.fillRect(0,0,720,960);context.fillStyle=accent;context.fillRect(0,0,720,72);context.fillStyle="#310b18";context.fillRect(0,72,720,8);
+  context.fillStyle="#fffaf2";context.font="700 24px Arial";context.fillText(`CONFERENCE PAPER · ${paper.year}`,38,46);
+  context.fillStyle="#35101d";context.font="700 44px Georgia";wrapCanvasText(context,paper.title,640,7).forEach((line,lineIndex)=>context.fillText(line,38,155+lineIndex*56));
+  context.fillStyle="#775563";context.font="600 25px Arial";wrapCanvasText(context,paper.venue,640,4).forEach((line,lineIndex)=>context.fillText(line,38,600+lineIndex*34));
+  context.strokeStyle=accent;context.lineWidth=3;context.beginPath();context.moveTo(38,748);context.lineTo(682,748);context.stroke();
+  context.fillStyle="#6a4a56";context.font="22px Arial";wrapCanvasText(context,paper.authors,640,4).forEach((line,lineIndex)=>context.fillText(line,38,795+lineIndex*30));
+  context.fillStyle="#35101d";context.font="700 18px Arial";context.fillText("JUDITH NJOKU-VOWELS · RESEARCH WORLD",38,925);
+  const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return texture;
 }
 
 function makeBoardTexture(title:string, lines:string[]) {
@@ -203,7 +231,7 @@ function createAmbientSound() {
   };
 }
 
-export default function ResearchWorldClient() {
+export default function ResearchWorldClient({conferencePapers}:{conferencePapers:ConferencePaper[]}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<ReturnType<typeof createAmbientSound>>(null);
@@ -217,6 +245,9 @@ export default function ResearchWorldClient() {
   const [challengeTitle, setChallengeTitle] = useState("Research Gate");
   const [restoredVision, setRestoredVision] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [activeKiosk,setActiveKiosk]=useState<ResearchKiosk|null>(null);
+  const [kioskInput,setKioskInput]=useState("");
+  const [kioskResponse,setKioskResponse]=useState("");
   const restoredVisionRef = useRef(false);
   const reducedMotionRef = useRef(false);
   const challengeOpenRef = useRef(false);
@@ -261,6 +292,25 @@ export default function ResearchWorldClient() {
     audioRef.current.master.gain.setTargetAtTime(nextMuted ? 0 : .3, audioRef.current.context.currentTime, .08);
     setMuted(nextMuted);
   }, [muted, startSound]);
+
+  const submitKiosk=useCallback(()=>{
+    const message=kioskInput.trim();if(!message||!activeKiosk)return;
+    if(activeKiosk==="metahate"){
+      const normalized=message.toLowerCase();
+      const harmful=["hate","kill","stupid","idiot","ugly","worthless","attack","trash","shut up"];
+      const positive=["thank","please","kind","great","good","helpful","appreciate","welcome","excellent"];
+      const harmfulHits=harmful.filter((term)=>normalized.includes(term));
+      const positiveHits=positive.filter((term)=>normalized.includes(term));
+      setKioskResponse(harmfulHits.length?`Concerning or potentially harmful language detected. The terms “${harmfulHits.join("”, “")}” may make the message hostile. Consider rewriting it around the behavior or issue rather than attacking a person.`:positiveHits.length?"Respectful and constructive language detected. The message contains positive social cues and is unlikely to be classified as hate speech by this demonstration.":"Neutral or context-dependent language detected. No obvious harmful term was found, but a responsible system should still examine context, identity references, intent, and conversation history.");
+      return;
+    }
+    const normalized=message.toLowerCase();const percentage=Number(normalized.match(/(\d{1,3})\s*%/)?.[1]);
+    if(/temperature|hot|thermal|overheat/.test(normalized))setKioskResponse("BAT-GPT demo: Temperature must be interpreted with chemistry, load, ambient conditions, and manufacturer limits. Sustained abnormal heat can accelerate degradation. Inspect the thermal trend and cell imbalance before making an operational decision.");
+    else if(/state of health|\bsoh\b|health|degrad/.test(normalized))setKioskResponse(Number.isFinite(percentage)?`BAT-GPT demo: A reported state of health of ${percentage}% means the usable capacity is approximately ${percentage}% of the reference capacity. Review capacity fade, internal resistance, temperature history, and prediction uncertainty together.`:"BAT-GPT demo: State of health summarizes long-term degradation. I would examine capacity retention, internal resistance growth, cycle history, temperature exposure, and model uncertainty rather than relying on one value alone.");
+    else if(/state of charge|\bsoc\b|charge|percent/.test(normalized))setKioskResponse(Number.isFinite(percentage)?percentage<20?`BAT-GPT demo: ${percentage}% state of charge is low. Plan charging soon and verify that the estimate remains stable under load.`:percentage>90?`BAT-GPT demo: ${percentage}% state of charge is high. That supports near-term range, although repeated high-charge storage can accelerate aging for some chemistries.`:`BAT-GPT demo: ${percentage}% state of charge is within a typical operating band. Interpret available range using load, temperature, and recent estimation uncertainty.`:"BAT-GPT demo: State of charge estimates remaining available energy. Ask with a value, such as ‘What does 34% state of charge mean?’, and I can provide a more specific interpretation.");
+    else if(/remaining useful life|\brul\b|replace|life/.test(normalized))setKioskResponse("BAT-GPT demo: Remaining useful life is a forecast, not a guaranteed date. Use the predicted horizon together with confidence bounds, recent degradation rate, duty cycle, and safety thresholds when planning inspection or replacement.");
+    else setKioskResponse("BAT-GPT demo: Ask about state of charge, state of health, remaining useful life, degradation, temperature, or maintenance. Include a measured value when possible for a more specific explanation.");
+  },[activeKiosk,kioskInput]);
 
   useEffect(() => {
     document.body.classList.add("research-world-active");
@@ -357,6 +407,7 @@ export default function ResearchWorldClient() {
 
     const treeGroups: THREE.Group[] = [];
     const exhibitMeshes: THREE.Object3D[] = [];
+    const kioskMeshes: THREE.Object3D[] = [];
     const districtClearings=[{x:-10,z:-9,r:8},{x:11,z:-17,r:10},{x:11,z:-32,r:8},{x:-11,z:-56,r:8},{x:-12,z:-36,r:6},{x:11,z:-68,r:8}];
     for (let index = 0; index < 44; index += 1) {
       const side = index % 2 === 0 ? -1 : 1;
@@ -411,6 +462,15 @@ export default function ResearchWorldClient() {
       loadModel(modelUrl,parent,[x,0,z],2.2,rotation,()=>{placeholder.visible=false;});
       return placeholder;
     };
+    const addKiosk=(mode:ResearchKiosk,title:string,subtitle:string,position:[number,number,number],color:number,rotation=0)=>{
+      const kiosk=new THREE.Group();kiosk.position.set(...position);kiosk.rotation.y=rotation;
+      const base=new THREE.Mesh(new THREE.BoxGeometry(2.5,1.15,1.5),new THREE.MeshStandardMaterial({color:0x35111e,metalness:.35,roughness:.35}));base.position.y=.58;kiosk.add(base);
+      const consoleTop=new THREE.Mesh(new THREE.BoxGeometry(2.3,.18,1.35),new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:.18,metalness:.55}));consoleTop.position.set(0,1.2,0);consoleTop.rotation.x=-.16;kiosk.add(consoleTop);
+      const screen=new THREE.Mesh(new THREE.PlaneGeometry(2.05,1.18),new THREE.MeshBasicMaterial({map:makeBoardTexture(title,[subtitle,"Select to begin the demonstration"])}));screen.position.set(0,2.05,-.25);screen.rotation.x=-.12;kiosk.add(screen);
+      const light=new THREE.PointLight(color,2.8,6);light.position.set(0,2.5,.8);kiosk.add(light);
+      const label=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(title,`#${color.toString(16).padStart(6,"0")}`),transparent:true}));label.position.set(0,3.45,0);label.scale.set(4.8,1.12,1);kiosk.add(label);proximityLabels.push(label);
+      kiosk.traverse(object=>{object.userData.kiosk=mode;kioskMeshes.push(object);});scene.add(kiosk);
+    };
 
     const museumRoad=new THREE.Mesh(new THREE.PlaneGeometry(7,76),new THREE.MeshStandardMaterial({color:0x34383a,roughness:1}));museumRoad.rotation.x=-Math.PI/2;museumRoad.position.set(11,.025,-34);scene.add(museumRoad);
     for(let z=1;z>-72;z-=5){const stripe=new THREE.Mesh(new THREE.PlaneGeometry(.12,2.4),new THREE.MeshBasicMaterial({color:0xe8c760}));stripe.rotation.x=-Math.PI/2;stripe.position.set(11,.04,z);scene.add(stripe);}
@@ -449,6 +509,9 @@ export default function ResearchWorldClient() {
     const omniLabel=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("OmniRestore Weather Chamber","#e4b65e"),transparent:true}));omniLabel.position.set(0,6,0);omniLabel.scale.set(6,1.35,1);omniDistrict.add(omniLabel);registerExhibit(omniDistrict,omniStory);scene.add(omniDistrict);
     proximityLabels.push(omniLabel);
 
+    addKiosk("metahate","MetaHate Language Lab","Explore explainable message classification",[-11,0,-24],0x9c526b,.25);
+    addKiosk("batgpt","BAT-GPT Consultation","Ask about battery condition",[17,0,-32],0x5e9faf,-.3);
+
     const teachingStory=forestStories.find(item=>item.title==="Teaching philosophy")!;
     const classroom=new THREE.Group();classroom.position.set(-12,0,-36);
     const teachingFloor=new THREE.Mesh(new THREE.CircleGeometry(5,40),new THREE.MeshStandardMaterial({color:0x6f5790,transparent:true,opacity:.28}));teachingFloor.rotation.x=-Math.PI/2;classroom.add(teachingFloor);
@@ -480,6 +543,46 @@ export default function ResearchWorldClient() {
     loadModel("/models/kenney/furniture/bookcaseOpen.glb",office,[-3.45,0,-2.45],3.1,0);
     loadModel("/models/kenney/furniture/pottedPlant.glb",office,[3.45,0,-2.45],1.35,0);
     loadModel("/models/kenney/city/building-a.glb",office,[6.7,0,-1],6.5,Math.PI/2);
+
+    const campusWalk=new THREE.Mesh(new THREE.PlaneGeometry(8,68),new THREE.MeshStandardMaterial({color:0xbda879,roughness:1}));campusWalk.rotation.x=-Math.PI/2;campusWalk.position.set(-25,.02,-36);scene.add(campusWalk);
+    const campusTrailSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("ACADEMIC CAMPUS TRAIL","#e4b65e"),transparent:true}));campusTrailSign.position.set(-22,4.8,-3);campusTrailSign.scale.set(7,1.65,1);scene.add(campusTrailSign);proximityLabels.push(campusTrailSign);
+    const campusData=[
+      {name:"Federal University of Technology, Owerri",detail:"BEng, Petroleum Engineering · Conferred Dec 12, 2014",description:"My engineering foundation in complex physical systems began at the Federal University of Technology, Owerri, Nigeria.",model:"b",z:-8},
+      {name:"Kumoh National Institute of Technology",detail:"FCSL 2019–2021 · ICT CRC Jan–Aug 2022 · NSL Sep 2022–Aug 2025",description:"At Kumoh National Institute of Technology in Gumi, South Korea, my work progressed from wireless communication to metaverse systems, digital twins, explainable AI, and BatteryMetrix.",model:"c",z:-22},
+      {name:"Kyungpook National University",detail:"Research Specialist and Supervisor · Aug 2022–Jul 2024",description:"I coordinated international research cohorts spanning AI-enabled sensing, digital agriculture, explainable machine learning, and workforce development.",model:"d",z:-36},
+      {name:"Michigan State University",detail:"CLIMDES collaboration Aug 2022–Jul 2024 · Visiting Scholar Jan–Dec 2024",description:"My Michigan State University work with CLIMDES connected climate-smart decision support, student mentorship, digital agriculture, and international research collaboration.",model:"e",z:-50},
+      {name:"University of Wyoming",detail:"Distinguished Postdoctoral Fellow · Aug 29, 2025–Present",description:"At the University of Wyoming, I work with the Secure Sensing and Learning Research Lab and the Center for Rural Community Resilience and Innovation.",model:"a",z:-64},
+    ];
+    campusData.forEach((campus,index)=>{
+      const exhibit:Exhibit={title:campus.name,kind:campus.detail,category:"Milestone",description:campus.description,href:index===campusData.length-1?"/about":"/cv",image:"/logo-judith.png",position:[-30,0,campus.z]};
+      const campusGroup=new THREE.Group();campusGroup.position.set(-30,0,campus.z);
+      const campusPlot=new THREE.Mesh(new THREE.BoxGeometry(12,.25,10),new THREE.MeshStandardMaterial({color:index%2?0x765567:0x6b7d63,roughness:.88}));campusPlot.position.y=.1;campusGroup.add(campusPlot);
+      const plaque=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(campus.name,"#e4b65e"),transparent:true}));plaque.position.set(4.2,5.4,0);plaque.scale.set(7.4,1.72,1);campusGroup.add(plaque);proximityLabels.push(plaque);
+      const datePlaque=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(campus.detail,"#8ebbc4"),transparent:true}));datePlaque.position.set(4.2,4.05,0);datePlaque.scale.set(7.4,1.72,1);campusGroup.add(datePlaque);proximityLabels.push(datePlaque);
+      registerExhibit(campusGroup,exhibit);scene.add(campusGroup);loadModel(`/models/kenney/city/building-${campus.model}.glb`,campusGroup,[0,.22,0],8.2,Math.PI/2);
+    });
+
+    const hall=new THREE.Group();hall.position.set(31,0,-42);
+    const hallFloor=new THREE.Mesh(new THREE.BoxGeometry(14,.22,66),new THREE.MeshStandardMaterial({color:0x6b5060,roughness:.72}));hall.add(hallFloor);
+    const hallWallMaterial=new THREE.MeshStandardMaterial({color:0xefe5dc,roughness:.82});
+    [-7,7].forEach(x=>{const wall=new THREE.Mesh(new THREE.BoxGeometry(.3,6.4,66),hallWallMaterial);wall.position.set(x,3.2,0);hall.add(wall);});
+    const hallBack=new THREE.Mesh(new THREE.BoxGeometry(14,6.4,.3),hallWallMaterial);hallBack.position.set(0,3.2,-33);hall.add(hallBack);
+    const roof=new THREE.Mesh(new THREE.BoxGeometry(14.3,.18,66),new THREE.MeshPhysicalMaterial({color:0xd8e4e1,transparent:true,opacity:.48,transmission:.2,roughness:.22}));roof.position.y=6.4;hall.add(roof);
+    const hallSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(`CONFERENCE POSTER HALL | ${conferencePapers.length} PAPERS`,"#e4b65e"),transparent:true}));hallSign.position.set(0,7,31);hallSign.scale.set(9,2.1,1);hall.add(hallSign);proximityLabels.push(hallSign);
+    [
+      {z:18,title:"Conference Poster Hall",lines:[`${conferencePapers.length} peer-reviewed conference papers`,"A complete walk through the conference record"]},
+      {z:0,title:"International Research Venues",lines:["CVPR · ICUFN · ICTC · ICAIIC · ICMIC","Computer vision, digital twins, AI, and communications"]},
+      {z:-18,title:"Conference Scholarship",lines:["From wireless systems to trustworthy digital twins","Select any poster to open its complete record"]},
+    ].forEach(panel=>{const exterior=new THREE.Mesh(new THREE.PlaneGeometry(7.4,4.3),new THREE.MeshBasicMaterial({map:makeBoardTexture(panel.title,panel.lines),side:THREE.DoubleSide}));exterior.position.set(-7.18,3.2,panel.z);exterior.rotation.y=-Math.PI/2;hall.add(exterior);});
+    conferencePapers.forEach((paper,index)=>{
+      const side=index%2===0?-1:1;const slot=Math.floor(index/2);const z=27-slot*2.18;
+      const frame=new THREE.Mesh(new THREE.BoxGeometry(.16,2.18,1.62),new THREE.MeshStandardMaterial({color:index%4===0?0xb68a3d:0x4b2231,metalness:.2,roughness:.55}));frame.position.set(side*6.79,2.55,z);hall.add(frame);
+      const poster=new THREE.Mesh(new THREE.PlaneGeometry(1.48,2.02),new THREE.MeshBasicMaterial({map:makePosterTexture(paper,index),side:THREE.DoubleSide}));poster.position.set(side*6.68,2.55,z);poster.rotation.y=side<0?Math.PI/2:-Math.PI/2;
+      const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z]};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
+    });
+    for(let z=-27;z<=27;z+=9){const light=new THREE.PointLight(0xffe2ae,2.2,10);light.position.set(0,5.7,z);hall.add(light);}
+    scene.add(hall);
+    const hallApproach=new THREE.Mesh(new THREE.PlaneGeometry(22,5),new THREE.MeshStandardMaterial({color:0x8f765d,roughness:1}));hallApproach.rotation.x=-Math.PI/2;hallApproach.position.set(21,.025,-10);scene.add(hallApproach);
 
     const firefliesGeometry = new THREE.BufferGeometry();
     const fireflyPositions = new Float32Array(240 * 3);
@@ -556,9 +659,10 @@ export default function ResearchWorldClient() {
       pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
       pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects([...portalMeshes, ...exhibitMeshes], false)[0];
+      const hit = raycaster.intersectObjects([...portalMeshes, ...exhibitMeshes, ...kioskMeshes], false)[0];
       if (hit?.object.userData.portal) { setActiveExhibit(null); setActivePortal(hit.object.userData.portal as Portal); }
       if (hit?.object.userData.exhibit) { setActivePortal(null); setActiveExhibit(hit.object.userData.exhibit as Exhibit); }
+      if (hit?.object.userData.kiosk) { setActivePortal(null);setActiveExhibit(null);setKioskInput("");setKioskResponse("");setActiveKiosk(hit.object.userData.kiosk as ResearchKiosk); }
     };
     const onResize = () => {
       camera.aspect = container.clientWidth / container.clientHeight;
@@ -606,7 +710,7 @@ export default function ResearchWorldClient() {
           openChallenge(gate);
         }
       });
-      camera.position.x = THREE.MathUtils.clamp(camera.position.x, -22, 22);
+      camera.position.x = THREE.MathUtils.clamp(camera.position.x, -40, 40);
       camera.position.z = THREE.MathUtils.clamp(camera.position.z, -76, 10);
       camera.position.y = reducedMotionRef.current ? 1.7 : 1.7 + Math.sin(clock.elapsedTime * 7) * ((keys.size > 0) ? .018 : .006);
       camera.rotation.order = "YXZ";
@@ -672,7 +776,7 @@ export default function ResearchWorldClient() {
       treeGroups.length = 0;
       rocks.length = 0;
     };
-  }, [entered, openChallenge]);
+  }, [entered, openChallenge, conferencePapers]);
 
   return (
     <main className={styles.world} ref={worldRef}>
@@ -740,14 +844,34 @@ export default function ResearchWorldClient() {
             </aside>
           )}
 
+          {activeKiosk && (
+            <aside className={`${styles.portalCard} ${styles.kioskPanel}`} style={{"--portal-color":activeKiosk==="metahate"?"#b86882":"#72b7c5"} as React.CSSProperties}>
+              <button type="button" onClick={()=>setActiveKiosk(null)} aria-label="Close research demonstration"><X size={17}/></button>
+              <p>{activeKiosk==="metahate"?"Explainable language analysis":"Interactive battery digital twin"}</p>
+              <h2>{activeKiosk==="metahate"?"MetaHate Language Lab":"Ask BAT-GPT"}</h2>
+              <span>{activeKiosk==="metahate"?"Type a message to explore how a transparent hate-speech demonstration distinguishes respectful, neutral, and potentially harmful language.":"Ask about battery state of charge, state of health, degradation, temperature, remaining useful life, or maintenance."}</span>
+              <div className={styles.kioskExamples}>
+                {(activeKiosk==="metahate"?["Thank you for helping me today","You are stupid and worthless","I disagree with this decision"]:["What does 34% state of charge mean?","Explain 78% state of health","Should I worry about battery temperature?"]).map(example=><button type="button" key={example} onClick={()=>{setKioskInput(example);setKioskResponse("");}}>{example}</button>)}
+              </div>
+              <form onSubmit={(event)=>{event.preventDefault();submitKiosk();}}>
+                <label htmlFor="research-kiosk-input">{activeKiosk==="metahate"?"Message to examine":"Battery question"}</label>
+                <textarea id="research-kiosk-input" value={kioskInput} onChange={(event)=>setKioskInput(event.target.value)} placeholder={activeKiosk==="metahate"?"Type a sample message":"Ask about a battery condition"}/>
+                <button type="submit" className={styles.kioskSubmit}>{activeKiosk==="metahate"?"Analyze message":"Ask the digital twin"}</button>
+              </form>
+              {kioskResponse&&<div className={styles.kioskResponse}><strong>Demonstration response</strong><span>{kioskResponse}</span></div>}
+              <small>This interpretive exhibit is a transparent, rule-based website demonstration. It does not reproduce the full trained research model or provide safety-critical battery advice.</small>
+              <Link href={activeKiosk==="metahate"?"/research/metahate":"/research/bat-gpt"} target="_blank" rel="noreferrer">Open the full research project <ExternalLink size={15}/></Link>
+            </aside>
+          )}
+
           {mapOpen && (
             <aside className={styles.mapPanel}>
               <button type="button" onClick={() => setMapOpen(false)} aria-label="Close map"><X size={18} /></button>
               <p><Map size={16} /> Research trail</p>
-              <h2>Portals, research trees, and photograph exhibits</h2>
+              <h2>Research districts, campuses, interactive labs, and the poster hall</h2>
               <div className={styles.mapLegend}>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</div>
               <ol>{portals.map((portal) => <li key={portal.title}><button type="button" onClick={() => { setActivePortal(portal); setMapOpen(false); }}><span style={{ background: `#${portal.color.toString(16).padStart(6, "0")}` }} />{portal.title}<small>{portal.subtitle}</small></button></li>)}</ol>
-              <p className={styles.mapNote}>Every tree carries a story from my research, news, milestones, teaching, mentorship, or service. Five themed gates draw without repetition from the ten-game collection, so every challenge in one exploration is different.</p>
+              <p className={styles.mapNote}>Explore project environments, five institutional buildings with dated affiliations, the MetaHate and BAT-GPT demonstrations, and a conference hall generated from the complete bibliography.</p>
               <Link href="/research" target="_blank">Open the research index in a new tab</Link>
             </aside>
           )}

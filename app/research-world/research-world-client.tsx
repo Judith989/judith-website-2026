@@ -477,16 +477,23 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
 
     const parkingStory=exhibits.find(item=>item.title==="SmartParking")!;
     const parkingDistrict=new THREE.Group();parkingDistrict.position.set(11,0,-17);
-    const lot=new THREE.Mesh(new THREE.PlaneGeometry(13,15),new THREE.MeshStandardMaterial({color:0x464b4d,roughness:1}));lot.rotation.x=-Math.PI/2;parkingDistrict.add(lot);
-    [-4,-2,0,2,4].forEach(x=>{[-4.7,4.7].forEach(z=>{const line=new THREE.Mesh(new THREE.PlaneGeometry(.08,3.3),new THREE.MeshBasicMaterial({color:0xf4eee2}));line.rotation.x=-Math.PI/2;line.position.set(x,.02,z);parkingDistrict.add(line);});});
-    [[-3,-4.2,0x7d1837],[0,-4.2,0x315b67],[3,-4.2,0xc48b3d],[-3,4.2,0x365c35],[3,4.2,0xd7d0c2]].forEach(([x,z,color])=>addCar(parkingDistrict,x,z,color));
-    const occupancy=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SMART PARKING | 7 OF 10 SPACES OPEN","#e4b65e"),transparent:true}));occupancy.position.set(0,4,-2.5);occupancy.scale.set(7.2,1.7,1);parkingDistrict.add(occupancy);registerExhibit(parkingDistrict,parkingStory);scene.add(parkingDistrict);
+    const lot=new THREE.Mesh(new THREE.PlaneGeometry(13,17),new THREE.MeshStandardMaterial({color:0x454a4c,roughness:1}));lot.rotation.x=-Math.PI/2;lot.position.y=.065;parkingDistrict.add(lot);
+    const driveAisle=new THREE.Mesh(new THREE.PlaneGeometry(11,4.2),new THREE.MeshStandardMaterial({color:0x303638,roughness:1}));driveAisle.rotation.x=-Math.PI/2;driveAisle.position.y=.075;parkingDistrict.add(driveAisle);
+    [-5,-3,-1,1,3,5].forEach(x=>{[-5.25,5.25].forEach(z=>{const line=new THREE.Mesh(new THREE.PlaneGeometry(.08,3.5),new THREE.MeshBasicMaterial({color:0xf5efe4}));line.rotation.x=-Math.PI/2;line.position.set(x,.085,z);parkingDistrict.add(line);});});
+    [-4,-2,0,2,4].forEach(x=>{[-6.7,6.7].forEach(z=>{const stop=new THREE.Mesh(new THREE.BoxGeometry(1.35,.13,.22),new THREE.MeshStandardMaterial({color:0xd8d2c8}));stop.position.set(x,.13,z);parkingDistrict.add(stop);});});
+    [-7.95,7.95].forEach(z=>{const sidewalk=new THREE.Mesh(new THREE.BoxGeometry(13,.16,1.05),new THREE.MeshStandardMaterial({color:0xc9bca8,roughness:1}));sidewalk.position.set(0,.12,z);parkingDistrict.add(sidewalk);});
+    [[-4,-5.25,0x7d1837],[-2,5.25,0x315b67],[2,-5.25,0xc48b3d]].forEach(([x,z,color])=>addCar(parkingDistrict,x,z,color));
+    [-1.45,-.95,-.45,.05,.55,1.05,1.55].forEach(z=>{const stripe=new THREE.Mesh(new THREE.PlaneGeometry(3.2,.3),new THREE.MeshBasicMaterial({color:0xf7f2e8}));stripe.rotation.x=-Math.PI/2;stripe.position.set(0,.095,z);parkingDistrict.add(stripe);});
+    const crossingPeople=[[-.8,-1.1,0x6f1737],[.65,.25,0x315b67],[-.45,1.2,0xc18b3d]];crossingPeople.forEach(([x,z,color],index)=>{const pedestrian=addPerson(parkingDistrict,x,z,color);pedestrian.scale.setScalar(.9);pedestrian.rotation.y=index%2?Math.PI:0;});
+    const signPoleMaterial=new THREE.MeshStandardMaterial({color:0x3f4547,metalness:.65,roughness:.35});
+    [{x:-5.6,z:-1.2,text:"PEDESTRIAN CROSSING",color:"#f0c96f"},{x:5.6,z:1.2,text:"SMART PARKING TEST SITE",color:"#75bdc8"}].forEach(signData=>{const pole=new THREE.Mesh(new THREE.CylinderGeometry(.07,.08,2.6,10),signPoleMaterial);pole.position.set(signData.x,1.3,signData.z);parkingDistrict.add(pole);const sign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(signData.text,signData.color),transparent:true}));sign.position.set(signData.x,2.8,signData.z);sign.scale.set(3.8,.9,1);parkingDistrict.add(sign);proximityLabels.push(sign);});
+    const occupancy=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SMART PARKING | 7 OF 10 SPACES OPEN","#e4b65e"),transparent:true}));occupancy.position.set(0,4,-5.4);occupancy.scale.set(7.2,1.7,1);parkingDistrict.add(occupancy);registerExhibit(parkingDistrict,parkingStory);scene.add(parkingDistrict);
     proximityLabels.push(occupancy);
 
     const pandaStory=exhibits.find(item=>item.title==="PANDA")!;
     const pandaLayer=new THREE.Group();
-    [-3,0,3].forEach((x,index)=>{const beacon=new THREE.PointLight(index===0?0x6fd48a:index===1?0xe7b85e:0x66c8d4,3,5);beacon.position.set(x,1.3,3.8);pandaLayer.add(beacon);const marker=new THREE.Mesh(new THREE.CylinderGeometry(.11,.11,1.6,10),new THREE.MeshStandardMaterial({color:index===0?0x6fd48a:index===1?0xe7b85e:0x66c8d4,emissive:index===0?0x245a34:index===1?0x6a4618:0x245e66}));marker.position.set(x,.8,3.8);pandaLayer.add(marker);});
-    const forecast=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("PANDA FORECAST | NOW · 15 MIN · 30 MIN","#66c8d4"),transparent:true}));forecast.position.set(0,5.7,2.5);forecast.scale.set(7.2,1.7,1);pandaLayer.add(forecast);registerExhibit(pandaLayer,pandaStory);parkingDistrict.add(pandaLayer);
+    [-4,-2,0,2,4].forEach((x,index)=>{const predictedOpen=index!==1;const beaconColor=predictedOpen?0x6fd48a:0xe7b85e;const beacon=new THREE.PointLight(beaconColor,2.8,4);beacon.position.set(x,1.3,5.25);pandaLayer.add(beacon);const marker=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,1.4,10),new THREE.MeshStandardMaterial({color:beaconColor,emissive:predictedOpen?0x245a34:0x6a4618}));marker.position.set(x,.75,5.25);pandaLayer.add(marker);});
+    const forecast=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("PANDA FORECAST | NOW · 15 MIN · 30 MIN","#66c8d4"),transparent:true}));forecast.position.set(0,5.7,5.2);forecast.scale.set(7.2,1.7,1);pandaLayer.add(forecast);registerExhibit(pandaLayer,pandaStory);parkingDistrict.add(pandaLayer);
     proximityLabels.push(forecast);
 
     const batteryStory=exhibits.find(item=>item.title==="BatteryMetrix")!;

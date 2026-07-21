@@ -22,9 +22,28 @@ type Category = "Research" | "News" | "Milestone" | "Teaching" | "Mentorship" | 
 type Exhibit = { title: string; kind: string; category?: Category; description: string; href: string; image: string; position: [number, number, number] };
 export type ConferencePaper = { title: string; venue: string; authors: string; year: number; href: string };
 type ResearchKiosk = "metahate" | "batgpt";
+type FacultyTourStop = { title:string; district:string; position:[number,number,number]; argument:string; evidence:string[]; links:{label:string;href:string}[]; final?:boolean };
 
 const welcomeNarration = "Welcome to My Research World. I am Dr. Judith Njoku-Vowels, an engineer and researcher building intelligent systems that help the physical world see, predict, and decide. This immersive world brings together my research, publications, teaching, mentorship, and academic journey. Follow the signs, explore the exhibits, and use the VR Console whenever you want to move directly to a destination.";
 const spokenWelcomeNarration = "Welcome to My Research World. I am Dr. Judith Vowels, an engineer and researcher building intelligent systems that help the physical world see, predict, and decide. This immersive world brings together my research, publications, teaching, mentorship, and academic journey. Follow the signs, explore the exhibits, and use the VR Console whenever you want to move directly to a destination.";
+
+const facultyTour:FacultyTourStop[] = [
+  { title:"A coherent research agenda",district:"Entrance thesis",position:[0,5,0],argument:"I build trustworthy intelligent systems that connect physical infrastructure, digital representations, and human decisions. My agenda unifies resilient perception, explainable digital twins, secure cyber-physical systems, and decision support.",evidence:["A portfolio spanning computer vision, battery intelligence, transportation, bridges, cybersecurity, and digital agriculture","Research systems designed around inspectability, efficiency, security, and real-world use","A trajectory from foundational communications research to interdisciplinary intelligent infrastructure"],links:[{label:"Research agenda",href:"/research"}] },
+  { title:"Resilient autonomous perception",district:"OmniRestore",position:[-6,-8,-Math.PI/2],argument:"OmniRestore shows how I translate a safety-critical perception problem into a parameter-efficient, weather-aware computer-vision system that restores evidence under rain, fog, snow, low light, and composite conditions.",evidence:["Presented at the IEEE/CVF CVPR Workshops 2026 in Denver","Public project page and reproducible GitHub implementations","A direct contribution to robust perception for autonomous systems"],links:[{label:"Open OmniRestore",href:"/research/omnirestore"},{label:"Publications",href:"/publications"}] },
+  { title:"Trustworthy battery intelligence",district:"BatteryMetrix",position:[7,-28,-Math.PI/2],argument:"BatteryMetrix is the core of my doctoral scholarship. It joins prediction, explanation, secure records, language interaction, and immersive digital twins so battery insights can support decisions instead of remaining isolated model outputs.",evidence:["PhD dissertation in IT Convergence Engineering","Peer-reviewed work on explainable battery twins, hybrid twins, metaverse-enhanced BMS, and BAT-GPT","An agenda that connects electrochemical models, machine learning, uncertainty, cybersecurity, and human interpretation"],links:[{label:"Explore BatteryMetrix",href:"/research/batterymetrix"},{label:"Open BAT-GPT",href:"/research/bat-gpt"}] },
+  { title:"Intelligent infrastructure in action",district:"PANDA and BridgeSync",position:[6,-50,-Math.PI/2],argument:"PANDA and BridgeSync demonstrate how I move from algorithms to spatial decision environments. They connect forecasting and sensing to digital representations that operators can inspect in parking and bridge systems.",evidence:["PANDA presented at the ASCE International Conference on Computing in Civil Engineering 2026","Multi-horizon parking occupancy and turnover forecasting in a Cesium digital twin","Secure bridge monitoring that connects sensor selection, digital representation, and resilient decision support"],links:[{label:"Explore PANDA",href:"/research/panda"},{label:"Explore BridgeSync",href:"/research/bridgesync"}] },
+  { title:"Scholarship that develops people",district:"Teaching, mentorship, and service",position:[0,-45,0],argument:"My academic contribution includes how I build research capacity. I teach through consequential systems, mentor toward intellectual ownership, and create pathways from internships and early research questions to peer-reviewed scholarship.",evidence:["More than fifteen students supervised across international internship cohorts","Cohort research matured into peer-reviewed publications in agriculture, sensing, and workforce development","Service across CVPR, ICML, NeurIPS, WACV, WCNC, and leading journals"],links:[{label:"Teaching and mentorship",href:"/about"},{label:"Professional record",href:"/cv"}] },
+  { title:"Why should your department interview me?",district:"Narrative conclusion",position:[11,-61,0],argument:"Because I bring a coherent interdisciplinary agenda, evidence that I can build working research systems, a record of peer-reviewed scholarship, and a mentorship practice that turns participation into ownership. I can connect computing with infrastructure, transportation, energy, agriculture, and human decision-making while helping a department expand both research impact and student opportunity.",evidence:["Research independence demonstrated through connected systems and a forward-looking agenda","International collaboration across Nigeria, South Korea, and the United States","Experience translating theory into prototypes, demonstrations, publications, and student outcomes","A distinctive platform for an interdisciplinary laboratory in trustworthy intelligent systems"],links:[{label:"Download and review my CV",href:"/cv"},{label:"Discuss collaboration",href:"/contact"}],final:true },
+];
+
+const projectEvidence:Record<string,string[]> = {
+  OmniRestore:["CVPR Workshops 2026 presentation","Public code and project website","Degraded, restored, and ground-truth comparisons"],
+  BatteryMetrix:["PhD research program","Multiple peer-reviewed battery digital-twin publications","Predictive, explainable, secure, and immersive system layers"],
+  PANDA:["ASCE i3CE 2026 presentation","Cesium-based predictive parking twin","Multi-horizon occupancy and turnover forecasting"],
+  BridgeSync:["Secure smart-bridge monitoring framework","Sensor-selection and digital-representation architecture","Infrastructure decision-support focus"],
+  MetaHate:["Peer-reviewed ICTC 2023 conference paper","System architecture and trained language-classification research","Interactive transparent website demonstration"],
+  "BAT-GPT":["IEEE ICUFN 2025 proceedings","Parameter-efficient language interaction for battery twins","Interactive battery-question demonstration"],
+};
 
 const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
 const worldGates = [
@@ -242,6 +261,8 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const [welcomeOpen, setWelcomeOpen] = useState(false);
   const [narrationOn, setNarrationOn] = useState(true);
   const [voiceNotice, setVoiceNotice] = useState("");
+  const [facultyTourStep, setFacultyTourStep] = useState<number | null>(null);
+  const [evidenceOpen, setEvidenceOpen] = useState(false);
   const [muted, setMuted] = useState(false);
   const [activePortal, setActivePortal] = useState<Portal | null>(null);
   const [mapOpen, setMapOpen] = useState(false);
@@ -279,6 +300,13 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const activateRestoration = useCallback(() => { restoredVisionRef.current=true; setRestoredVision(true); }, []);
   const toggleMotion = useCallback(() => { const next=!reducedMotionRef.current; reducedMotionRef.current=next; setReducedMotion(next); }, []);
   const navigateTo=useCallback((x:number,z:number,yaw=0)=>{worldGates.forEach((gate,index)=>{if(z<gate.z)completedGatesRef.current.add(index);});navigationTargetRef.current={x,z,yaw};setActivePortal(null);setActiveExhibit(null);setActiveKiosk(null);setMapOpen(false);},[]);
+
+  const goToFacultyTourStep=useCallback((step:number)=>{
+    const bounded=Math.max(0,Math.min(facultyTour.length-1,step));
+    const stop=facultyTour[bounded];
+    setFacultyTourStep(bounded);
+    navigateTo(...stop.position);
+  },[navigateTo]);
 
   const startSound = useCallback(() => {
     if (!audioRef.current) audioRef.current = createAmbientSound();
@@ -363,6 +391,12 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     setWelcomeOpen(false);
     if (audioRef.current && !muted) audioRef.current.master.gain.setTargetAtTime(.3, audioRef.current.context.currentTime, .12);
   }, [muted, stopNarration]);
+
+  const startFacultyTour=useCallback(()=>{
+    stopNarration();
+    setWelcomeOpen(false);
+    goToFacultyTourStep(0);
+  },[goToFacultyTourStep,stopNarration]);
 
   const toggleSound = useCallback(() => {
     if (!audioRef.current) {
@@ -968,11 +1002,32 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               </div>
               {voiceNotice && <small className={styles.voiceNotice}>{voiceNotice}</small>}
               <div className={styles.welcomeActions}>
+                <button type="button" className={styles.facultyTourButton} onClick={startFacultyTour}>Start the Faculty Tour</button>
                 <button type="button" className={styles.beginButton} onClick={closeWelcome}>Proceed</button>
                 <button type="button" className={styles.narrationButton} onClick={toggleNarration}>{narrationOn ? <VolumeX size={17} /> : <Volume2 size={17} />}{narrationOn ? "Narration off" : "Play feminine voice"}</button>
               </div>
             </aside>
           )}
+
+          {facultyTourStep !== null && (()=>{
+            const stop=facultyTour[facultyTourStep];
+            return <aside className={`${styles.facultyTourPanel} ${stop.final?styles.facultyTourFinal:""}`} aria-live="polite">
+              <div className={styles.tourProgress}><span>Five-minute Faculty Tour</span><strong>{facultyTourStep+1} / {facultyTour.length}</strong></div>
+              <div className={styles.tourProgressBar}><i style={{width:`${((facultyTourStep+1)/facultyTour.length)*100}%`}}/></div>
+              <p>{stop.district}</p>
+              <h2>{stop.title}</h2>
+              <span className={styles.tourArgument}>{stop.argument}</span>
+              <div className={styles.tourEvidence}><strong>Evidence</strong><ul>{stop.evidence.map(item=><li key={item}>{item}</li>)}</ul></div>
+              <div className={styles.tourLinks}>{stop.links.map(link=><Link key={link.href} href={link.href} target="_blank">{link.label}<ExternalLink size={13}/></Link>)}</div>
+              {stop.final&&<div className={styles.interviewAnswer}><strong>The interview case</strong><span>Research vision, system-building ability, interdisciplinary range, teaching commitment, mentorship evidence, and international collaboration are already connected in one academic program.</span></div>}
+              <div className={styles.tourControls}>
+                <button type="button" disabled={facultyTourStep===0} onClick={()=>goToFacultyTourStep(facultyTourStep-1)}>Previous</button>
+                {!stop.final&&<button type="button" className={styles.tourNext} onClick={()=>goToFacultyTourStep(facultyTourStep+1)}>Next stop</button>}
+                {stop.final&&<Link className={styles.tourNext} href="mailto:jnjoku@uwyo.edu">Email Dr. Judith</Link>}
+                <button type="button" onClick={()=>setFacultyTourStep(null)}>{stop.final?"Return to free exploration":"Exit tour"}</button>
+              </div>
+            </aside>;
+          })()}
 
           {activePortal && (
             <aside className={styles.portalCard} style={{ "--portal-color": `#${activePortal.color.toString(16).padStart(6, "0")}` } as React.CSSProperties}>
@@ -989,6 +1044,8 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <button type="button" onClick={() => setActiveExhibit(null)} aria-label="Close research exhibit"><X size={17} /></button>
               <Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />
               <p>{activeExhibit.category??"Research"} · {activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
+              <button type="button" className={styles.evidenceButton} onClick={()=>setEvidenceOpen(open=>!open)}>{evidenceOpen?"Hide evidence":"Show evidence"}</button>
+              {evidenceOpen&&<div className={styles.exhibitEvidence}><strong>Evidence behind this exhibit</strong><ul>{(projectEvidence[activeExhibit.title]??["Dedicated project page with system description and research context","Related peer-reviewed record in the publication archive","Connection to the wider trustworthy intelligent-systems agenda"]).map(item=><li key={item}>{item}</li>)}</ul></div>}
               {activeExhibit.title==="OmniRestore"&&!restoredVision&&<button type="button" className={styles.restoreButton} onClick={activateRestoration}>Activate Restore Vision</button>}
               {activeExhibit.title==="OmniRestore"&&restoredVision&&<b className={styles.restoredNotice}>Weather suppressed. Restored evidence revealed.</b>}
               <Link href={activeExhibit.href} target="_blank" rel="noreferrer">Explore without leaving the world <ExternalLink size={15} /></Link>
@@ -1021,6 +1078,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <p><Map size={16} /> Research trail</p>
               <h2>Research districts, campuses, interactive labs, and the poster hall</h2>
               <div className={styles.destinationGrid} aria-label="Museum destinations">
+                <button type="button" className={styles.facultyTourDestination} onClick={startFacultyTour}><strong>Start the Faculty Tour</strong><span>A five-minute evidence-based case for interview</span></button>
                 <button type="button" onClick={()=>navigateTo(31,-5,0)}><strong>Conference Poster Hall</strong><span>{conferencePapers.length} selectable conference papers</span></button>
                 <button type="button" onClick={()=>navigateTo(-21,-5,Math.PI/2)}><strong>Academic Campus Trail</strong><span>Five institutions and dated affiliations</span></button>
                 <button type="button" onClick={()=>navigateTo(5,-15,-Math.PI/2)}><strong>Smart Parking and PANDA</strong><span>Detection, occupancy, and forecasting</span></button>

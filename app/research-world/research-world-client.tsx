@@ -277,6 +277,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const [mapOpen, setMapOpen] = useState(false);
   const [qualityNotice, setQualityNotice] = useState("");
   const [activeExhibit, setActiveExhibit] = useState<Exhibit | null>(null);
+  const [insideConferenceHall, setInsideConferenceHall] = useState(false);
   const [challengeSeed, setChallengeSeed] = useState<number | null>(null);
   const [challengeTitle, setChallengeTitle] = useState("Research Gate");
   const [restoredVision, setRestoredVision] = useState(false);
@@ -290,6 +291,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const completedGatesRef = useRef(new Set<number>());
   const challengeDeckRef = useRef<number[]>([]);
   const navigationTargetRef=useRef<{x:number;z:number;yaw:number}|null>(null);
+  const insideConferenceHallRef=useRef(false);
 
   const openChallenge = useCallback((gate: number) => {
     if (challengeOpenRef.current || completedGatesRef.current.has(gate)) return;
@@ -896,6 +898,8 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       });
       camera.position.x = THREE.MathUtils.clamp(camera.position.x, -40, 40);
       camera.position.z = THREE.MathUtils.clamp(camera.position.z, -76, 10);
+      const cameraIsInsideConferenceHall=camera.position.x>24&&camera.position.x<38&&camera.position.z<-9&&camera.position.z>-75;
+      if(cameraIsInsideConferenceHall!==insideConferenceHallRef.current){insideConferenceHallRef.current=cameraIsInsideConferenceHall;setInsideConferenceHall(cameraIsInsideConferenceHall);}
       camera.position.y = reducedMotionRef.current ? 1.7 : 1.7 + Math.sin(clock.elapsedTime * 7) * ((keys.size > 0) ? .018 : .006);
       camera.rotation.order = "YXZ";
       camera.rotation.y = yaw;
@@ -999,7 +1003,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
           </header>
 
           <div className={styles.guide}><span>WASD or arrows to move</span><span>Drag to look</span><span>Select exhibits to inspect</span></div>
-          <aside className={styles.trailLegend} aria-label="Travel to a themed trail"><strong>Choose a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><button type="button" key={category} onClick={()=>navigateTo(...trailDestinations[category])} title={`Travel to ${category.toLowerCase()} exhibits`}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</button>)}</aside>
+          <aside className={`${styles.trailLegend} ${insideConferenceHall?styles.trailLegendHidden:""}`} aria-label="Travel to a themed trail" aria-hidden={insideConferenceHall}><strong>Choose a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><button type="button" key={category} tabIndex={insideConferenceHall?-1:0} onClick={()=>navigateTo(...trailDestinations[category])} title={`Travel to ${category.toLowerCase()} exhibits`}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</button>)}</aside>
           <div className={styles.vrConsole} aria-label="VR navigation console">
             <div className={styles.consoleHeader}><span>VR navigation</span><i aria-hidden="true" /></div>
             <div className={styles.consoleReadout}><strong>Explore</strong><span>Touch and hold to move</span></div>

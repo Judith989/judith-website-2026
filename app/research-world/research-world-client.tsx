@@ -46,6 +46,14 @@ const projectEvidence:Record<string,string[]> = {
 };
 
 const categoryColors: Record<Category, number> = { Research:0x3f7546, News:0x3d7183, Milestone:0xc28b3d, Teaching:0x6f5790, Mentorship:0xa64f68, Service:0x8b5d3f };
+const trailDestinations: Record<Category, [number, number, number]> = {
+  Research: [0, -11, 0],
+  News: [-10, -19, 0],
+  Milestone: [0, -26, 0],
+  Teaching: [0, -40, 0],
+  Mentorship: [0, -54, 0],
+  Service: [0, -66, 0],
+};
 const worldGates = [
   { z:-13, title:"Research Gate", color:categoryColors.Research },
   { z:-27, title:"Milestone Gate", color:categoryColors.Milestone },
@@ -991,7 +999,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
           </header>
 
           <div className={styles.guide}><span>WASD or arrows to move</span><span>Drag to look</span><span>Select exhibits to inspect</span></div>
-          <aside className={styles.trailLegend}><strong>Follow a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</aside>
+          <aside className={styles.trailLegend} aria-label="Travel to a themed trail"><strong>Choose a trail</strong>{(Object.keys(categoryColors) as Category[]).map(category=><button type="button" key={category} onClick={()=>navigateTo(...trailDestinations[category])} title={`Travel to ${category.toLowerCase()} exhibits`}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</button>)}</aside>
           <div className={styles.vrConsole} aria-label="VR navigation console">
             <div className={styles.consoleHeader}><span>VR navigation</span><i aria-hidden="true" /></div>
             <div className={styles.consoleReadout}><strong>Explore</strong><span>Touch and hold to move</span></div>
@@ -1040,6 +1048,8 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               </div>
             </aside>;
           })()}
+
+          {(activePortal||activeExhibit||activeKiosk)&&<button type="button" className={styles.panelDismissOverlay} aria-label="Close open information panel" onClick={()=>{setActivePortal(null);setActiveExhibit(null);setActiveKiosk(null);setEvidenceOpen(false);}}/>}
 
           {activePortal && (
             <aside className={styles.portalCard} style={{ "--portal-color": `#${activePortal.color.toString(16).padStart(6, "0")}` } as React.CSSProperties}>

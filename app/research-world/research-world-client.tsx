@@ -253,6 +253,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const challengeOpenRef = useRef(false);
   const completedGatesRef = useRef(new Set<number>());
   const challengeDeckRef = useRef<number[]>([]);
+  const navigationTargetRef=useRef<{x:number;z:number;yaw:number}|null>(null);
 
   const openChallenge = useCallback((gate: number) => {
     if (challengeOpenRef.current || completedGatesRef.current.has(gate)) return;
@@ -271,6 +272,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   }, []);
   const activateRestoration = useCallback(() => { restoredVisionRef.current=true; setRestoredVision(true); }, []);
   const toggleMotion = useCallback(() => { const next=!reducedMotionRef.current; reducedMotionRef.current=next; setReducedMotion(next); }, []);
+  const navigateTo=useCallback((x:number,z:number,yaw=0)=>{worldGates.forEach((gate,index)=>{if(z<gate.z)completedGatesRef.current.add(index);});navigationTargetRef.current={x,z,yaw};setActivePortal(null);setActiveExhibit(null);setActiveKiosk(null);setMapOpen(false);},[]);
 
   const startSound = useCallback(() => {
     if (!audioRef.current) audioRef.current = createAmbientSound();
@@ -414,6 +416,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       const x = side * (9 + Math.random() * 27);
       const z = 10 - Math.random() * 105;
       if (z < -73 && Math.abs(x) < 19) continue;
+      if (x > 22 && x < 39 && z < -7 && z > -76) continue;
       if(districtClearings.some(clearing=>Math.hypot(x-clearing.x,z-clearing.z)<clearing.r))continue;
       const story = forestStories[index % forestStories.length];
       const tree = addTree(scene, x, z, .65 + Math.random() * .75, categoryColors[story.category ?? "Research"]);
@@ -588,6 +591,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     const hallBack=new THREE.Mesh(new THREE.BoxGeometry(14,6.4,.3),hallWallMaterial);hallBack.position.set(0,3.2,-33);hall.add(hallBack);
     const roof=new THREE.Mesh(new THREE.BoxGeometry(14.3,.18,66),new THREE.MeshPhysicalMaterial({color:0xd8e4e1,transparent:true,opacity:.48,transmission:.2,roughness:.22}));roof.position.y=6.4;hall.add(roof);
     const hallSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(`CONFERENCE POSTER HALL | ${conferencePapers.length} PAPERS`,"#e4b65e"),transparent:true}));hallSign.position.set(0,7,31);hallSign.scale.set(9,2.1,1);hall.add(hallSign);proximityLabels.push(hallSign);
+    const hallInstruction=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("SELECT ANY POSTER TO OPEN ITS PAPER RECORD","#72a9b5"),transparent:true}));hallInstruction.position.set(0,5.25,29.5);hallInstruction.scale.set(8.2,1.9,1);hall.add(hallInstruction);proximityLabels.push(hallInstruction);
     [
       {z:18,title:"Conference Poster Hall",lines:[`${conferencePapers.length} peer-reviewed conference papers`,"A complete walk through the conference record"]},
       {z:0,title:"International Research Venues",lines:["CVPR · ICUFN · ICTC · ICAIIC · ICMIC","Computer vision, digital twins, AI, and communications"]},
@@ -602,6 +606,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     for(let z=-27;z<=27;z+=9){const light=new THREE.PointLight(0xffe2ae,2.2,10);light.position.set(0,5.7,z);hall.add(light);}
     scene.add(hall);
     const hallApproach=new THREE.Mesh(new THREE.PlaneGeometry(22,5),new THREE.MeshStandardMaterial({color:0x8f765d,roughness:1}));hallApproach.rotation.x=-Math.PI/2;hallApproach.position.set(21,.025,-10);scene.add(hallApproach);
+    const hallDirection=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(`POSTER HALL → ${conferencePapers.length} CONFERENCE PAPERS`,"#e4b65e"),transparent:true}));hallDirection.position.set(16,4.8,-5);hallDirection.scale.set(8.5,2,1);scene.add(hallDirection);proximityLabels.push(hallDirection);
 
     const firefliesGeometry = new THREE.BufferGeometry();
     const fireflyPositions = new Float32Array(240 * 3);
@@ -715,6 +720,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       animationId = requestAnimationFrame(animate);
       const delta = Math.min(clock.getDelta(), .04);
       const speed = (keys.has("shift") ? 9 : 5.2) * delta;
+      if(navigationTargetRef.current){const target=navigationTargetRef.current;camera.position.set(target.x,1.7,target.z);yaw=target.yaw;pitch=0;keys.clear();navigationTargetRef.current=null;}
       const forward = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
       const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
       if (keys.has("w") || keys.has("arrowup")) camera.position.addScaledVector(forward, speed);
@@ -824,7 +830,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
             <Link href="/" aria-label="Return to the main website"><ArrowLeft size={18} /><span>Main website</span></Link>
             <div><strong>Judith Njoku-Vowels</strong><span>Research World</span></div>
             <div className={styles.headerControls}>
-              <button type="button" onClick={() => setMapOpen((open) => !open)} aria-label="Open research world map"><Map size={18} /></button>
+              <button type="button" className={styles.navigateButton} onClick={() => setMapOpen((open) => !open)} aria-label="Navigate Research World"><Map size={18} /><span>Navigate</span></button>
               <button type="button" onClick={toggleMotion} aria-label={reducedMotion?"Enable ambient motion":"Reduce motion"}><Activity size={18} /></button>
               <button type="button" onClick={toggleSound} aria-label={muted ? "Play soundtrack" : "Mute soundtrack"}>{muted ? <VolumeX size={18} /> : <Music2 size={18} />}</button>
             </div>
@@ -888,6 +894,15 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <button type="button" onClick={() => setMapOpen(false)} aria-label="Close map"><X size={18} /></button>
               <p><Map size={16} /> Research trail</p>
               <h2>Research districts, campuses, interactive labs, and the poster hall</h2>
+              <div className={styles.destinationGrid} aria-label="Museum destinations">
+                <button type="button" onClick={()=>navigateTo(20,-8,-Math.PI/2)}><strong>Conference Poster Hall</strong><span>{conferencePapers.length} selectable conference papers</span></button>
+                <button type="button" onClick={()=>navigateTo(-21,-5,Math.PI/2)}><strong>Academic Campus Trail</strong><span>Five institutions and dated affiliations</span></button>
+                <button type="button" onClick={()=>navigateTo(5,-15,-Math.PI/2)}><strong>Smart Parking and PANDA</strong><span>Detection, occupancy, and forecasting</span></button>
+                <button type="button" onClick={()=>navigateTo(-7,-21,Math.PI/2)}><strong>MetaHate Language Lab</strong><span>Interactive message analysis</span></button>
+                <button type="button" onClick={()=>navigateTo(8,-31,-Math.PI/2)}><strong>BatteryMetrix and BAT-GPT</strong><span>Battery intelligence consultation</span></button>
+                <button type="button" onClick={()=>navigateTo(-4,-53,Math.PI/2)}><strong>BridgeSync</strong><span>Cable bridge monitoring environment</span></button>
+                <button type="button" onClick={()=>navigateTo(11,-61,0)}><strong>Consultation Office</strong><span>Research and collaboration space</span></button>
+              </div>
               <div className={styles.mapLegend}>{(Object.keys(categoryColors) as Category[]).map(category=><span key={category}><i style={{background:`#${categoryColors[category].toString(16).padStart(6,"0")}`}}/>{category}</span>)}</div>
               <ol>{portals.map((portal) => <li key={portal.title}><button type="button" onClick={() => { setActivePortal(portal); setMapOpen(false); }}><span style={{ background: `#${portal.color.toString(16).padStart(6, "0")}` }} />{portal.title}<small>{portal.subtitle}</small></button></li>)}</ol>
               <p className={styles.mapNote}>Explore project environments, five institutional buildings with dated affiliations, the MetaHate and BAT-GPT demonstrations, and a conference hall generated from the complete bibliography.</p>

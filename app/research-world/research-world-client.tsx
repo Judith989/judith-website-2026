@@ -585,6 +585,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     });
 
     const hall=new THREE.Group();hall.position.set(31,0,-42);
+    treeGroups.forEach(tree=>{const {x,z}=tree.position;if(x>21&&x<41&&z<-5&&z>-78){scene.remove(tree);}});
     const hallFloor=new THREE.Mesh(new THREE.BoxGeometry(14,.22,66),new THREE.MeshStandardMaterial({color:0x6b5060,roughness:.72}));hall.add(hallFloor);
     const hallWallMaterial=new THREE.MeshStandardMaterial({color:0xefe5dc,roughness:.82});
     [-7,7].forEach(x=>{const wall=new THREE.Mesh(new THREE.BoxGeometry(.3,6.4,66),hallWallMaterial);wall.position.set(x,3.2,0);hall.add(wall);});
@@ -603,6 +604,21 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       const poster=new THREE.Mesh(new THREE.PlaneGeometry(1.48,2.02),new THREE.MeshBasicMaterial({map:makePosterTexture(paper,index),side:THREE.DoubleSide}));poster.position.set(side*6.68,2.55,z);poster.rotation.y=side<0?Math.PI/2:-Math.PI/2;
       const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z]};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
     });
+    const addRefreshmentTable=(z:number,accent:number)=>{
+      const tableGroup=new THREE.Group();tableGroup.position.set(0,0,z);
+      const linen=new THREE.MeshStandardMaterial({color:0xf3e8dc,roughness:.9});
+      const tableTop=new THREE.Mesh(new THREE.BoxGeometry(3.8,.18,1.6),linen);tableTop.position.y=1.25;tableGroup.add(tableTop);
+      [-1.55,1.55].forEach(x=>[-.58,.58].forEach(tableZ=>{const leg=new THREE.Mesh(new THREE.CylinderGeometry(.07,.09,1.2,10),new THREE.MeshStandardMaterial({color:0x553526,roughness:.7}));leg.position.set(x,.6,tableZ);tableGroup.add(leg);}));
+      const runner=new THREE.Mesh(new THREE.BoxGeometry(3.85,.03,.45),new THREE.MeshStandardMaterial({color:accent,roughness:.82}));runner.position.y=1.36;tableGroup.add(runner);
+      const bowl=new THREE.Mesh(new THREE.CylinderGeometry(.48,.3,.24,20),new THREE.MeshStandardMaterial({color:0xc7a46b,roughness:.55}));bowl.position.set(-.85,1.51,0);tableGroup.add(bowl);
+      const fruitColors=[0xd65338,0xe8b53f,0x7ea24f,0xc84d4f,0xe58a32,0x78a852];
+      fruitColors.forEach((color,index)=>{const angle=index/fruitColors.length*Math.PI*2;const fruit=new THREE.Mesh(new THREE.SphereGeometry(.16,14,10),new THREE.MeshStandardMaterial({color,roughness:.72}));fruit.position.set(-.85+Math.cos(angle)*.28,1.7+index%2*.08,Math.sin(angle)*.25);tableGroup.add(fruit);});
+      const platter=new THREE.Mesh(new THREE.CylinderGeometry(.62,.62,.07,24),new THREE.MeshStandardMaterial({color:0xe1d9cf,metalness:.15,roughness:.4}));platter.position.set(.7,1.43,0);tableGroup.add(platter);
+      for(let index=0;index<8;index+=1){const snack=new THREE.Mesh(new THREE.BoxGeometry(.24,.12,.18),new THREE.MeshStandardMaterial({color:index%2?0xd7a65b:0xb87843,roughness:.8}));snack.position.set(.35+(index%4)*.23,1.54,-.22+Math.floor(index/4)*.42);snack.rotation.y=(index%3)*.2;tableGroup.add(snack);}
+      [-1.65,1.55].forEach((x,index)=>{const cup=new THREE.Mesh(new THREE.CylinderGeometry(.11,.09,.3,14),new THREE.MeshPhysicalMaterial({color:index?0x9bc6cd:0xd9b176,transparent:true,opacity:.85,roughness:.25}));cup.position.set(x,1.5,.25);tableGroup.add(cup);});
+      const tableSign=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel("CONFERENCE REFRESHMENTS","#e4b65e"),transparent:true}));tableSign.position.set(0,2.35,0);tableSign.scale.set(3.8,.9,1);tableGroup.add(tableSign);hall.add(tableGroup);
+    };
+    addRefreshmentTable(11,0x8b1738);addRefreshmentTable(-12,0x315b67);
     for(let z=-27;z<=27;z+=9){const light=new THREE.PointLight(0xffe2ae,2.2,10);light.position.set(0,5.7,z);hall.add(light);}
     scene.add(hall);
     const hallApproach=new THREE.Mesh(new THREE.PlaneGeometry(22,5),new THREE.MeshStandardMaterial({color:0x8f765d,roughness:1}));hallApproach.rotation.x=-Math.PI/2;hallApproach.position.set(21,.025,-10);scene.add(hallApproach);
@@ -895,7 +911,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
               <p><Map size={16} /> Research trail</p>
               <h2>Research districts, campuses, interactive labs, and the poster hall</h2>
               <div className={styles.destinationGrid} aria-label="Museum destinations">
-                <button type="button" onClick={()=>navigateTo(20,-8,-Math.PI/2)}><strong>Conference Poster Hall</strong><span>{conferencePapers.length} selectable conference papers</span></button>
+                <button type="button" onClick={()=>navigateTo(31,-5,0)}><strong>Conference Poster Hall</strong><span>{conferencePapers.length} selectable conference papers</span></button>
                 <button type="button" onClick={()=>navigateTo(-21,-5,Math.PI/2)}><strong>Academic Campus Trail</strong><span>Five institutions and dated affiliations</span></button>
                 <button type="button" onClick={()=>navigateTo(5,-15,-Math.PI/2)}><strong>Smart Parking and PANDA</strong><span>Detection, occupancy, and forecasting</span></button>
                 <button type="button" onClick={()=>navigateTo(-7,-21,Math.PI/2)}><strong>MetaHate Language Lab</strong><span>Interactive message analysis</span></button>

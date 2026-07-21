@@ -862,9 +862,12 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       if (hit?.object.userData.kiosk) { setActivePortal(null);setActiveExhibit(null);setKioskInput("");setKioskResponse("");setActiveKiosk(hit.object.userData.kiosk as ResearchKiosk); }
     };
     const onWheel=(event:WheelEvent)=>{
+      const target=event.target;
+      if(target instanceof Element&&target.closest(`.${styles.portalCard},.${styles.mapPanel},.${styles.facultyTourPanel},.${styles.welcomeSpeech},.${styles.challengeInner}`))return;
       event.preventDefault();
       const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
-      const distance=THREE.MathUtils.clamp(event.deltaY*.008,-2.2,2.2);
+      const normalizedDelta=event.deltaMode===WheelEvent.DOM_DELTA_LINE?event.deltaY*16:event.deltaMode===WheelEvent.DOM_DELTA_PAGE?event.deltaY*window.innerHeight:event.deltaY;
+      const distance=THREE.MathUtils.clamp(normalizedDelta*.012,-2.8,2.8);
       camera.position.addScaledVector(forward,-distance);
     };
     const onResize = () => {
@@ -890,7 +893,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
     canvas.addEventListener("pointerdown", onPointerDown);
     canvas.addEventListener("pointermove", onPointerMove);
     canvas.addEventListener("pointerup", onPointerUp);
-    canvas.addEventListener("wheel",onWheel,{passive:false});
+    container.addEventListener("wheel",onWheel,{passive:false,capture:true});
 
     const clock = new THREE.Clock();
     const labelPosition=new THREE.Vector3();
@@ -966,7 +969,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerUp);
-      canvas.removeEventListener("wheel",onWheel);
+      container.removeEventListener("wheel",onWheel,{capture:true});
       buttonHandlers.forEach(({ button, down, up }) => {
         button.removeEventListener("pointerdown", down);
         button.removeEventListener("pointerup", up);

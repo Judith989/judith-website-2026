@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe2 } from "lucide-react";
 
 const navigation = [
   ["Home", "/"],
   ["About", "/about"],
   ["Research", "/research"],
-  ["My World", "/research-world"],
   ["Publications", "/publications"],
   ["News", "/news"],
   ["Gallery", "/gallery"],
@@ -24,9 +23,10 @@ export function SiteHeader() {
       <nav aria-label="Main navigation">
         {navigation.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
       </nav>
-      <Link className="header-contact" href="/contact">
-        Contact <ArrowUpRight size={15} />
-      </Link>
+      <div className="header-actions">
+        <Link className="header-contact" href="/contact">Contact <ArrowUpRight size={15} /></Link>
+        <Link className="header-world" href="/research-world"><Globe2 size={19} aria-hidden="true" /><span>My World</span></Link>
+      </div>
     </header>
   );
 }

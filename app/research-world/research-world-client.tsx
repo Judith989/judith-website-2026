@@ -161,7 +161,7 @@ function wrapCanvasText(context:CanvasRenderingContext2D,text:string,maxWidth:nu
 }
 
 function makePosterTexture(paper:ConferencePaper,index:number) {
-  const canvas=document.createElement("canvas");const resolutionScale=window.innerWidth<=700?.5:1;canvas.width=720*resolutionScale;canvas.height=960*resolutionScale;const context=canvas.getContext("2d");if(!context)return new THREE.Texture();context.scale(resolutionScale,resolutionScale);
+  const canvas=document.createElement("canvas");const resolutionScale=window.innerWidth<=700?.4:.64;canvas.width=720*resolutionScale;canvas.height=960*resolutionScale;const context=canvas.getContext("2d");if(!context)return new THREE.Texture();context.scale(resolutionScale,resolutionScale);
   const accents=["#d9ad55","#72a9b5","#9c526b","#6f8d63"];const accent=accents[index%accents.length];
   context.fillStyle="#f7f0e7";context.fillRect(0,0,720,960);context.fillStyle=accent;context.fillRect(0,0,720,72);context.fillStyle="#310b18";context.fillRect(0,72,720,8);
   context.fillStyle="#fffaf2";context.font="700 24px Arial";context.fillText(`CONFERENCE PAPER · ${paper.year}`,38,46);
@@ -258,6 +258,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   const worldRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<ReturnType<typeof createAmbientSound>>(null);
   const [entered, setEntered] = useState(false);
+  const [worldReady, setWorldReady] = useState(false);
   const [welcomeOpen, setWelcomeOpen] = useState(false);
   const [narrationOn, setNarrationOn] = useState(true);
   const [voiceNotice, setVoiceNotice] = useState("");
@@ -366,6 +367,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
   }, [muted]);
 
   const enterWorld = useCallback((withSound: boolean) => {
+    setWorldReady(false);
     setEntered(true);
     setWelcomeOpen(true);
     setNarrationOn(withSound);
@@ -724,12 +726,19 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       {z:0,title:"International Research Venues",lines:["CVPR · ICUFN · ICTC · ICAIIC · ICMIC","Computer vision, digital twins, AI, and communications"]},
       {z:-18,title:"Conference Scholarship",lines:["From wireless systems to trustworthy digital twins","Select any poster to open its complete record"]},
     ].forEach(panel=>{const exterior=new THREE.Mesh(new THREE.PlaneGeometry(7.4,4.3),new THREE.MeshBasicMaterial({map:makeBoardTexture(panel.title,panel.lines),side:THREE.DoubleSide}));exterior.position.set(-7.18,3.2,panel.z);exterior.rotation.y=-Math.PI/2;hall.add(exterior);});
-    conferencePapers.forEach((paper,index)=>{
-      const side=index%2===0?-1:1;const slot=Math.floor(index/2);const z=27-slot*2.18;
-      const frame=new THREE.Mesh(new THREE.BoxGeometry(.16,2.18,1.62),new THREE.MeshStandardMaterial({color:index%4===0?0xb68a3d:0x4b2231,metalness:.2,roughness:.55}));frame.position.set(side*6.79,2.55,z);hall.add(frame);
-      const poster=new THREE.Mesh(new THREE.PlaneGeometry(1.48,2.02),new THREE.MeshBasicMaterial({map:makePosterTexture(paper,index),side:THREE.DoubleSide}));poster.position.set(side*6.68,2.55,z);poster.rotation.y=side<0?Math.PI/2:-Math.PI/2;
-      const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z]};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
-    });
+    let posterBuildTimer:number|undefined;
+    let nextPosterIndex=0;
+    const buildPosterBatch=()=>{
+      const batchEnd=Math.min(nextPosterIndex+4,conferencePapers.length);
+      for(;nextPosterIndex<batchEnd;nextPosterIndex+=1){
+        const paper=conferencePapers[nextPosterIndex];const index=nextPosterIndex;const side=index%2===0?-1:1;const slot=Math.floor(index/2);const z=27-slot*2.18;
+        const frame=new THREE.Mesh(new THREE.BoxGeometry(.16,2.18,1.62),new THREE.MeshStandardMaterial({color:index%4===0?0xb68a3d:0x4b2231,metalness:.2,roughness:.55}));frame.position.set(side*6.79,2.55,z);hall.add(frame);
+        const poster=new THREE.Mesh(new THREE.PlaneGeometry(1.48,2.02),new THREE.MeshBasicMaterial({map:makePosterTexture(paper,index),side:THREE.DoubleSide}));poster.position.set(side*6.68,2.55,z);poster.rotation.y=side<0?Math.PI/2:-Math.PI/2;
+        const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z]};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
+      }
+      if(nextPosterIndex<conferencePapers.length)posterBuildTimer=window.setTimeout(buildPosterBatch,45);
+    };
+    posterBuildTimer=window.setTimeout(buildPosterBatch,180);
     const addRefreshmentTable=(z:number,accent:number)=>{
       const tableGroup=new THREE.Group();tableGroup.position.set(0,0,z);
       const linen=new THREE.MeshStandardMaterial({color:0xf3e8dc,roughness:.9});
@@ -912,12 +921,14 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
         }
       }
       renderer.render(scene, camera);
+      if(frame===1)setWorldReady(true);
     };
     animate();
     if (!renderer.capabilities.isWebGL2) setQualityNotice("Your browser is using a compatibility renderer. The world remains fully explorable.");
 
     return () => {
       cancelAnimationFrame(animationId);
+      if(posterBuildTimer)window.clearTimeout(posterBuildTimer);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
       window.removeEventListener("resize", onResize);
@@ -967,6 +978,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       {entered && (
         <>
           <canvas ref={canvasRef} className={styles.canvas} aria-label="Interactive three-dimensional research world" />
+          {!worldReady&&<div className={styles.worldLoader} role="status" aria-live="polite"><Image src="/logo-judith.png" alt="" width={78} height={78}/><strong>Building My World</strong><span>Opening the research landscape</span><i aria-hidden="true"/></div>}
           <div className={styles.vignette} />
           <header className={styles.worldHeader}>
             <Link href="/" aria-label="Return to the main website"><ArrowLeft size={18} /><span>Main website</span></Link>

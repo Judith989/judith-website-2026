@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const researchPaths = researchProjects.map((project) => `/research/${project.slug}`);
-  return ["", "/about", "/research", "/research-world", "/journey-globe", ...researchPaths, "/publications", "/news", "/gallery", "/cv", "/contact"].map((path) => ({
+  return ["", "/about", "/research", "/research-world", ...researchPaths, "/publications", "/news", "/gallery", "/cv", "/contact"].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: path === "/news" || path === "/publications" ? "monthly" : "yearly",

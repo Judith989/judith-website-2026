@@ -237,7 +237,6 @@ h1 em { color: var(--green); font-weight: 400; }
 footer { align-items: center; background: #2d0612; color: #d1adb9; display: flex; font-size: 11px; justify-content: space-between; letter-spacing: .05em; padding: 26px clamp(24px, 7vw, 110px); }
 footer p { margin: 0; }
 .research-world-active .site-header, .research-world-active footer { display: none; }
-.journey-globe-active .site-header, .journey-globe-active footer { display: none; }
 .footer-brand { align-items: center; display: flex; gap: 12px; }
 .footer-links { display: flex; gap: 18px; }
 

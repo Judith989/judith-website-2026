@@ -18,7 +18,7 @@ export default function Home() {
     <main className="profile-home">
       <div className="profile-shell">
         <aside className="profile-sidebar" aria-label="Profile and contact details">
-          <Image src="/judith_pic2.png" alt="Dr. Judith Njoku-Vowels at her desk" width={1402} height={1122} sizes="(max-width: 720px) 220px, 240px" priority />
+          <div className="profile-portrait"><Image src="/judith_pic2.png" alt="Dr. Judith Njoku-Vowels at her desk" fill sizes="220px" priority /></div>
           <h1>Judith Njoku-Vowels</h1>
           <p>Distinguished Postdoctoral Fellow</p>
           <p>University of Wyoming</p>

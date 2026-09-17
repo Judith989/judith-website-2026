@@ -24,7 +24,7 @@ export default function TeachingPage() {
         <div className="academic-entry-list">
           <article className="academic-entry"><h3><em>Machine Learning</em> (COSC 4555/5555)</h3><p>University of Wyoming · Project research mentor, Mar to May 2026. Guided student projects in model implementation, evaluation, and interpretation.</p></article>
           <article className="academic-entry"><h3><em>Introduction to Probability</em></h3><p>Kumoh National Institute of Technology · Teaching assistant during my MSc.</p></article>
-          <article className="academic-entry"><h3>Graduate <em>Real-Time Systems</em></h3><p>Kumoh National Institute of Technology · Teaching assistant during my PhD.</p></article>
+          <article className="academic-entry"><h3><em>Real-Time Systems</em></h3><p>Kumoh National Institute of Technology · Teaching assistant during my PhD.</p></article>
           <article className="academic-entry"><h3><em>Hardware-in-the-Loop Simulation with MATLAB</em></h3><p>Kumoh National Institute of Technology · Developed online course materials during my MSc.</p></article>
         </div>
       </section>

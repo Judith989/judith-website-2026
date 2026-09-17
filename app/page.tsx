@@ -55,7 +55,7 @@ export default function Home() {
           <section id="teaching">
             <h2>Teaching Philosophy</h2>
             <p>I teach by connecting foundations to authentic systems. Students should understand why a method works, test where it fails, communicate its assumptions, and apply it responsibly. I emphasize staged projects, reproducible workflows, design reviews, and learning from failure.</p>
-            <p>During my MSc, I helped teach <em>Introduction to Probability</em>. During my PhD, I supported a graduate <em>Real-Time Systems</em> course. I also developed MATLAB hardware-in-the-loop teaching materials and a research-writing module for graduate students.</p>
+            <p>During my MSc, I helped teach <em>Introduction to Probability</em>. During my PhD, I supported <em>Real-Time Systems</em>. I also developed MATLAB hardware-in-the-loop teaching materials and a research-writing module for graduate students.</p>
             <p><Link href="/teaching">Teaching experience and courses</Link></p>
           </section>
 

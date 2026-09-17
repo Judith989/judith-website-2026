@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Gallery | Judith Njoku-Vowels, PhD" 
 const phdGraduation = [
   { src: "/gallery/phd_grad1.jpeg", alt: "Judith Njoku-Vowels at her PhD graduation", caption: "Celebrating the conferral of my PhD in IT Convergence Engineering at Kumoh National Institute of Technology in South Korea on August 22, 2025." },
   { src: "/gallery/phd_grad2.jpeg", alt: "Judith Njoku-Vowels celebrating with colleagues at her PhD graduation", caption: "A graduation celebration shared with members of the academic community who were part of the doctoral journey." },
-  { src: "/gallery/phd_grad3.jpeg", alt: "Judith Njoku-Vowels in graduation regalia with supporters", caption: "Marking the completion of BatteryMetrix and a doctoral chapter shaped by research, mentorship, and community." },
+  { src: "/gallery/phd_grad3.jpeg", alt: "Judith Njoku-Vowels in graduation regalia with supporters", caption: "Celebrating my PhD graduation with the people who supported me through my doctoral studies." },
 ];
 
 const cvprPresentation = [
@@ -99,7 +99,7 @@ const albums: GalleryAlbum[] = [
   { date: "2026-06-17", title: "PANDA at i3CE 2026", description: "I presented PANDA virtually at the ASCE International Conference on Computing in Civil Engineering.", images: pandaPresentation },
   { date: "2026-06-06", title: "OmniRestore at CVPR 2026", description: "I presented our adverse-weather image-restoration research at the IEEE/CVF CVPR Workshops in Denver.", images: cvprPresentation },
   { date: "2026-05-06", title: "UW Digital Twins Computing Meet Up", description: "I facilitated the School of Computing event and presented a battery-management digital twin case study.", images: uwDigitalTwinsMeetup },
-  { date: "2025-08-22", title: "PhD graduation", description: "My PhD dissertation introduced BatteryMetrix.", images: phdGraduation },
+  { date: "2025-08-22", title: "PhD graduation", description: "My PhD in IT Convergence Engineering was conferred on August 22, 2025.", images: phdGraduation },
   { date: "2022-05-26", title: "Metaverse and The Industry Workshop", description: "I co-organized the two-day program and presented on metaverse applications in transportation.", images: metaverseWorkshop },
   { date: "2021-08-20", title: "MSc graduation", images: [{ src: "/gallery/msc_grad.jpeg", alt: "Judith Njoku-Vowels at her MSc graduation", caption: "My MSc in Electronics Engineering was conferred at Kumoh National Institute of Technology, South Korea, on August 20, 2021." }] },
   { date: "2014-12-12", title: "BEng graduation", images: [{ src: "/gallery/Bsc_grad.jpg", alt: "Judith Njoku-Vowels at her BEng graduation", caption: "My Bachelor of Engineering in Petroleum Engineering was conferred at the Federal University of Technology, Owerri, Nigeria, on December 12, 2014." }] },

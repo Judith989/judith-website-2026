@@ -60,6 +60,7 @@ export default function Home() {
             <Link className="button button-primary" href="/research">Explore my research <ChevronRight size={17} /></Link>
             <Link className="button button-secondary" href="/cv">View my CV <ArrowUpRight size={16} /></Link>
           </div>
+          <p className="home-scholar">1,400+ citations · <a href="https://scholar.google.com/citations?user=Ag2gYzIAAAAJ" target="_blank" rel="noreferrer">Google Scholar <ArrowUpRight size={13} /></a></p>
           <p className="home-location"><MapPin size={15} aria-hidden="true" /> Laramie, Wyoming</p>
         </div>
         <div className="portrait-wrap">

@@ -464,7 +464,10 @@ footer p { margin: 0; }
 .home-hero .typing-headline { font-size: clamp(45px, 5vw, 72px); min-height: 3.1em; }
 .home-hero .portrait-wrap { margin-left: auto; max-width: 445px; width: 100%; }
 .home-hero .portrait-frame::after { display: none; }
-.home-location { align-items: center; color: var(--muted); display: flex; font-size: 12px; gap: 7px; margin: 25px 0 0; }
+.home-scholar { color: var(--ink); font-size: 14px; font-weight: 600; margin: 25px 0 0; }
+.home-scholar a { align-items: center; color: var(--green); display: inline-flex; gap: 2px; }
+.home-scholar a:hover { text-decoration: underline; }
+.home-location { align-items: center; color: var(--muted); display: flex; font-size: 12px; gap: 7px; margin: 10px 0 0; }
 .home-focus,.home-featured,.home-next { padding-bottom: clamp(65px, 7vw, 100px); padding-top: clamp(65px, 7vw, 100px); }
 .home-focus { background: var(--cream); }
 .home-focus .section-heading h2,.home-featured .section-heading h2 { font-size: clamp(36px, 4vw, 56px); }

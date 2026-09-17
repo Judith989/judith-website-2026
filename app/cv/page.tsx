@@ -39,9 +39,9 @@ export default function CvPage() {
           <div className="cv-block"><p className="kicker">Education</p>{education.map(([date, degree, institution]) => <article key={degree}><span>{date}</span><div><h2>{degree}</h2><p>{institution}</p></div></article>)}</div>
         </div>
         <aside className="cv-sidebar">
-          <div><strong>1,350+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>
+          <div><strong>1,400+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>
           <h3>Research areas</h3><p>Digital twins, trustworthy AI, computer vision, cyber-physical systems, simulation, and intelligent infrastructure.</p>
-          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Women in Machine Learning member and mentor, Toastmasters International Level 4, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
+          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Women in Machine Learning member and mentor, Toastmasters International Level 4, National Postdoctoral Association content developer, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
         </aside>
       </section>
       <section className="page-section professional-service">
@@ -60,6 +60,7 @@ export default function CvPage() {
             <div className="service-entry"><span>2020 to Present</span><p><strong>WomenTech Network Member and Global Ambassador</strong></p></div>
             <div className="service-entry"><span>2024 to Present</span><p><strong>Women in Machine Learning</strong><br />Member and mentorship-program mentor</p></div>
             <div className="service-entry"><span>2020 to Present</span><p><strong>Toastmasters International</strong><br />Level 4 in communication and leadership</p></div>
+            <div className="service-entry"><span>Volunteer</span><p><strong>National Postdoctoral Association (NPA)</strong><br />Content Developer</p></div>
           </article>
         </div>
       </section>

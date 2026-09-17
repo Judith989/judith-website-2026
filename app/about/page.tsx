@@ -26,7 +26,6 @@ export default function AboutPage() {
         </div>
       </section>
       <section className="page-section education-values">
-        <div className="philosophy-logo"><Image src="/logo-judith.png" alt="Judith Njoku-Vowels monogram logo" fill sizes="(max-width: 900px) 180px, 16vw" /></div>
         <div>
           <p className="kicker">Teaching philosophy</p>
           <h2>Learning becomes durable when students use ideas to solve meaningful problems.</h2>

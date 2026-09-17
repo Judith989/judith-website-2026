@@ -89,11 +89,11 @@ const forestStories: Exhibit[] = [
   { title:"MSc in Electronics Engineering", kind:"August 20, 2021", category:"Milestone", description:"My MSc chapter at Kumoh National Institute of Technology established my foundation in deep learning for wireless systems.", href:"/gallery", image:"/gallery/msc_grad.jpeg", position:[0,0,0] },
   { title:"Distinguished Postdoctoral Fellowship", kind:"University of Wyoming", category:"News", description:"I joined the Secure Sensing and Learning Research Lab to advance trustworthy vision, infrastructure, and cyber-physical intelligence.", href:"/news", image:"/judith_pic.png", position:[0,0,0] },
   { title:"CVPR Workshops 2026", kind:"Conference news", category:"News", description:"OmniRestore entered the international computer-vision community through a workshop presentation in Denver.", href:"/gallery", image:"/gallery/cvpr_2026.jpg", position:[0,0,0] },
-  { title:"Teaching philosophy", kind:"Learning through systems", category:"Teaching", description:"I teach by connecting mathematical foundations, computational experiments, and consequential physical-world problems.", href:"/about", image:"/logo-judith.png", position:[0,0,0] },
+  { title:"Teaching philosophy", kind:"Learning through systems", category:"Teaching", description:"I teach by connecting mathematical foundations, computational experiments, and consequential physical-world problems.", href:"/about", image:"", position:[0,0,0] },
   { title:"Mentorship philosophy", kind:"Ownership, rigor, and confidence", category:"Mentorship", description:"I help emerging researchers move from guided participation toward intellectual ownership, publication, and independent judgment.", href:"/about", image:"/gallery/uw-digital-twins-meetup-3.jpg", position:[0,0,0] },
-  { title:"International internship cohorts", kind:"Research mentorship", category:"Mentorship", description:"I recruited and supervised more than fifteen students across Kyungpook National University, Michigan State University, and CLIMDES collaborations.", href:"/news", image:"/logo-judith.png", position:[0,0,0] },
+  { title:"International internship cohorts", kind:"Research mentorship", category:"Mentorship", description:"I recruited and supervised more than fifteen students across Kyungpook National University, Michigan State University, and CLIMDES collaborations.", href:"/news", image:"", position:[0,0,0] },
   { title:"WomenTech Global Ambassador", kind:"Community leadership", category:"Service", description:"I connect and amplify women in technology across borders while supporting more inclusive technical leadership.", href:"/news", image:"/judith_pic.png", position:[0,0,0] },
-  { title:"Peer review and technical service", kind:"Academic service", category:"Service", description:"My service spans leading computer-vision, machine-learning, wireless-communication, and intelligent-systems venues.", href:"/cv", image:"/logo-judith.png", position:[0,0,0] },
+  { title:"Peer review and technical service", kind:"Academic service", category:"Service", description:"My service spans leading computer-vision, machine-learning, wireless-communication, and intelligent-systems venues.", href:"/cv", image:"", position:[0,0,0] },
 ];
 
 const portals: Portal[] = [
@@ -714,7 +714,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       {name:"University of Wyoming",detail:"Distinguished Postdoctoral Fellow · 2025–Present",description:"Since August 29, 2025, I have worked with the Secure Sensing and Learning Research Lab and the Center for Rural Community Resilience and Innovation at the University of Wyoming.",model:"a",z:-64},
     ];
     campusData.forEach((campus,index)=>{
-      const exhibit:Exhibit={title:campus.name,kind:campus.detail,category:"Milestone",description:campus.description,href:index===campusData.length-1?"/about":"/cv",image:"/logo-judith.png",position:[-30,0,campus.z]};
+      const exhibit:Exhibit={title:campus.name,kind:campus.detail,category:"Milestone",description:campus.description,href:index===campusData.length-1?"/about":"/cv",image:"",position:[-30,0,campus.z]};
       const campusGroup=new THREE.Group();campusGroup.position.set(-30,0,campus.z);
       const campusPlot=new THREE.Mesh(new THREE.BoxGeometry(12,.25,10),new THREE.MeshStandardMaterial({color:index%2?0x765567:0x6b7d63,roughness:.88}));campusPlot.position.y=.1;campusGroup.add(campusPlot);
       const plaque=new THREE.Sprite(new THREE.SpriteMaterial({map:makeLabel(campus.name,"#e4b65e"),transparent:true}));plaque.position.set(6.4,5.5,0);plaque.scale.set(6.2,1.45,1);campusGroup.add(plaque);proximityLabels.push(plaque);
@@ -744,7 +744,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
         const paper=conferencePapers[nextPosterIndex];const index=nextPosterIndex;const side=index%2===0?-1:1;const slot=Math.floor(index/2);const z=27-slot*2.18;
         const frame=new THREE.Mesh(new THREE.BoxGeometry(.16,2.18,1.62),new THREE.MeshStandardMaterial({color:index%4===0?0xb68a3d:0x4b2231,metalness:.2,roughness:.55}));frame.position.set(side*6.79,2.55,z);hall.add(frame);
         const poster=new THREE.Mesh(new THREE.PlaneGeometry(1.48,2.02),new THREE.MeshBasicMaterial({map:makePosterTexture(paper,index),side:THREE.DoubleSide}));poster.position.set(side*6.68,2.55,z);poster.rotation.y=side<0?Math.PI/2:-Math.PI/2;
-        const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"/logo-judith.png",position:[31+side*6.68,2.55,-42+z],isPaper:true};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
+        const paperExhibit:Exhibit={title:paper.title,kind:`${paper.year} · ${paper.venue}`,category:"Research",description:paper.authors,href:paper.href,image:"",position:[31+side*6.68,2.55,-42+z],isPaper:true};poster.userData.exhibit=paperExhibit;exhibitMeshes.push(poster);hall.add(poster);
       }
       if(nextPosterIndex<conferencePapers.length)posterBuildTimer=window.setTimeout(buildPosterBatch,45);
     };
@@ -996,7 +996,6 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       {!entered && (
         <section className={styles.portal}>
           <div className={styles.portalGlow} />
-          <Image src="/logo-judith.png" alt="Judith Njoku-Vowels monogram" width={160} height={160} priority className={styles.logo} />
           <p className={styles.eyebrow}>An immersive research experience</p>
           <h1>Enter my <em>Research World</em></h1>
           <p className={styles.identity}>AI Researcher · Digital Twins · Computer Vision · Cyber-Physical Systems</p>
@@ -1013,7 +1012,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
       {entered && (
         <>
           <canvas ref={canvasRef} className={styles.canvas} aria-label="Interactive three-dimensional research world" />
-          {!worldReady&&<div className={styles.worldLoader} role="status" aria-live="polite"><Image src="/logo-judith.png" alt="" width={78} height={78}/><strong>Building My World</strong><span>Opening the research landscape</span><i aria-hidden="true"/></div>}
+          {!worldReady&&<div className={styles.worldLoader} role="status" aria-live="polite"><strong>Building My World</strong><span>Opening the research landscape</span><i aria-hidden="true"/></div>}
           <div className={styles.vignette} />
           <header className={styles.worldHeader}>
             <Link href="/" aria-label="Return to the main website"><ArrowLeft size={18} /><span>Main website</span></Link>
@@ -1091,7 +1090,7 @@ export default function ResearchWorldClient({conferencePapers}:{conferencePapers
           {activeExhibit && (
             <aside className={`${styles.portalCard} ${styles.exhibitCard}`} style={{ "--portal-color": `#${categoryColors[activeExhibit.category??"Research"].toString(16).padStart(6,"0")}` } as React.CSSProperties}>
               <button type="button" onClick={() => setActiveExhibit(null)} aria-label="Close research exhibit"><X size={17} /></button>
-              <Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />
+              {activeExhibit.image&&<Image src={activeExhibit.image} width={520} height={300} alt={activeExhibit.title} />}
               <p>{activeExhibit.category??"Research"} · {activeExhibit.kind}</p><h2>{activeExhibit.title}</h2><span>{activeExhibit.description}</span>
               {projectEvidence[activeExhibit.title]&&<button type="button" className={styles.evidenceButton} onClick={()=>setEvidenceOpen(open=>!open)}>{evidenceOpen?"Hide project evidence":"Show project evidence"}</button>}
               {evidenceOpen&&projectEvidence[activeExhibit.title]&&<div className={styles.exhibitEvidence}><strong>Evidence from this project</strong><ul>{projectEvidence[activeExhibit.title].map(item=><li key={item}>{item}</li>)}</ul></div>}

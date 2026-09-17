@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowUpRight, Globe2 } from "lucide-react";
@@ -17,7 +16,6 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <Link className="wordmark" href="/" aria-label="Judith Njoku-Vowels, home">
-        <Image className="brand-logo" src="/logo-judith.png" alt="" width={52} height={52} priority />
         <span className="brand-name">Judith Njoku-Vowels</span>
       </Link>
       <nav aria-label="Main navigation">
@@ -35,7 +33,6 @@ export function SiteFooter() {
   return (
     <footer>
       <div className="footer-brand">
-        <Image className="brand-logo" src="/logo-judith.png" alt="Judith Njoku-Vowels logo" width={58} height={58} />
         <p>© 2026 Judith Nkechinyere Njoku-Vowels, PhD</p>
       </div>
       <div className="footer-links">

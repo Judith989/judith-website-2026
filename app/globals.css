@@ -703,7 +703,8 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
 .academic-news-list .news-timeline, .academic-archive .news-timeline { padding: 12px 0 22px; }
 .academic-news-list .news-timeline article, .academic-archive .news-timeline article { max-width: none; }
 .academic-news-list .news-card h2, .academic-archive .news-card h2 { font-size: 17px !important; }
-.about-profile { gap: 40px; grid-template-columns: 250px minmax(0, 1fr); }
+.about-profile { gap: 40px; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); }
+.about-photo-full { display: block; height: auto; max-width: 100%; width: 100%; }
 .about-profile .prose p { font-size: 15px; line-height: 1.65; }
 .about-profile .prose .lead { font-size: 17px !important; }
 .education-values { gap: 40px; }

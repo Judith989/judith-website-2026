@@ -12,7 +12,7 @@ export default function AboutPage() {
         title="About"
       />
       <section className="page-section about-profile">
-        <div className="about-photo"><Image src="/judith_pic2.png" alt="Judith Nkechinyere Njoku-Vowels" fill sizes="(max-width: 800px) 90vw, 38vw" /></div>
+        <Image className="about-photo-full" src="/judith_pic2.png" alt="Judith Nkechinyere Njoku-Vowels at her desk" width={1402} height={1122} sizes="(max-width: 800px) 90vw, 340px" />
         <div className="prose">
           <p className="lead">I am a Distinguished Postdoctoral Fellow in the Secure Sensing and Learning Research Lab and the Center for Rural Community Resilience and Innovation at the University of Wyoming, working at the intersection of artificial intelligence, digital twins, and cyber-physical systems.</p>
           <p>My academic path began in petroleum engineering at the Federal University of Technology, Owerri, where I developed a practical understanding of complex physical systems. In South Korea, I moved into communications engineering and machine learning, completing an MSc focused on deep learning for wireless systems. In January 2022, I joined the ICT Convergence Research Center for post-master&apos;s research on the metaverse before pursuing a PhD centered on BatteryMetrix, a predictive, explainable, and secure digital twin framework for electric vehicle batteries.</p>

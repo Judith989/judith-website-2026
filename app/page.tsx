@@ -67,6 +67,11 @@ export default function Home() {
           <section id="philosophy">
             <h2>Research Philosophy</h2>
             <p>Three principles guide my work: <strong>intelligibility</strong>, communicating evidence and uncertainty; <strong>integration</strong>, connecting models, sensors, simulation, and human expertise; and <strong>impact</strong>, improving consequential systems while broadening participation in research.</p>
+          </section>
+
+          <section id="personal-philosophy">
+            <h2>Words I live by</h2>
+            <p>These are two of my favorite quotes. Van Gogh&apos;s words remind me to act despite self-doubt; Schuller&apos;s remind me that achievement grows from patient, often unseen preparation. I share both with students and mentees because I hope they will find the courage to begin and the resolve to keep going.</p>
             <blockquote><p>“If you hear a voice within you say, ‘You cannot paint,’ then by all means paint, and that voice will be silenced.”</p><cite>Vincent van Gogh, adapted from a letter to Theo van Gogh, October 28, 1883</cite></blockquote>
             <blockquote><p>“Spectacular achievement is always preceded by unspectacular preparation.”</p><cite>Robert H. Schuller</cite></blockquote>
           </section>

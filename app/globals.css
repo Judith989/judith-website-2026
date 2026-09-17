@@ -765,7 +765,7 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
 .profile-shell { display: grid; gap: 50px; grid-template-columns: 230px minmax(0, 1fr); margin: 0 auto; max-width: 1120px; padding: 48px 24px 60px; }
 .profile-sidebar { align-self: start; position: sticky; top: 95px; }
 .profile-portrait { aspect-ratio: 1; border-radius: 50%; overflow: hidden; position: relative; width: min(100%, 220px); }
-.profile-portrait img { object-fit: cover; object-position: right center; }
+.profile-portrait img { object-fit: cover; object-position: center; }
 .profile-sidebar h1 { font-family: inherit; font-size: 18px; font-weight: 650; letter-spacing: 0; line-height: 1.3; margin: 17px 0 8px; }
 .profile-sidebar p { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 5px; }
 .profile-sidebar-links { display: grid; gap: 7px; margin-top: 16px; }

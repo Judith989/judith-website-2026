@@ -26,7 +26,6 @@ export default function TeachingPage() {
           <article className="academic-entry"><h3><em>Introduction to Probability</em></h3><p>Kumoh National Institute of Technology · Teaching assistant during my MSc.</p></article>
           <article className="academic-entry"><h3>Graduate <em>Real-Time Systems</em></h3><p>Kumoh National Institute of Technology · Teaching assistant during my PhD.</p></article>
           <article className="academic-entry"><h3><em>Hardware-in-the-Loop Simulation with MATLAB</em></h3><p>Kumoh National Institute of Technology · Developed online course materials during my MSc.</p></article>
-          <article className="academic-entry"><h3>Graduate research writing</h3><p>Kumoh National Institute of Technology · Developed a research-paper writing component for a graduate laboratory course during my PhD.</p></article>
         </div>
       </section>
       <section className="academic-section teaching-page">

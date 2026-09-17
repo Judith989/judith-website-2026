@@ -78,7 +78,7 @@ export default function Home() {
 
           <section id="service">
             <h2>Service and Community</h2>
-            <p>I joined WomenTech Network in May 2020 and became a Global Ambassador that June. I volunteer as a Content Developer with the National Postdoctoral Association. From 2025 to 2026, I coordinated seminars for the Prof. Cosmas Daughters Forum, including speaker outreach and event moderation. I also mentor women entering and returning to technology and research careers.</p>
+            <p>I joined WomenTech Network in May 2020 and became a Global Ambassador that June. I joined the National Postdoctoral Association on March 20, 2026, and volunteer as a Content Developer. From 2025 to 2026, I coordinated seminars for the Prof. Cosmas Daughters Forum, including speaker outreach and event moderation. I also mentor women entering and returning to technology and research careers.</p>
             <p>For collaboration, talks, or mentorship, please <a href="mailto:jnjoku@uwyo.edu">email me</a>.</p>
           </section>
         </div>

@@ -148,6 +148,7 @@ story += [
     entry("Sep 2024 to Present", "Women in Machine Learning Member", "Mentorship-program mentor since Oct 1, 2024"),
     entry("May 2026 to Present", "Global Mentorship Initiative Mentor", "Joined May 28, 2026"),
     entry("Jun 2026 to Present", "Femme Alliance Network Mentor", "Joined Jun 8, 2026"),
+    entry("Mar 20, 2026 to Present", "Member", "National Postdoctoral Association"),
     entry("Volunteer", "Content Developer", "National Postdoctoral Association"),
 ]
 

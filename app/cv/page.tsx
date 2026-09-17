@@ -53,7 +53,7 @@ export default function CvPage() {
         <aside className="cv-sidebar">
           <div><strong>1,400+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>
           <h3>Research areas</h3><p>Digital twins, trustworthy AI, computer vision, cyber-physical systems, simulation, and intelligent infrastructure.</p>
-          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Women in Machine Learning member and mentor, Toastmasters International Level 4, National Postdoctoral Association content developer, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
+          <h3>Professional community</h3><p>IEEE Member, WomenTech Network Global Ambassador, Women in Machine Learning member and mentor, Toastmasters International Level 4, National Postdoctoral Association member and volunteer Content Developer, and mentor with Femme Alliance Network and the <a href="https://globalmentorship.org/be-a-mentor/" target="_blank" rel="noreferrer">Global Mentorship Initiative</a>.</p>
         </aside>
       </section>
       <section className="page-section professional-service">
@@ -75,7 +75,8 @@ export default function CvPage() {
             <div className="service-entry"><span>Jul 2020 to Present</span><p><strong>Toastmasters International</strong><br />Level 4 in communication and leadership</p></div>
             <div className="service-entry"><span>May 2026 to Present</span><p><strong>Global Mentorship Initiative</strong><br />Mentor since May 28, 2026</p></div>
             <div className="service-entry"><span>Jun 2026 to Present</span><p><strong>Femme Alliance Network</strong><br />Mentor since June 8, 2026</p></div>
-            <div className="service-entry"><span>Volunteer</span><p><strong>National Postdoctoral Association (NPA)</strong><br />Content Developer</p></div>
+            <div className="service-entry"><span>Mar 20, 2026 to Present</span><p><strong>National Postdoctoral Association (NPA)</strong><br />Member</p></div>
+            <div className="service-entry"><span>Volunteer</span><p><strong>NPA Content Developer</strong></p></div>
           </article>
         </div>
       </section>

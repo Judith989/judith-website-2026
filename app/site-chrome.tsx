@@ -7,6 +7,7 @@ const navigation = [
   ["Teaching", "/teaching"],
   ["Talks", "/talks"],
   ["News", "/news"],
+  ["Gallery", "/gallery"],
   ["CV", "/cv"],
 ];
 

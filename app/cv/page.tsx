@@ -13,10 +13,10 @@ const education = [
 
 const appointments = [
   ["2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and Center for Rural Community Resilience and Innovation", "University of Wyoming"],
-  ["2024", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory", "Michigan State University"],
+  ["2024 (from Jan 4)", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory", "Michigan State University"],
   ["Aug 2022 to Jul 2024", "Research Specialist and Supervisor", "Climate Smart Decision Support Systems Laboratory (CLIMDES), AI-enabled sensing, digital agriculture, explainable machine learning, and international workforce development", "Kyungpook National University, Daegu, South Korea and Michigan State University, East Lansing, Michigan"],
-  ["2022 to 2025", "Graduate Research Assistant", "Networked Systems Laboratory", "Kumoh National Institute of Technology"],
-  ["2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
+  ["Sep 2022 to 2025", "Graduate Research Assistant", "Networked Systems Laboratory", "Kumoh National Institute of Technology"],
+  ["Aug 2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
   ["Apr 2017 to Jul 2019", "Customer Experience Management Personnel and IT Buddy", "Customer experience, branch technology support, and ATM operations", "Sterling Bank PLC, Lagos, Nigeria"],
   ["Nov 2015 to Oct 2016", "National Youth Service Corps Intern", "Energy-sector administration and public service", "Ministry of Energy, Alausa, Ikeja, Lagos, Nigeria"],
 ];
@@ -57,9 +57,12 @@ export default function CvPage() {
           <article>
             <h3>Memberships and community leadership</h3>
             <div className="service-entry"><span>2019 to Present</span><p><strong>IEEE Member</strong></p></div>
-            <div className="service-entry"><span>2020 to Present</span><p><strong>WomenTech Network Member and Global Ambassador</strong></p></div>
-            <div className="service-entry"><span>2024 to Present</span><p><strong>Women in Machine Learning</strong><br />Member and mentorship-program mentor</p></div>
-            <div className="service-entry"><span>2020 to Present</span><p><strong>Toastmasters International</strong><br />Level 4 in communication and leadership</p></div>
+            <div className="service-entry"><span>May 2020</span><p><strong>Joined WomenTech Network</strong></p></div>
+            <div className="service-entry"><span>Jun 2020 to Present</span><p><strong>WomenTech Network Global Ambassador</strong></p></div>
+            <div className="service-entry"><span>Sep 2024 to Present</span><p><strong>Women in Machine Learning</strong><br />Member since September 10; mentorship-program mentor since October 1, 2024</p></div>
+            <div className="service-entry"><span>Jul 2020 to Present</span><p><strong>Toastmasters International</strong><br />Level 4 in communication and leadership</p></div>
+            <div className="service-entry"><span>May 2026 to Present</span><p><strong>Global Mentorship Initiative</strong><br />Mentor since May 28, 2026</p></div>
+            <div className="service-entry"><span>Jun 2026 to Present</span><p><strong>Femme Alliance Network</strong><br />Mentor since June 8, 2026</p></div>
             <div className="service-entry"><span>Volunteer</span><p><strong>National Postdoctoral Association (NPA)</strong><br />Content Developer</p></div>
           </article>
         </div>

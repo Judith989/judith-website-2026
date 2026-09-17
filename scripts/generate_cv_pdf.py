@@ -86,27 +86,29 @@ def parse_publications():
 
 story = []
 story += [Paragraph("Judith Nkechinyere Njoku-Vowels, PhD", styles["Name"])]
-story += [Paragraph("Distinguished Postdoctoral Fellow | AI-Enabled Systems | Digital Twins | Trustworthy AI", styles["Identity"])]
-story += [Paragraph("University of Wyoming, Laramie, Wyoming | judithnjoku24@gmail.com | judithnjoku.me", styles["Identity"])]
-story += [Paragraph("Google Scholar: 1,350+ citations, h-index 14 | ORCID: 0000-0002-2294-9204", styles["Identity"]), Spacer(1, 12)]
+story += [Paragraph("Distinguished Postdoctoral Fellow | Digital Twins | Trustworthy AI", styles["Identity"])]
+story += [Paragraph("University of Wyoming, Laramie, Wyoming | jnjoku@uwyo.edu | judithnjoku24@gmail.com | judithnjoku.me", styles["Identity"])]
+story += [Paragraph("Google Scholar: 1,400+ citations, h-index 14 | ORCID: 0000-0002-2294-9204 | Updated September 2026", styles["Identity"]), Spacer(1, 12)]
 
 story += section("Research Profile")
 story += [Paragraph("AI-enabled systems engineering for complex cyber-physical systems through digital twins, trustworthy artificial intelligence, model-informed machine learning, computer vision, explainable AI, and uncertainty quantification. Applications span transportation, energy systems, agriculture, and smart infrastructure.", styles["BodyCV"])]
 
 story += section("Education")
 story += [
-    entry("2025", "PhD, IT Convergence Engineering", "Kumoh National Institute of Technology, South Korea", "Dissertation: BatteryMetrix: A User-Centric Digital Twin Framework for Predictive, Explainable, and Secure Battery Management Systems."),
-    entry("2021", "MSc, Electronics Engineering", "Kumoh National Institute of Technology, South Korea", "Thesis: Improving Performance and Reliability of Wireless Communication Systems using Deep Learning."),
-    entry("2014", "BEng, Petroleum Engineering", "Federal University of Technology, Owerri, Nigeria"),
+    entry("Aug 22, 2025", "PhD, IT Convergence Engineering", "Kumoh National Institute of Technology, South Korea", "Dissertation: BatteryMetrix: A User-Centric Digital Twin Framework for Predictive, Explainable, and Secure Battery Management Systems."),
+    entry("Aug 20, 2021", "MSc, Electronics Engineering", "Kumoh National Institute of Technology, South Korea", "Thesis: Improving Performance and Reliability of Wireless Communication Systems using Deep Learning."),
+    entry("Dec 12, 2014", "BEng, Petroleum Engineering", "Federal University of Technology, Owerri, Nigeria"),
 ]
 
 story += section("Professional Appointments")
 story += [
     entry("2025 to Present", "Distinguished Postdoctoral Fellow", "University of Wyoming", "Research in robust autonomous perception, digital twins for smart infrastructure and rural communities, and trustworthy AI for cyber-physical systems."),
-    entry("2024", "Visiting Research Scholar", "Michigan State University", "Digital twins and AI-driven decision support for climate-smart agriculture."),
-    entry("2022 to 2025", "Graduate Research Assistant, PhD", "Kumoh National Institute of Technology", "Developed BatteryMetrix and BridgeSync; led multidisciplinary research in battery intelligence, transportation, security, and infrastructure."),
-    entry("2022 to 2024", "Research Specialist and Supervisor", "Kyungpook National University and Michigan State University", "AI-enabled sensing, digital agriculture, international collaboration, and workforce development."),
-    entry("2019 to 2021", "Graduate Research and Teaching Assistant, MSc", "Kumoh National Institute of Technology", "Machine learning for next-generation wireless communication systems."),
+    entry("2024 (from Jan 4)", "Visiting Research Scholar", "Michigan State University", "Digital twins and AI-driven decision support for climate-smart agriculture."),
+    entry("Sep 2022 to 2025", "Graduate Research Assistant, PhD", "Networked Systems Laboratory, Kumoh National Institute of Technology", "Developed BatteryMetrix and BridgeSync; led multidisciplinary research in battery intelligence, transportation, security, and infrastructure."),
+    entry("Aug 2022 to Jul 2024", "Research Specialist and Supervisor", "Kyungpook National University and Michigan State University (CLIMDES)", "AI-enabled sensing, digital agriculture, international collaboration, and workforce development."),
+    entry("Aug 2019 to 2021", "Graduate Research and Teaching Assistant, MSc", "Future Communications Systems Laboratory, Kumoh National Institute of Technology", "Machine learning for next-generation wireless communication systems."),
+    entry("Apr 2017 to Jul 2019", "Customer Experience Management Personnel and IT Buddy", "Sterling Bank PLC, Lagos, Nigeria", "Customer experience, branch technology support, and ATM operations."),
+    entry("Nov 2015 to Oct 2016", "National Youth Service Corps Intern", "Ministry of Energy, Alausa, Ikeja, Lagos, Nigeria", "Energy-sector administration and public service."),
 ]
 
 story += section("Selected Research Systems")
@@ -122,7 +124,7 @@ story += section("Grants and Funding")
 story += [
     entry("2023 to 2024", "Research Team Lead, AI in Service Drive for Automotive Retail Dealerships", "Metamonkey AI and KIT", "Total funding: $100,000."),
     entry("2022 to 2024", "Research Team Lead, Metaverse and Digital Twin for Battery Management Systems", "KIT Internal ICT Fund", "Total funding: $50,000."),
-    entry("2019 to 2027", "Funded Researcher, National Research Programs", "NRF Korea, MSIT Korea, IITP, and Brain Korea 21+", "Contributed to laboratory-wide programs in ICT convergence, smart manufacturing, and talent development."),
+    entry("2019 to 2025", "Funded Researcher, National Research Programs", "NRF Korea, MSIT Korea, IITP, and Brain Korea 21+", "Contributed to laboratory-wide programs in ICT convergence, smart manufacturing, and talent development during my KIT appointments."),
 ]
 
 story += section("Honors and Awards")
@@ -136,9 +138,14 @@ story += [
 story += section("Teaching, Mentorship, and Service")
 story += [
     entry("2026 to Present", "Project Research Mentor", "University of Wyoming", "Mentoring five research teams toward peer-reviewed publication across computer vision, mobility, and health sensing."),
-    entry("2023 to 2024", "Internship Lead and Research Supervisor", "International remote research program", "Recruited and supervised 15 interns. Twelve contributed to peer-reviewed publications."),
+    entry("Aug 2022 to Jul 2024", "Internship Lead and Research Supervisor", "Kyungpook National University and Michigan State University", "Recruited and supervised two international internship cohorts comprising more than 15 students; many coauthored peer-reviewed publications."),
     entry("Ongoing", "Conference and Journal Reviewer", "CVPR, ICML, NeurIPS, IEEE and interdisciplinary AI journals"),
-    entry("2018 to Present", "WomenTech Network Global Ambassador and Mentor", "Women in technology and STEM"),
+    entry("May 2020", "WomenTech Network Member", "Women in technology and STEM"),
+    entry("Jun 2020 to Present", "WomenTech Network Global Ambassador", "Women in technology and STEM"),
+    entry("Sep 2024 to Present", "Women in Machine Learning Member", "Mentorship-program mentor since Oct 1, 2024"),
+    entry("May 2026 to Present", "Global Mentorship Initiative Mentor", "Joined May 28, 2026"),
+    entry("Jun 2026 to Present", "Femme Alliance Network Mentor", "Joined Jun 8, 2026"),
+    entry("Volunteer", "Content Developer", "National Postdoctoral Association"),
 ]
 
 story += section("Technical Expertise")

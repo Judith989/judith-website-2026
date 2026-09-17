@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 const navigation = [
   ["Research", "/research"],
   ["Publications", "/publications"],
-  ["Teaching", "/#teaching"],
   ["Talks", "/talks"],
   ["News", "/news"],
   ["CV", "/cv"],
@@ -35,7 +34,6 @@ export function SiteFooter() {
       </div>
       <div className="footer-links">
         <Link href="/">Home</Link>
-        <Link href="/#teaching">Teaching</Link>
         <Link href="/news">News</Link>
         <Link href="/talks">Talks</Link>
         <Link href="/gallery">Gallery</Link>

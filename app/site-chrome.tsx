@@ -7,7 +7,6 @@ const navigation = [
   ["Teaching", "/teaching"],
   ["Talks", "/talks"],
   ["News", "/news"],
-  ["Gallery", "/gallery"],
   ["CV", "/cv"],
 ];
 
@@ -22,6 +21,7 @@ export function SiteHeader() {
       </nav>
       <div className="header-actions">
         <Link className="header-contact" href="/contact">Contact</Link>
+        <Link className="header-contact" href="/gallery">Gallery</Link>
         <Link className="header-world" href="/research-world">My World</Link>
       </div>
     </header>

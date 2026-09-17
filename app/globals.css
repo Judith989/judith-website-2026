@@ -794,6 +794,8 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
   .academic-news-list summary { gap: 6px; grid-template-columns: 1fr; }
   .header-contact { font-size: 13px; }
   .header-world { font-size: 13px; }
+  .header-actions { grid-column: 1 / -1; grid-row: 2; justify-self: start; }
+  .site-header nav { grid-row: 3; }
   .site-header nav { display: flex; flex-wrap: wrap; gap: 8px 15px; }
   .site-header nav a { font-size: 13px; min-height: 0; }
   .gallery-story-list, .gallery-story-feature { display: grid; grid-template-columns: 1fr; }

@@ -16,7 +16,7 @@ type Talk = {
 const invitedTalks: Talk[] = [
   { date: "Jun 12, 2026", title: "Can AI Drive in the Storm? Restoring Vision for Autonomous Vehicles", event: "Invited REU colloquium, University of Wyoming, Laramie" },
   { date: "May 16, 2026", title: "The Insider Playbook to Winning Global Scholarships & Fellowships", event: "Invited talk, Prof. Cosmas Daughters Forum, virtual", href: "https://www.linkedin.com/posts/pcdf-official_studyabraod-scholarships-careeradvancement-activity-7461359203580964864-CzOA" },
-  { date: "May 6, 2026", title: "Battery-management digital twins", event: "UW Computing Meet Up on Digital Twins, Laramie, Wyoming", href: "https://www.linkedin.com/posts/judith989_four-weeks-ago-i-facilitated-the-uw-computing-activity-7468040070458040320-976W" },
+  { date: "May 6, 2026", title: "UW Computing Meet Up on Digital Twins", event: "Facilitator and presenter, University of Wyoming School of Computing, Laramie, Wyoming", href: "https://www.linkedin.com/posts/judith989_four-weeks-ago-i-facilitated-the-uw-computing-activity-7468040070458040320-976W" },
   { date: "Apr 4, 2026", title: "Inspiring Young Ladies in STEM", event: "Keynote, International Women in Tech Day, WomenTech Kenya, virtual", href: "https://www.linkedin.com/posts/judith989_most-young-women-dont-lack-potential-they-activity-7444735983377444864-KVEv" },
   { date: "May 25–26, 2022", title: "Metaverse Applicability to Transportation Systems", event: "Metaverse and The Industry Workshop, Kumoh National Institute of Technology, Gumi, South Korea", href: "https://www.youtube.com/watch?v=nk00bl7RHBU", linkLabel: "Watch the talk" },
 ];

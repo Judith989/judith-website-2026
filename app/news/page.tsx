@@ -250,6 +250,11 @@ function newsDateValue(date: string) {
 }
 
 const allNews = [...journalNews, ...journey].sort((a, b) => newsDateValue(b.date) - newsDateValue(a.date));
+const archive = new Map<string, NewsItem[]>();
+for (const item of allNews.slice(8)) {
+  const year = item.date.match(/\b20\d{2}\b/)?.[0] ?? "Earlier";
+  archive.set(year, [...(archive.get(year) ?? []), item]);
+}
 
 function NewsCard({ item }: { item: NewsItem }) {
   const external = item.href?.startsWith("http");
@@ -275,9 +280,16 @@ function NewsCard({ item }: { item: NewsItem }) {
 export default function NewsPage() {
   return (
     <main>
-      <PageHero label="News and milestones" title="What I am presenting, building, and celebrating." />
-      <section className="page-section news-timeline">
-        {allNews.map((item) => <NewsCard item={item} key={`${item.date}-${item.title}`} />)}
+      <PageHero title="News" />
+      <section className="academic-section">
+        <h2>Recent updates</h2>
+        <div className="academic-news-list">
+          {allNews.slice(0, 8).map((item) => <details key={`${item.date}-${item.title}`}><summary><time>{abbreviateMonths(item.date)}</time><span>{item.title}</span></summary><div className="news-timeline"><NewsCard item={item} /></div></details>)}
+        </div>
+      </section>
+      <section className="academic-section academic-archive">
+        <h2>Archive</h2>
+        {[...archive].map(([year, items]) => <details key={year}><summary>{year} ({items.length})</summary><div className="news-timeline">{items.map((item) => <NewsCard item={item} key={`${item.date}-${item.title}`} />)}</div></details>)}
       </section>
     </main>
   );

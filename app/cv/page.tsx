@@ -28,7 +28,7 @@ const journalReview = ["IEEE Transactions on Industrial Informatics", "IEEE Inte
 export default function CvPage() {
   return (
     <main>
-      <PageHero label="Curriculum vitae" title="The record behind my research journey." />
+      <PageHero title="Curriculum vitae" />
       <section className="page-section cv-actions">
         <a className="button button-primary" href={sitePath("/Judith_Njoku_Academic_CV.pdf")} download><Download size={17} /> Download academic CV</a>
         <a className="button button-secondary" href="https://scholar.google.com/citations?user=Ag2gYzIAAAAJ" target="_blank" rel="noreferrer">Google Scholar <ExternalLink size={16} /></a>
@@ -45,7 +45,7 @@ export default function CvPage() {
         </aside>
       </section>
       <section className="page-section professional-service">
-        <div className="gallery-lead"><p className="kicker">Leadership and professional service</p><h2>Strengthening the communities that evaluate, communicate, and widen access to research.</h2></div>
+        <div className="gallery-lead"><h2>Leadership and professional service</h2></div>
         <div className="service-grid">
           <article>
             <h3>Technical program committees</h3>

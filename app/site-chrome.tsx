@@ -1,15 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowUpRight, Globe2 } from "lucide-react";
 
 const navigation = [
-  ["Home", "/"],
   ["About", "/about"],
   ["Research", "/research"],
   ["Publications", "/publications"],
   ["Talks", "/talks"],
-  ["News", "/news"],
-  ["Gallery", "/gallery"],
   ["CV", "/cv"],
 ];
 
@@ -23,8 +19,8 @@ export function SiteHeader() {
         {navigation.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
       </nav>
       <div className="header-actions">
-        <Link className="header-contact" href="/contact">Contact <ArrowUpRight size={15} /></Link>
-        <Link className="header-world" href="/research-world"><Globe2 size={19} aria-hidden="true" /><span>My World</span></Link>
+        <Link className="header-contact" href="/contact">Contact</Link>
+        <Link className="header-world" href="/research-world">My World</Link>
       </div>
     </header>
   );
@@ -45,7 +41,6 @@ export function SiteFooter() {
         <Link href="/cv">CV</Link>
         <Link href="/contact">Contact</Link>
       </div>
-      <p>AI-enabled systems, Digital twins, Trustworthy AI</p>
     </footer>
   );
 }
@@ -55,13 +50,13 @@ export function PageHero({
   title,
   text,
 }: {
-  label: string;
+  label?: string;
   title: ReactNode;
   text?: string;
 }) {
   return (
     <section className="page-hero">
-      <p className="kicker">{label}</p>
+      {label && <p className="kicker">{label}</p>}
       <h1>{title}</h1>
       {text && <p>{text}</p>}
     </section>

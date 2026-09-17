@@ -28,7 +28,7 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
   return (
     <main>
       <section className="project-page-hero">
-        <Link href="/research"><ArrowLeft size={16} /> All research systems</Link>
+        <Link href="/research"><ArrowLeft size={16} /> Research</Link>
         <p className="kicker">{project.eyebrow}</p>
         <h1>{project.name}</h1>
         <p className="project-question">{project.statement}</p>
@@ -43,7 +43,7 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
       </section>
 
       <section className="page-section project-overview">
-        <div><p className="kicker">Why I built it</p><h2>{project.question}</h2></div>
+        <div><h2>Overview</h2><p>{project.question}</p></div>
         <div>{project.overview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
       </section>
 
@@ -53,7 +53,7 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
       </section>
 
       <section className="page-section project-method">
-        <p className="kicker">How the system works</p>
+        <h2>Methods</h2>
         <div className="project-method-grid">
           {project.approach.map((step, index) => (
             <article key={step.title}><span>0{index + 1}</span><h2>{step.title}</h2><p>{step.text}</p></article>
@@ -67,8 +67,7 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
 
       <section className="page-section project-evidence">
         <div>
-          <p className="kicker">What this work contributes</p>
-          <h2>From a research question to an inspectable system.</h2>
+          <h2>Contributions</h2>
           <ul>{project.contributions.map((item) => <li key={item}>{item}</li>)}</ul>
         </div>
         <figure>
@@ -78,12 +77,12 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
       </section>
 
       <section className="page-section project-reading">
-        <article><p className="kicker">How I read the results</p><h2>What the evidence means</h2><p>{project.interpretation}</p></article>
-        <article><p className="kicker">Current scope</p><h2>{project.next ? "What has been validated so far" : "What this study validates"}</h2><p>{project.scope}</p></article>
+        <article><h2>Interpretation</h2><p>{project.interpretation}</p></article>
+        <article><h2>Current scope</h2><p>{project.scope}</p></article>
       </section>
 
       <section className="page-section project-image-gallery">
-        <div><p className="kicker">Inside the system</p><h2>More evidence from the research.</h2></div>
+        <div><h2>Additional figures</h2></div>
         <div className="project-image-grid">
           {project.images.slice(2).map((image) => (
             <figure key={image.src}>
@@ -96,8 +95,8 @@ export default async function ResearchProjectPage({ params }: { params: Promise<
 
       {project.next && (
         <section className="page-section project-next">
-          <p className="kicker">Where I am taking it next</p>
-          <h2>{project.next}</h2>
+          <h2>Next steps</h2>
+          <p>{project.next}</p>
           <div className="project-resource-links">
             {project.links.map((link) => <a href={link.href.startsWith("http") ? link.href : sitePath(link.href)} target={link.href.startsWith("http") ? "_blank" : undefined} rel={link.href.startsWith("http") ? "noreferrer" : undefined} key={link.label}>{link.label}<ArrowUpRight size={15} /></a>)}
           </div>

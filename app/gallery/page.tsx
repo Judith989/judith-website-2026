@@ -113,7 +113,7 @@ const albums: GalleryAlbum[] = [
 export default function GalleryPage() {
   return (
     <main>
-      <PageHero label="Gallery" title="Research in pictures." />
+      <PageHero title="Gallery" />
       <GalleryGrid albums={albums} paperTitles={galleryPaperTitles} />
     </main>
   );

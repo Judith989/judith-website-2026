@@ -14,11 +14,10 @@ const links = [
 export default function ContactPage() {
   return (
     <main>
-      <PageHero label="Contact" title="Bring me the difficult system you want to understand better." text="I welcome conversations about research collaborations, interdisciplinary projects, invited talks, and mentorship that can grow into meaningful work." />
+      <PageHero title="Contact" />
       <section className="page-section contact-page">
         <div>
-          <p className="kicker">Direct contact</p>
-          <h2>Tell me what question has stayed with you.</h2>
+          <p>For collaborations, talks, and mentorship, please email me.</p>
           <div className="contact-emails">
             <a className="contact-email" href="mailto:jnjoku@uwyo.edu"><Mail />jnjoku@uwyo.edu</a>
             <a className="contact-email" href="mailto:judithnjoku24@gmail.com"><Mail />judithnjoku24@gmail.com</a>

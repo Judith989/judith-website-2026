@@ -691,6 +691,12 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
 .academic-section-heading a { font-size: 13px; }
 .academic-section h2 { margin: 0 0 16px; }
 .academic-section > p { font-size: 15px; line-height: 1.65; max-width: 760px; }
+.teaching-page .academic-entry p { max-width: 760px; }
+.teaching-course-group { border-top: 1px solid #eee; display: grid; gap: 25px; grid-template-columns: minmax(190px, .4fr) minmax(0, 1fr); padding: 14px 0; }
+.teaching-course-group h3 { font-size: 15px; font-weight: 650; margin: 0; }
+.teaching-course-group ul, .teaching-proposed-courses { margin: 0; padding-left: 22px; }
+.teaching-course-group li, .teaching-proposed-courses li { color: var(--muted); font-size: 14px; line-height: 1.65; margin-bottom: 4px; }
+.teaching-proposed-courses { columns: 2; column-gap: 40px; max-width: 850px; }
 .academic-entry { border-top: 1px solid #eee; display: grid; gap: 25px; grid-template-columns: minmax(190px, .4fr) minmax(0, 1fr); padding: 12px 0; }
 .academic-entry h3 { font-family: inherit; font-size: 15px; font-weight: 650; letter-spacing: 0; margin: 0; }
 .academic-entry p { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0; }
@@ -786,6 +792,9 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
   .academic-home-intro { gap: 20px; grid-template-columns: 1fr; padding-top: 32px; }
   .academic-portrait { grid-row: 1; width: 150px; }
   .academic-entry { display: block; }
+  .teaching-course-group { display: block; }
+  .teaching-course-group h3 { margin-bottom: 8px; }
+  .teaching-proposed-courses { columns: 1; }
   .academic-entry h3 { margin-bottom: 4px; }
   .about-profile { grid-template-columns: 1fr; }
   .academic-news-list summary { gap: 6px; grid-template-columns: 1fr; }

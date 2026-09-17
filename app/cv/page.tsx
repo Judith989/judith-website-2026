@@ -41,7 +41,7 @@ export default function CvPage() {
           <div className="cv-block"><p className="kicker">Teaching and mentorship</p>
             <article><span>2026 to Present</span><div><h2>Research mentor</h2><p>Mentoring six interdisciplinary teams across graduate, undergraduate, and high-school levels at the University of Wyoming.</p></div></article>
             <article><span>2026</span><div><h2>Machine learning project mentor</h2><p>Guided student projects in model implementation, evaluation, and interpretation at the University of Wyoming.</p></div></article>
-            <article><span>2019 to 2025</span><div><h2>Teaching and course materials</h2><p>Supported Introduction to Probability and graduate Real-Time Systems instruction; developed hardware-in-the-loop simulation materials with MATLAB and graduate research-writing guidance.</p></div></article>
+            <article><span>2019 to 2025</span><div><h2>Teaching and course materials</h2><p>Supported <em>Introduction to Probability</em> and graduate <em>Real-Time Systems</em> instruction; developed hardware-in-the-loop simulation materials with MATLAB and graduate research-writing guidance.</p></div></article>
             <article><span>Teaching areas</span><div><h2>Systems engineering and AI</h2><p>Prepared to teach data analytics, simulation, cyber-physical systems, digital twins, and explainable AI for safety-critical systems.</p></div></article>
             <article><span>2022 to 2024</span><div><h2>International internship supervisor</h2><p>Recruited and supervised two research cohorts of more than 15 students through projects, feedback, and publication development with Kyungpook National University and Michigan State University.</p></div></article>
           </div>

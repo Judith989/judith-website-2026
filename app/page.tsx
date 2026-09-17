@@ -34,13 +34,13 @@ export default function Home() {
             <h2>Short Bio</h2>
             <p>I am a Distinguished Postdoctoral Fellow in the Secure Sensing and Learning Research Lab and the Center for Rural Community Resilience and Innovation at the University of Wyoming. I develop trustworthy AI and digital twins for energy, transportation, agriculture, and infrastructure.</p>
             <p>I earned a BEng in Petroleum Engineering from the Federal University of Technology, Owerri, an MSc in Electronics Engineering from Kumoh National Institute of Technology, and a PhD in IT Convergence Engineering from Kumoh National Institute of Technology. In South Korea, I worked in the Future Communications Systems Laboratory, the ICT Convergence Research Center, and the Networked Systems Laboratory, moving from wireless communications to digital twins and battery management.</p>
-            <p>My research combines physical models, simulation, machine learning, and visualization to help people understand complex systems and make better decisions under real-world constraints.</p>
+            <p>My research combines physical models, simulation, machine learning, and visualization to help people understand complex systems and make better decisions under real-world constraints. I am now studying how intelligent systems can recognize unreliable evidence, continue monitoring when needed, and defer consequential decisions to people.</p>
           </section>
 
           <section id="research">
             <div className="profile-section-heading"><h2>Research</h2><Link href="/research">All projects</Link></div>
             <ul className="profile-list">
-              {selectedResearch.map((project) => <li key={project.name}><Link href={project.href}>{project.name}</Link> — {project.detail}</li>)}
+              {selectedResearch.map((project) => <li key={project.name}><Link href={project.href}>{project.name}</Link>: {project.detail}</li>)}
             </ul>
           </section>
 
@@ -54,17 +54,19 @@ export default function Home() {
 
           <section id="teaching">
             <h2>Teaching Philosophy</h2>
-            <p>I teach by connecting foundations to authentic systems. Students should understand why a method works, test where it fails, communicate its assumptions, and apply it responsibly. I emphasize active learning, reproducible inquiry, and collaborative problem solving.</p>
+            <p>I teach by connecting foundations to authentic systems. Students should understand why a method works, test where it fails, communicate its assumptions, and apply it responsibly. I emphasize staged projects, reproducible workflows, design reviews, and learning from failure.</p>
+            <p>I have supported Introduction to Probability and graduate Real-Time Systems instruction, developed materials for hardware-in-the-loop simulation with MATLAB, and created research-writing guidance for graduate students.</p>
           </section>
 
           <section id="mentorship">
             <h2>Mentorship Philosophy</h2>
             <p>I aim to develop independent thinkers, not replicas of the mentor. I help researchers frame consequential questions, make defensible technical choices, interpret evidence honestly, and communicate their contributions clearly. My mentorship adapts to each person while maintaining high standards and widening access to opportunity.</p>
+            <p>At Wyoming, I mentor six interdisciplinary research teams across graduate, undergraduate, and high-school levels. I also led two international research internship cohorts, using clear milestones and feedback to help emerging researchers take ownership of their work.</p>
           </section>
 
           <section id="philosophy">
             <h2>Research Philosophy</h2>
-            <p>Three principles guide my work: <strong>intelligibility</strong>—communicating evidence and uncertainty; <strong>integration</strong>—connecting models, sensors, simulation, and human expertise; and <strong>impact</strong>—improving consequential systems while broadening participation in research.</p>
+            <p>Three principles guide my work: <strong>intelligibility</strong>, communicating evidence and uncertainty; <strong>integration</strong>, connecting models, sensors, simulation, and human expertise; and <strong>impact</strong>, improving consequential systems while broadening participation in research.</p>
             <blockquote><p>“If you hear a voice within you say, ‘You cannot paint,’ then by all means paint, and that voice will be silenced.”</p><cite>Vincent van Gogh, adapted from a letter to Theo van Gogh, October 28, 1883</cite></blockquote>
             <blockquote><p>“Spectacular achievement is always preceded by unspectacular preparation.”</p><cite>Robert H. Schuller</cite></blockquote>
           </section>

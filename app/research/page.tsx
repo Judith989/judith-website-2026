@@ -27,6 +27,11 @@ export default function ResearchPage() {
     <main>
       <PageHero title="Research" />
       <section className="academic-section"><p>I develop AI and digital twins for energy, transportation, and infrastructure. See the <Link href="/publications">publication list</Link> for the full research record.</p></section>
+      <section className="academic-section">
+        <h2>Current research directions</h2>
+        <p>I am connecting adverse-weather perception to three-dimensional reconstruction and digital twins, including work on severe blowing snow and a city-scale model of downtown Laramie.</p>
+        <p>I am also developing ways to evaluate trust across sensing, prediction, and decision-making. This work asks when a system has enough evidence to act, when it should keep monitoring, and when a person should take over. The Digital Twin Trustworthiness Index and dttibench are frameworks in development, not completed systems.</p>
+      </section>
       {researchAreas.map((area) => (
         <section className="academic-section" key={area.title}>
           <h2>{area.title}</h2>

@@ -12,16 +12,17 @@ const education = [
 ];
 
 const appointments = [
-  ["2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and Center for Rural Community Resilience and Innovation", "University of Wyoming"],
-  ["2024 (from Jan 4)", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory", "Michigan State University"],
+  ["Aug 2025 to Present", "Distinguished Postdoctoral Fellow", "Secure Sensing and Learning Research Lab and Center for Rural Community Resilience and Innovation", "University of Wyoming"],
+  ["Jan to Feb 2024", "Visiting Research Scholar", "Climate Smart Decision Support Systems Laboratory", "Michigan State University"],
   ["Aug 2022 to Jul 2024", "Research Specialist and Supervisor", "Climate Smart Decision Support Systems Laboratory (CLIMDES), AI-enabled sensing, digital agriculture, explainable machine learning, and international workforce development", "Kyungpook National University, Daegu, South Korea and Michigan State University, East Lansing, Michigan"],
-  ["Sep 2022 to 2025", "Graduate Research Assistant", "Networked Systems Laboratory", "Kumoh National Institute of Technology"],
-  ["Aug 2019 to 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
+  ["Sep 2022 to Aug 2025", "Graduate Research Assistant", "Networked Systems Laboratory", "Kumoh National Institute of Technology"],
+  ["Jan to Aug 2022", "Post-Masters Researcher", "ICT Convergence Research Center", "Kumoh National Institute of Technology"],
+  ["Sep 2019 to Aug 2021", "Graduate Research and Teaching Assistant", "Future Communications Systems Laboratory", "Kumoh National Institute of Technology"],
   ["Apr 2017 to Jul 2019", "Customer Experience Management Personnel and IT Buddy", "Customer experience, branch technology support, and ATM operations", "Sterling Bank PLC, Lagos, Nigeria"],
   ["Nov 2015 to Oct 2016", "National Youth Service Corps Intern", "Energy-sector administration and public service", "Ministry of Energy, Alausa, Ikeja, Lagos, Nigeria"],
 ];
 
-const conferenceReview = ["IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)", "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)", "International Conference on Machine Learning (ICML)", "Conference on Neural Information Processing Systems (NeurIPS)", "International Conference on Computer Vision and Image Processing (CVIP)", "IEEE Wireless Communications and Networking Conference (WCNC)"];
+const conferenceReview = ["IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)", "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)", "International Conference on Machine Learning (ICML)", "Conference on Neural Information Processing Systems (NeurIPS)", "AAAI Conference on Artificial Intelligence (AAAI)", "International Conference on Computer Vision and Image Processing (CVIP)", "IEEE Wireless Communications and Networking Conference (WCNC)"];
 
 const journalReview = ["IEEE Transactions on Industrial Informatics", "IEEE Internet of Things Journal", "IEEE Access", "IEEE Communications Letters", "IET Communications", "Engineering Applications of Artificial Intelligence", "Journal of Retailing and Consumer Services", "Electronics (MDPI)", "Sensors (MDPI)", "Algorithms (MDPI)", "Cogent Arts & Humanities"];
 
@@ -37,6 +38,17 @@ export default function CvPage() {
         <div className="cv-main">
           <div className="cv-block"><p className="kicker">Appointments</p>{appointments.map(([date, role, lab, institution]) => <article key={role}><span>{date}</span><div><h2>{role}</h2><p><strong>{lab}</strong><br />{institution}</p></div></article>)}</div>
           <div className="cv-block"><p className="kicker">Education</p>{education.map(([date, degree, institution]) => <article key={degree}><span>{date}</span><div><h2>{degree}</h2><p>{institution}</p></div></article>)}</div>
+          <div className="cv-block"><p className="kicker">Teaching and mentorship</p>
+            <article><span>2026 to Present</span><div><h2>Research mentor</h2><p>Mentoring six interdisciplinary teams across graduate, undergraduate, and high-school levels at the University of Wyoming.</p></div></article>
+            <article><span>2026</span><div><h2>Machine learning project mentor</h2><p>Guided student projects in model implementation, evaluation, and interpretation at the University of Wyoming.</p></div></article>
+            <article><span>2019 to 2025</span><div><h2>Teaching and course materials</h2><p>Supported Introduction to Probability and graduate Real-Time Systems instruction; developed hardware-in-the-loop simulation materials with MATLAB and graduate research-writing guidance.</p></div></article>
+            <article><span>Teaching areas</span><div><h2>Systems engineering and AI</h2><p>Prepared to teach data analytics, simulation, cyber-physical systems, digital twins, and explainable AI for safety-critical systems.</p></div></article>
+            <article><span>2022 to 2024</span><div><h2>International internship supervisor</h2><p>Recruited and supervised two research cohorts of more than 15 students through projects, feedback, and publication development with Kyungpook National University and Michigan State University.</p></div></article>
+          </div>
+          <div className="cv-block"><p className="kicker">Selected research leadership</p>
+            <article><span>2023 to 2024</span><div><h2>Automotive retail predictive analytics</h2><p>Research team lead on a $100,000 industry-supported project with Metamonkey AI and Kumoh National Institute of Technology.</p></div></article>
+            <article><span>2022 to 2024</span><div><h2>Battery digital twins</h2><p>Research team lead on a $50,000 institutional ICT project integrating battery management with digital-twin research.</p></div></article>
+          </div>
         </div>
         <aside className="cv-sidebar">
           <div><strong>1,400+</strong><span>citations</span></div><div><strong>14</strong><span>h-index</span></div><div><strong>$150K</strong><span>projects led</span></div>

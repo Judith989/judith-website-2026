@@ -102,11 +102,12 @@ story += [
 
 story += section("Professional Appointments")
 story += [
-    entry("2025 to Present", "Distinguished Postdoctoral Fellow", "University of Wyoming", "Research in robust autonomous perception, digital twins for smart infrastructure and rural communities, and trustworthy AI for cyber-physical systems."),
-    entry("2024 (from Jan 4)", "Visiting Research Scholar", "Michigan State University", "Digital twins and AI-driven decision support for climate-smart agriculture."),
-    entry("Sep 2022 to 2025", "Graduate Research Assistant, PhD", "Networked Systems Laboratory, Kumoh National Institute of Technology", "Developed BatteryMetrix and BridgeSync; led multidisciplinary research in battery intelligence, transportation, security, and infrastructure."),
+    entry("Aug 2025 to Present", "Distinguished Postdoctoral Fellow", "University of Wyoming", "Research in robust autonomous perception, digital twins for smart infrastructure and rural communities, and trustworthy AI for cyber-physical systems."),
+    entry("Jan to Feb 2024", "Visiting Research Scholar", "Michigan State University", "Digital twins and AI-driven decision support for climate-smart agriculture."),
+    entry("Sep 2022 to Aug 2025", "Graduate Research Assistant, PhD", "Networked Systems Laboratory, Kumoh National Institute of Technology", "Developed BatteryMetrix and BridgeSync; led multidisciplinary research in battery intelligence, transportation, security, and infrastructure."),
     entry("Aug 2022 to Jul 2024", "Research Specialist and Supervisor", "Kyungpook National University and Michigan State University (CLIMDES)", "AI-enabled sensing, digital agriculture, international collaboration, and workforce development."),
-    entry("Aug 2019 to 2021", "Graduate Research and Teaching Assistant, MSc", "Future Communications Systems Laboratory, Kumoh National Institute of Technology", "Machine learning for next-generation wireless communication systems."),
+    entry("Jan to Aug 2022", "Post-Masters Researcher", "ICT Convergence Research Center, Kumoh National Institute of Technology", "Metaverse research and immersive digital environments."),
+    entry("Sep 2019 to Aug 2021", "Graduate Research and Teaching Assistant, MSc", "Future Communications Systems Laboratory, Kumoh National Institute of Technology", "Machine learning for next-generation wireless communication systems."),
     entry("Apr 2017 to Jul 2019", "Customer Experience Management Personnel and IT Buddy", "Sterling Bank PLC, Lagos, Nigeria", "Customer experience, branch technology support, and ATM operations."),
     entry("Nov 2015 to Oct 2016", "National Youth Service Corps Intern", "Ministry of Energy, Alausa, Ikeja, Lagos, Nigeria", "Energy-sector administration and public service."),
 ]
@@ -137,7 +138,9 @@ story += [
 
 story += section("Teaching, Mentorship, and Service")
 story += [
-    entry("2026 to Present", "Project Research Mentor", "University of Wyoming", "Mentoring five research teams toward peer-reviewed publication across computer vision, mobility, and health sensing."),
+    entry("Mar 2026 to Present", "Research Mentor", "University of Wyoming", "Mentoring six interdisciplinary research teams across graduate, undergraduate, and high-school levels."),
+    entry("Mar to May 2026", "Machine Learning Project Mentor", "University of Wyoming", "Guided student projects in model implementation, evaluation, and interpretation."),
+    entry("2019 to 2025", "Teaching and Instructional Materials", "Kumoh National Institute of Technology", "Supported Introduction to Probability and graduate Real-Time Systems instruction; developed hardware-in-the-loop simulation materials with MATLAB and graduate research-writing guidance."),
     entry("Aug 2022 to Jul 2024", "Internship Lead and Research Supervisor", "Kyungpook National University and Michigan State University", "Recruited and supervised two international internship cohorts comprising more than 15 students; many coauthored peer-reviewed publications."),
     entry("Ongoing", "Conference and Journal Reviewer", "CVPR, ICML, NeurIPS, IEEE and interdisciplinary AI journals"),
     entry("May 2020", "WomenTech Network Member", "Women in technology and STEM"),

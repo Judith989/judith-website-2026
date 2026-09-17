@@ -761,6 +761,24 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
 .gallery-story .story-arrow { background: rgba(32,32,32,.83); border-radius: 2px; height: 36px; width: 36px; }
 .gallery-story .story-arrow:hover { background: #202020; }
 .gallery-story .story-count { background: rgba(32,32,32,.83); }
+.profile-shell { display: grid; gap: 50px; grid-template-columns: 230px minmax(0, 1fr); margin: 0 auto; max-width: 1120px; padding: 48px 24px 60px; }
+.profile-sidebar { align-self: start; position: sticky; top: 95px; }
+.profile-sidebar img { display: block; height: auto; width: 100%; }
+.profile-sidebar h1 { font-family: inherit; font-size: 18px; font-weight: 650; letter-spacing: 0; line-height: 1.3; margin: 17px 0 8px; }
+.profile-sidebar p { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 5px; }
+.profile-sidebar-links { display: grid; gap: 7px; margin-top: 16px; }
+.profile-home a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+.profile-content section { margin-bottom: 30px; scroll-margin-top: 90px; }
+.profile-content h2 { font-family: inherit; font-size: 22px; font-weight: 650; letter-spacing: -.015em; line-height: 1.3; margin: 0 0 12px; }
+.profile-content p, .profile-content li { color: #454d54; font-size: 15px; line-height: 1.7; }
+.profile-content p { margin-bottom: 15px; }
+.profile-section-heading { align-items: baseline; display: flex; gap: 16px; justify-content: space-between; }
+.profile-section-heading a, .profile-small { font-size: 13px !important; }
+.profile-list { margin: 0 0 12px; padding-left: 25px; }
+.profile-list li { padding-left: 3px; margin-bottom: 8px; }
+.profile-content blockquote { border-left: 2px solid var(--line); margin: 14px 0 18px; padding: 0 0 0 16px; }
+.profile-content blockquote p { font-size: 14px; font-style: italic; margin-bottom: 3px; }
+.profile-content blockquote cite { color: var(--muted); font-size: 12px; font-style: normal; }
 @media (max-width: 700px) {
   .site-header { padding: 10px 20px; }
   .academic-home-intro { gap: 20px; grid-template-columns: 1fr; padding-top: 32px; }
@@ -775,4 +793,7 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
   .site-header nav a { font-size: 13px; min-height: 0; }
   .gallery-story-list, .gallery-story-feature { display: grid; grid-template-columns: 1fr; }
   .gallery-story-feature { gap: 8px; }
+  .profile-shell { gap: 28px; grid-template-columns: 1fr; padding: 28px 20px 45px; }
+  .profile-sidebar { position: static; }
+  .profile-sidebar img { max-width: 240px; }
 }

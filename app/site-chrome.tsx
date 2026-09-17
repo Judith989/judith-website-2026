@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 const navigation = [
-  ["About", "/about"],
   ["Research", "/research"],
   ["Publications", "/publications"],
+  ["Teaching", "/#teaching"],
   ["Talks", "/talks"],
   ["News", "/news"],
   ["CV", "/cv"],
@@ -34,7 +34,8 @@ export function SiteFooter() {
         <p>© 2026 Judith Nkechinyere Njoku-Vowels, PhD</p>
       </div>
       <div className="footer-links">
-        <Link href="/about">About</Link>
+        <Link href="/">Home</Link>
+        <Link href="/#teaching">Teaching</Link>
         <Link href="/news">News</Link>
         <Link href="/talks">Talks</Link>
         <Link href="/gallery">Gallery</Link>

@@ -65,8 +65,15 @@ const verifiedPaperUrls: Record<string, string> = {
   "Automatic Radar Waveform Recognition Using the Wigner-Ville Distribution and AlexNet-SVM": "https://www.researchgate.net/publication/343712491_Automatic_Radar_Waveform_Recognition_using_the_Wigner-Ville_distribution_and_AlexNet-SVM",
 };
 
-function paperUrl(paper: Paper) {
-  return paper.doi ? `https://doi.org/${paper.doi}` : paper.url || verifiedPaperUrls[paper.title];
+function paperLink(paper: Paper) {
+  if (paper.doi) return { href: `https://doi.org/${paper.doi}`, label: "Open paper" };
+  if (paper.url) return { href: paper.url, label: "Open paper" };
+  const verified = verifiedPaperUrls[paper.title];
+  if (verified) return { href: verified, label: verified.startsWith("/") ? "View project" : "Open paper" };
+  return {
+    href: `https://scholar.google.com/scholar?q=${encodeURIComponent(`"${paper.title}"`)}`,
+    label: "Search for paper",
+  };
 }
 
 function AuthorLine({ authors }: { authors?: string }) {
@@ -142,7 +149,7 @@ export default function PublicationExplorer({ papers = defaultPapers }: { papers
 
       <div className="publication-list">
         {visible.map((paper) => {
-          const href = paperUrl(paper);
+          const { href, label } = paperLink(paper);
           const content = <>
             <span className="pub-year">{paper.year}</span>
             <div>
@@ -154,14 +161,11 @@ export default function PublicationExplorer({ papers = defaultPapers }: { papers
                 {paper.venueType && <span>{paper.venueType}</span>}
                 {paper.scope && <span>{paper.scope}</span>}
               </div>
+              <span className="paper-link-label">{label}</span>
             </div>
-            {href && <ArrowUpRight className="pub-arrow" size={20} />}
+            <ArrowUpRight className="pub-arrow" size={20} />
           </>;
-          return href ? (
-            <a className="publication" href={href} target={href.startsWith("/") ? undefined : "_blank"} rel={href.startsWith("/") ? undefined : "noreferrer"} key={`${paper.year}-${paper.title}`}>{content}</a>
-          ) : (
-            <article className="publication publication-record-only" key={`${paper.year}-${paper.title}`}>{content}</article>
-          );
+          return <a className="publication" href={href} target={href.startsWith("/") ? undefined : "_blank"} rel={href.startsWith("/") ? undefined : "noreferrer"} key={`${paper.year}-${paper.title}`}>{content}</a>;
         })}
       </div>
     </>

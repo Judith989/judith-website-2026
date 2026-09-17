@@ -734,6 +734,7 @@ footer { margin: 40px auto 0; max-width: 1120px; padding: 20px 24px; }
 .publication { padding: 15px 0; }
 .publication:hover { background: #fff; padding-left: 0; padding-right: 0; }
 .publication h3 { font-family: inherit; font-size: 16px; font-weight: 600; }
+.paper-link-label { color: #52657a; display: inline-block; font-size: 12px; margin-top: 9px; text-decoration: underline; text-underline-offset: 2px; }
 .cv-sidebar { border: 0; border-left: 1px solid var(--line); padding: 0 0 0 22px; }
 .cv-sidebar strong { font-family: inherit; font-size: 24px; font-weight: 600; }
 .service-grid { gap: 0 24px; margin-top: 14px; }

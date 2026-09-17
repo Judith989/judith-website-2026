@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Publications | Judith Njoku-Vowels, 
 
 function field(block: string, name: string) {
   const match = block.match(new RegExp(`${name}=\\{([\\s\\S]*?)\\}\\s*,?\\s*\\n`, "i"));
-  return match?.[1].replace(/\s+/g, " ").replace(/[{}]/g, "").trim() ?? "";
+  return match?.[1].replace(/\s+/g, " ").replace(/[{}]/g, "").replace(/\\&/g, "&").replace(/``/g, "\u201c").replace(/''/g, "\u201d").trim() ?? "";
 }
 
 function taxonomy(title: string) {

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, ChevronRight, MapPin } from "lucide-react";
-import { TypingHeadline } from "./typing-headline";
 
 const themes = [
   {
@@ -51,7 +50,7 @@ export default function Home() {
       <section className="hero home-hero">
         <div className="hero-copy">
           <p className="hero-overline">Dr. Judith Njoku-Vowels · Distinguished Postdoctoral Fellow</p>
-          <TypingHeadline />
+          <h1 className="home-headline">I build intelligent systems that help the physical world see, predict, and decide.</h1>
           <p className="hero-lede">
             I am a researcher at the University of Wyoming working across digital twins,
             trustworthy AI, and computer vision for transportation, energy, and infrastructure.

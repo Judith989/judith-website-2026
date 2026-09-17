@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "../site-chrome";
-import PhotoStoryCarousel from "./photo-story-carousel";
+import GalleryGrid, { type GalleryAlbum } from "./gallery-grid";
 
 export const metadata: Metadata = { title: "Gallery | Judith Njoku-Vowels, PhD" };
 
@@ -88,68 +87,34 @@ const galleryPaperTitles = [
   "Hunger Marketing and Blockchain Technology: Applications in Wireless Spectrum Management",
 ];
 
-function GalleryDetail({ text }: { text: string }) {
-  const paperTitle = galleryPaperTitles.find((title) => text.includes(title));
-  if (!paperTitle) return <>{text}</>;
-  const [before, after] = text.split(paperTitle);
-  return <>{before}<cite>{paperTitle}</cite>{after}</>;
-}
+const momentDates = [
+  "2025-07-09", "2025-04-25", "2025-02-19", "2024-11-21", "2024-10-16",
+  "2024-08-08", "2024-04-25", "2023-10-12", "2023-08-25", "2023-07-07",
+  "2023-06-24", "2023-04-28", "2022-11-30", "2022-10-21", "2022-10-21",
+  "2022-06-24", "2022-02-11", "2021-02-05", "2021-02-05", "2020-06-30",
+  "2019-11-30",
+];
 
-function MomentGrid({ items }: { items: typeof moments }) {
-  return (
-    <section className="page-section photo-grid">
-      {items.map((moment) => (
-        <figure className={moment.orientation} key={`${moment.src}-${moment.title}`}>
-          <div><Image src={moment.src} alt={`${moment.title}: ${moment.detail}`} fill sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 24vw" /></div>
-          <figcaption><strong>{moment.title}</strong><span><GalleryDetail text={moment.detail} /></span></figcaption>
-        </figure>
-      ))}
-    </section>
-  );
-}
+const albums: GalleryAlbum[] = [
+  { date: "2026-06-17", title: "PANDA at i3CE 2026", description: "I presented PANDA virtually at the ASCE International Conference on Computing in Civil Engineering.", images: pandaPresentation },
+  { date: "2026-06-06", title: "OmniRestore at CVPR 2026", description: "I presented our adverse-weather image-restoration research at the IEEE/CVF CVPR Workshops in Denver.", images: cvprPresentation },
+  { date: "2026-05-06", title: "UW Digital Twins Computing Meet Up", description: "I facilitated the School of Computing event and presented a battery-management digital twin case study.", images: uwDigitalTwinsMeetup },
+  { date: "2025-08-22", title: "PhD graduation", description: "My PhD dissertation introduced BatteryMetrix.", images: phdGraduation },
+  { date: "2022-05-26", title: "Metaverse and The Industry Workshop", description: "I co-organized the two-day program and presented on metaverse applications in transportation.", images: metaverseWorkshop },
+  { date: "2021-08-20", title: "MSc graduation", images: [{ src: "/gallery/msc_grad.jpeg", alt: "Judith Njoku-Vowels at her MSc graduation", caption: "My MSc in Electronics Engineering was conferred at Kumoh National Institute of Technology, South Korea, on August 20, 2021." }] },
+  { date: "2014-12-12", title: "BEng graduation", images: [{ src: "/gallery/Bsc_grad.jpg", alt: "Judith Njoku-Vowels at her BEng graduation", caption: "My Bachelor of Engineering in Petroleum Engineering was conferred at the Federal University of Technology, Owerri, Nigeria, on December 12, 2014." }] },
+  ...moments.map((moment, index) => ({
+    date: momentDates[index],
+    title: moment.title,
+    images: [{ src: moment.src, alt: moment.title, caption: moment.detail }],
+  })),
+].sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
 
 export default function GalleryPage() {
   return (
     <main>
-      <PageHero label="Gallery" title="The places I have been and the moments that shaped how I research." />
-
-      <section className="page-section gallery-highlight-grid">
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 17, 2026, virtual presentation</p><h2>PANDA at the ASCE International Conference on Computing in Civil Engineering</h2><p>I presented PANDA virtually during i3CE 2026, hosted at Songdo Convensia in Songdo, Incheon, South Korea. The presentation demonstrated how a lightweight forecasting model and a Cesium digital twin can turn limited parking data into multi-horizon occupancy and turnover predictions that operators can inspect spatially.</p></div><PhotoStoryCarousel images={pandaPresentation} label="PANDA presentation" /></article>
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">June 6, 2026, Denver, Colorado</p><h2>OmniRestore at the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops</h2><p>I presented OmniRestore, coauthored with Prof. Diksha Shukla, at the Colorado Convention Center during the conference held June 3 to 7, 2026. The work introduces a lightweight, weather-aware framework for restoring visual information degraded by rain, snow, fog, low light, and composite conditions. Presenting it at CVPR brought this research into conversation with the international computer vision community and marked an important expansion of my work into robust autonomous perception.</p></div><PhotoStoryCarousel images={cvprPresentation} label="OmniRestore at CVPR" /></article>
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 6, 2026, Laramie, Wyoming</p><h2>Facilitating a University of Wyoming community conversation on digital twins</h2><p>I facilitated the School of Computing&apos;s Digital Twins Computing Meet Up at Altitude Chophouse and presented a battery-management digital twin case study. Six lightning talks brought complementary views of digital twins into one room.</p></div><PhotoStoryCarousel images={uwDigitalTwinsMeetup} label="University of Wyoming Digital Twins Computing Meet Up" /></article>
-      </section>
-
-      <section className="page-section graduation-section degree-timeline-entry">
-        <p className="kicker">August 22, 2025</p>
-        <figure className="degree-card"><PhotoStoryCarousel images={phdGraduation} label="PhD graduation" /><figcaption><strong>PhD Graduation</strong><span>Celebrating the conferral of my PhD in IT Convergence Engineering at Kumoh National Institute of Technology, South Korea. My dissertation introduced BatteryMetrix.</span></figcaption></figure>
-      </section>
-
-      <MomentGrid items={moments.slice(0, 16)} />
-
-      <section className="page-section gallery-highlight-grid gallery-highlight-single">
-        <article className="gallery-highlight-card"><div className="featured-story-copy"><p className="kicker">May 25 to 26, 2022, Gumi, South Korea</p><h2>Metaverse and The Industry Workshop</h2><p>I co-organized this two-day workshop with the ICT Convergence Research Center and delivered the transportation-systems presentation. Eight sessions connected metaverse foundations with manufacturing, blockchain, NFTs, artificial intelligence, transportation, research trends, and security.</p></div><PhotoStoryCarousel images={metaverseWorkshop} label="Metaverse and The Industry Workshop" /></article>
-      </section>
-
-      <MomentGrid items={moments.slice(16, 17)} />
-
-      <section className="page-section graduation-section degree-timeline-entry">
-        <p className="kicker">August 20, 2021</p>
-        <figure className="degree-card">
-          <div><Image src="/gallery/msc_grad.jpeg" alt="Judith Njoku-Vowels at her MSc graduation" fill sizes="(max-width: 800px) 92vw, 48vw" /></div>
-          <figcaption><strong>MSc Graduation</strong><span>Celebrating the conferral of my MSc in Electronics Engineering at Kumoh National Institute of Technology, South Korea.</span></figcaption>
-        </figure>
-      </section>
-
-      <MomentGrid items={moments.slice(17)} />
-
-      <section className="page-section graduation-section degree-timeline-entry">
-        <p className="kicker">December 12, 2014</p>
-        <figure className="degree-card">
-          <div><Image src="/gallery/Bsc_grad.jpg" alt="Judith Njoku-Vowels at her bachelor of engineering graduation" fill sizes="(max-width: 800px) 92vw, 48vw" /></div>
-          <figcaption><strong>BEng Graduation</strong><span>Celebrating the conferral of my Bachelor of Engineering in Petroleum Engineering at the Federal University of Technology, Owerri, Nigeria.</span></figcaption>
-        </figure>
-      </section>
-
+      <PageHero label="Gallery" title="Research in pictures." />
+      <GalleryGrid albums={albums} paperTitles={galleryPaperTitles} />
     </main>
   );
 }

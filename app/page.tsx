@@ -9,7 +9,7 @@ const selectedResearch = [
 
 const selectedPublications = [
   { title: "OmniRestore: A Parameter-Efficient Framework for Universal Adverse-Weather Image Restoration", venue: "CVPR Workshops, 2026", href: "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Njoku_OmniRestore_A_Parameter-Efficient_Framework_for_Universal_Adverse-Weather_Image_Restoration_CVPRW_2026_paper.pdf" },
-  { title: "MetaWatch: Trends, Challenges, and Future of Network Intrusion Detection in the Metaverse", venue: "IEEE Internet of Things Journal, 2025", href: "https://doi.org/10.1109/JIOT.2025.3568477" },
+  { title: "Digital Twin and Metaverse-Enhanced Battery Management for Electric Vehicles", venue: "High-Confidence Computing, 2026", href: "https://doi.org/10.1016/j.hcc.2025.100358" },
   { title: "Explainable Data-Driven Digital Twins for Predicting Battery States in Electric Vehicles", venue: "IEEE Access, 2024", href: "https://doi.org/10.1109/ACCESS.2024.3413075" },
 ];
 
